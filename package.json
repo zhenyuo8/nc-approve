@@ -1,0 +1,39 @@
+{
+  "name": "nc-approve",
+  "version": "1.0.0",
+  "description": "",
+  "main": "remoteJS.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhenyuo8/nc-approve.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zhenyuo8/nc-approve/issues"
+  },
+  "homepage": "https://github.com/zhenyuo8/nc-approve#readme",
+  "dependencies": {
+    "express": "^4.14.0",
+    "flf-gulp-file-hash": "^0.2.0",
+    "glob": "^7.1.1",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-if": "^2.0.2",
+    "gulp-less": "^3.3.0",
+    "gulp-minify-css": "^1.2.4",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^2.0.0",
+    "merge-stream": "^1.0.1",
+    "through2": "^2.0.3"
+  },
+  "devDependencies": {
+    "express-http-proxy": "^1.2.0"
+  }
+}

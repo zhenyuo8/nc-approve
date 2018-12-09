@@ -1,0 +1,7 @@
+node_modules
+dist
+.vscode
+yarn.lock
+Apps/NCApprove/node_modules
+Apps/NCApprove/dist
+.DS_Store

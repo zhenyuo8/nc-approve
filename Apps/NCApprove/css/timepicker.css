@@ -1,0 +1,118 @@
+.tmpk-list {
+    position: relative;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    overflow: hidden;
+    width: 33%;
+    float: left;
+    height: auto;
+}
+
+.tmpk-date-area {
+    position: relative;
+    width: 100%;
+    height: 170px;
+    overflow: hidden;
+    color:#6d6d6d;
+}
+
+.tmpk-item {
+    position: relative;
+    height: 40px;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    font-size: 15px;
+    line-height: 30px;
+}
+
+.tmpk-mid-area {
+    position: absolute;
+    height: 34px;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    top: 64px;
+    width: 100%;
+}
+
+.tmpk-auto-col {
+    width: auto !important;
+    font-size: 15px;
+    color: rgb(86, 85, 85) !important;
+}
+
+
+
+.tmpk-gradient-layer {
+    position: absolute;
+    height: 100%;
+    top: 0px;
+    width: 100%;
+    z-index: 10;
+    background: -webkit-linear-gradient(top,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, .6) 30%,
+    rgba(255, 255, 255, .0) 50%,
+    rgba(255, 255, 255, .6) 70%,
+    rgba(255, 255, 255, 1) 100%);
+}
+
+.tmpk-top-area {
+    width: 100%;
+    height: 36px;
+    font-size: 15px;
+    position: relative;
+    display: table;
+    table-layout: fixed;
+    background-color: rgb(242,242,242);
+}
+
+.tmpk-top-col {
+    position: relative;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    color: rgb(2, 199, 255);
+    width: 60px;
+}
+
+.tmpk-back-cover
+{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    z-index: 3000;
+    display: none;
+    background-color: rgba(0, 0, 0, .5);
+}
+.tmpk-wrapper
+{
+    position:fixed;
+    background-color: White;
+    z-index:10002;
+    width: 100%;
+     bottom:0px;
+    /*visibility:hidden;*/
+    display: none;
+      transform:translate3d(0,100%,0);
+    -webkit-transform:translate3d(0,100%,0);
+    transition:transform 0.2s, display 0.2s;
+    -webkit-transition:transform 0.2s ,display 0.2s; /* Safari and Chrome */
+}
+.tmpk-wrapper-show
+{
+    /*visibility:visible;*/
+    display: inline-block;
+    transform:translate3d(0,0,0);
+    -webkit-transform:translate3d(0,0,0);
+  
+}
+.tmpk-clear{
+  display: none;
+}
+.tmpk-cancel{
+  color:#333;
+}
