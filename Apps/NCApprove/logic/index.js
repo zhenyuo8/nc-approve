@@ -11,35 +11,10 @@ define(["../parts/common", "utils", "../../../components/dialog",'../parts/langu
     pageLogic.prototype = {
         init: function () {
             var _this = this;
-            // if (wxapp.isDingTalkApp()) {
-            //     _this.pageview.showLoading({text: language.formTips.authorization});
-            //     wxapp.ddJSSign( function () {
-            //         _this.pageview.hideLoading(true);
-
-            //         _this.loadNum();
-            //         _this.loadData();
-            //         _this.setHeader();
-            //         _this.getUserInfo();
-            //     });
-            // } else {
-            //     this.pageview.ajax({//判断是否为管理员
-            //         url: '/user/isAdmin',
-            //         type: 'POST',
-            //         data: {},
-            //         success: function (data) {
-            //             if (data.success === true) {
-            //                 _this.isAdmin = data.data ? true : false;
-            //                 _this.inAdmin = false;
-            //                 _this.loadNum();
-            //                 _this.setHeader();
-            //                 _this.getUserInfo();
-            //                 // _this.pageview.go("moreTemplate", {isAdmin: isAdmin});
-            //             } else {
-            //                 // _this.pageview.go("moreTemplate", {isAdmin: false});
-            //             }
-            //         }
-            //     });
-            // }
+            _this.loadNum();
+            _this.loadData();
+            _this.setHeader();
+            _this.getUserInfo();
         },
         waitme_approve_icon_init:function (sender,params) {
             sender.config.text=language.tasksToProcess;
@@ -273,19 +248,19 @@ define(["../parts/common", "utils", "../../../components/dialog",'../parts/langu
                 text: language.formTips.onLoading,
                 timeout: 1000,
             });
-            // sender.config.ajaxConfig = {
-            //     url: '/form/moreListForm',
-            //     type: "POST",
-            //     pageSize: 1,//每篇加载多少数目
-            //     pageNumKey: "pageNum",
-            //     timeout: 10000,
-            //     data: {
-            //         pageNum: 1,
-            //         start: 0,
-            //         size: 1000,
-            //         isManager: _this.inAdmin ? 'true' : 'false'
-            //     }
-            // };
+            sender.config.ajaxConfig = {
+                url: '/form/moreListForm',
+                type: "POST",
+                pageSize: 1,//每篇加载多少数目
+                pageNumKey: "pageNum",
+                timeout: 10000,
+                data: {
+                    pageNum: 1,
+                    start: 0,
+                    size: 1000,
+                    isManager: _this.inAdmin ? 'true' : 'false'
+                }
+            };
             sender.config.autoLoadData = true;
         },
         //上拉加载更多
@@ -479,55 +454,12 @@ define(["../parts/common", "utils", "../../../components/dialog",'../parts/langu
                 }
             });
         },
-        collectionData:function (sender) {
-            var _this=this,regIos=/(\d_\d)/,regAndroid=/(\(.*?\))/;
-            var collectionData={};
-            collectionData.object_id=sender.datasource.formId;
-            collectionData.client=utils.deviceInfo().isAndroid?'android':'ios';
-            collectionData.trackCode=this.trackCode||"";
-            collectionData.device_model='';
-            collectionData.device_name='';
-            var navigatorInfo=navigator.userAgent;
-            var androidInfo='';
-            if(collectionData.client==='android'){
-                var arr=[];
-                navigatorInfo.replace(regAndroid,function () {
-                    androidInfo=arguments[1];
-                });
-                arr=androidInfo.split(';');
-                collectionData.device_model=arr[1].trim();
-                collectionData.device_name=arr[2].split('Build')[0].trim();
-            }else{
-                navigatorInfo.replace(regIos,function () {
-                    collectionData.device_model=arguments[1];
-                    return arguments[1];
-                });
-                if(navigatorInfo.indexOf('iPad')>-1){
-                    collectionData.device_name='iPad';
-                }else{
-                    collectionData.device_name='iPhone';
-                }
-            }
-            this.pageview.ajax({
-                url: "form/collectionData",
-                type: "POST",
-                data: collectionData,
-                success: function (data) {
-                    if(data.data){
-
-                    }
-                },
-                error: function (data) {
-                }
-            });
-        },
+        
         template_item_click: function (sender, params) {
             var _this = this;
             // 管理员模式不可以看详情
-            _this.trackCode='enterform_click';
             window.calculationMeta=null;
             window.localStorage.removeItem("copyUserParticipants");
-            _this.collectionData(sender);
             if (_this.inAdmin) {
                 return false;
             }

@@ -154,7 +154,7 @@ define(["../logic/index", "../parts/common", 'utils'], function (pluginClass, c,
                     overflowX: "hidden",
                     flex: 1,
                 },
-                root: ["searchInput","topfixedbar","main_view"]
+                root: ["topfixedbar","main_view"]
             },
             manageBtn: {
                 type: "button",

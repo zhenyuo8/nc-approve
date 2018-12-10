@@ -1,6 +1,6 @@
 define(["utils"], function(utils) {
     var p = "local";
-    var host ="http://127.0.0.1:3333/approve-app";
+    var host ="https://ys.esn.ren/approve-app";
     if(p==="正式"){
         host ="https://ys.yonyoucloud.com/approve-app";
     }else if(p==="pre-rel"){
@@ -8,7 +8,7 @@ define(["utils"], function(utils) {
     }  else if (p === "dev") {//容器使用的配置项
         host = "http://ys.chaoke.com:91/approve-app";
     } else {
-        host = "http://127.0.0.1:3333/approve-app";
+        host = "https://ys.esn.ren/approve-app";
     }
 
     return {
@@ -21,7 +21,7 @@ define(["utils"], function(utils) {
                 customerComponents: {
                     ApproveSearchView:"./components/ApproveSearchView",
                 },
-                root: "index",
+                root: "waitmeapprove",
                 baseSize: {
                     width: 375,
                     height: 667

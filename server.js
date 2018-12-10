@@ -49,11 +49,11 @@ app.get('/getlistdata', function(req, res, next) {
     }, 1000);
 });
 
-// app.use('/approve-app', proxy('https://ys.esn.ren/approve-app',{
-//     proxyReqPathResolver:function(req){
-//         return '/approve-app'+require('url').parse(req.url).path
-//     }
-// }))
+app.use('/approve-app', proxy('https://ys.esn.ren/approve-app',{
+    proxyReqPathResolver:function(req){
+        return '/approve-app'+require('url').parse(req.url).path
+    }
+}))
 
 app.use(express.static(__dirname));
 app.listen(3333, function() {
