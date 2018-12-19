@@ -1,6 +1,5 @@
 define(["../parts/common", "utils","../../../components/calendarbetween","../parts/language"], function (c, utils, calendarbetween,language) {
 
-
     function pageLogic(config) {
         this.pageview = config.pageview;
         this.countNum = this.pageview.params.countNum;
@@ -18,10 +17,6 @@ define(["../parts/common", "utils","../../../components/calendarbetween","../par
             }
             window.localStorage.removeItem('BATCHFAILURENUM');
             this.loadNum();
-            this.setHeader();
-        },
-
-        setHeader: function () {
         },
         loadNum: function () {
             var _this = this;
@@ -143,8 +138,6 @@ define(["../parts/common", "utils","../../../components/calendarbetween","../par
             if (value || this.searchValue) {
                 this.searchValue = false;
                 sender.input.val('');
-
-                // this.viewpager.curPageViewItem.contentInstance.listview.config.ajaxConfig.data.keyword = '';
                 this.viewpager.curPageViewItem.contentInstance.refs.listview.ajaxConfig.data.start = 0;
                 this.viewpager.curPageViewItem.contentInstance.refs.listview.ajaxConfig.data.pageNum = 1;
                 this.viewpager.curPageViewItem.contentInstance.refs.listview.config.ajaxConfig.data.keyword = '';
@@ -169,8 +162,6 @@ define(["../parts/common", "utils","../../../components/calendarbetween","../par
             if (value || this.searchValue) {
                 this.searchValue = false;
                 sender.input.val('');
-
-                // this.viewpager.curPageViewItem.contentInstance.listview.config.ajaxConfig.data.keyword = '';
                 this.viewpager.curPageViewItem.contentInstance.refs.listview.ajaxConfig.data.start = 0;
                 this.viewpager.curPageViewItem.contentInstance.refs.listview.ajaxConfig.data.pageNum = 1;
                 this.viewpager.curPageViewItem.contentInstance.refs.listview.config.ajaxConfig.data.keyword = '';
@@ -482,7 +473,6 @@ define(["../parts/common", "utils","../../../components/calendarbetween","../par
             this.viewpager.curPageViewItem.contentInstance.refs.listview.loadFirstPageData({parentAnimate: true});
         },
         approveSelector1_menu2_itemClick: function (sender, params) {
-            // sender.rootInstance.hideDropDown();
             if(sender.curSelectedItem.data.id==="taskTime_more"){
                 this.datepick=new calendarbetween({
                     wrapper: this.pageview.$el,
@@ -506,7 +496,6 @@ define(["../parts/common", "utils","../../../components/calendarbetween","../par
             }
         },
         approveSelector1_menu1_itemClick: function (sender, params) {
-            // sender.rootInstance.hideDropDown();
             if(sender.curSelectedItem.data.id==="taskTime_more"){
                 this.datepick=new calendarbetween({
                     wrapper: this.pageview.$el,
@@ -560,11 +549,7 @@ define(["../parts/common", "utils","../../../components/calendarbetween","../par
                 }
                 this.viewpager.curPageViewItem.contentInstance.refs.listview.loadFirstPageData({parentAnimate: true});
             }
-
-
-
         },
-
     };
     return pageLogic;
 });

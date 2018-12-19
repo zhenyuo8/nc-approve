@@ -29,16 +29,13 @@ define(["../parts/common", "utils", '../parts/language',"../../../components/dia
         window.localStorage.removeItem("ADD_SIGN_BEHIND");
         window.localStorage.removeItem("copyUserParticipants");
         window.localStorage.removeItem("freeFlowActivityInfos");
-        this.setHeader();
     }
 
     pageLogic.prototype = {
         body_init: function (sender) {
             this.body = sender;
         },
-        setHeader: function () {
-           
-        },
+    
         searchBtn_click: function (sender, params) {
             this.pageview.refs.leftview.$el.hide();
             this.pageview.refs.searchInput.$el.show();
@@ -382,7 +379,6 @@ define(["../parts/common", "utils", '../parts/language',"../../../components/dia
                     this.pageview.refs.listview.loadFirstPageData({parentAnimate: true});
                 }
             }
-            this.setHeader();
         },
 
         body_pulltorefresh: function (sender, params) {
@@ -457,9 +453,7 @@ define(["../parts/common", "utils", '../parts/language',"../../../components/dia
 
                     }
                 }
-                if (formDataName.indexOf("的") > -1 && formDataName.indexOf("的") < formDataName.length) {
-                    formDataName = formDataName.substring((formDataName.indexOf("的") + 1), formDataName.length);
-                }
+            
 
                 if(sender.datasource&&sender.datasource.isFromEsnDocument){
                     this.pageview.go("detail", {
@@ -467,10 +461,7 @@ define(["../parts/common", "utils", '../parts/language',"../../../components/dia
                         instId: instId,
                         copyToId: copyToId,
                         curPage: curUrl.slice(1),
-                        // tempSaveId:
-                        formDataName: encodeURI(formDataName),
                         isFromEsnDocument:true,
-
                         category: _category === 'nc' ? 'nc' : 'bpm'
                     });
                 }else{
@@ -479,9 +470,6 @@ define(["../parts/common", "utils", '../parts/language',"../../../components/dia
                         instId: instId,
                         copyToId: copyToId,
                         curPage: curUrl.slice(1),
-                        // tempSaveId:
-                        formDataName: encodeURI(formDataName),
-
                         category: _category === 'nc' ? 'nc' : 'bpm'
                     });
                 }
@@ -662,10 +650,6 @@ define(["../parts/common", "utils", '../parts/language',"../../../components/dia
             } else if (fullpagekey === "commonlist_waitmyapprovedone" || fullpagekey === "commonlist_waitmyapprove") {
                 //待审批的三种状态:审批中(是否有逾期)、已完成、已终止
                 if (fullpagekey === "commonlist_waitmyapprove") {
-
-                    // if(!sender.datasource.processInstance) {
-                    //     console.log(sender.datasource);
-                    // }
                     var completed = sender.datasource.processInstance && sender.datasource.processInstance.completed;//sender.datasource.completed;
                     var ended = sender.datasource.processInstance.ended;//sender.datasource.ended;
                     if (completed) {
@@ -729,8 +713,6 @@ define(["../parts/common", "utils", '../parts/language',"../../../components/dia
             if (this.fullPageKey === 'commonlist_myapproverunning' || this.fullPageKey === "commonlist_myapprovedone") {
                 sender.config.style.backgroundColor = "#fff";
                 sender.config.style.borderRadius = "";
-                // sender.config.style.height = 40;
-                // sender.config.style.width = 40;
                 var middle_type='';
                 var processDefinitionId=sender.datasource.inst.processDefinitionId;
                 if(processDefinitionId.indexOf('processKey')>-1){

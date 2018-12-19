@@ -11,19 +11,11 @@ define(["../parts/common", "utils", "../../../components/dialog", "../libs/plupl
         this.formName = this.pageview.params.formDataName || language.ApprovalHeader;
         this.formName = decodeURI(this.formName) || language.ApprovalHeader;
         window.localStorage.removeItem('SETBTNVAL');
-        try{
-            if(this.formName===''&&this.instName!==''){
-                var instArr=this.instName.split('的');
-                this.formName=instArr.slice(1).join('');
-            }
-        }catch (e){
-
-        }
+        
         this.hideProcessAnnex=0;
         this.currentTodoTaskInitAttCnt = 0;//当前待办任务初始时已上传附件数
         this.fileMaxNum = 50; // 附件默认最大数量
         this.fileNum = 0; // 附件现有数量
-        this.setHeader();
         this.processDefInsIdTempSave = '';
         this.add_sign_select_list = [];
         //动画在请求一起的时候 安卓会卡顿  动画完后请求
@@ -39,16 +31,13 @@ define(["../parts/common", "utils", "../../../components/dialog", "../libs/plupl
         if(urlReg.test(window.location.href.split('?')[1])){
             _this.pageview.params.isFromEsnDocument="true";
             _this.formName=language.ApprovalHeader;
-            _this.setHeader();
         }
         if(window.location.href.indexOf('isDocumentQuery=true')>-1){
             _this.formName=language.ApprovalHeader;
             _this.documentMobile=true;
-            _this.setHeader();
         }
         if(window.location.href.indexOf('isFromBusiness=true')>-1){
             _this.isFromBusiness=true;
-
         }
         this.assigneee=JSON.parse(window.localStorage.getItem("ADD_SIGN_BEHIND"));
         this.circulator=JSON.parse(window.localStorage.getItem("CIRCULATE"));
@@ -57,7 +46,6 @@ define(["../parts/common", "utils", "../../../components/dialog", "../libs/plupl
         window.localStorage.removeItem("ADD_SIGN_BEHIND_STYLE");
         window.localStorage.removeItem("freeFlowActivityInfos");
         window.localStorage.removeItem("SETBTNVAL");
-        window.localStorage.removeItem('ANNOUCE_URL');
     }
 
     PageLogic.prototype = {
@@ -98,50 +86,6 @@ define(["../parts/common", "utils", "../../../components/dialog", "../libs/plupl
                         _this.item=[];
                         _this.sourceInfoFlag=true;
 
-                        if(listData.data&&listData.data.inst){
-                            _this.processMapId=listData.data&&listData.data.inst&&listData.data.inst.id;
-                            _this.processMapDefId=listData.data&&listData.data.inst&&listData.data.inst.processDefinitionId;
-                            var processMapIdUrl=location.origin+'/approve-app/sso/webDiagram/'+_this.processMapDefId+'/'+_this.processMapId;
-                            var iformBrowserUrl='';
-                            if(listData.data.inst.iforms&&listData.data.inst.iforms[0]){
-                                iformBrowserUrl=location.origin+'/approve-app/sso/webFormPage/iformBrowse?pkBo='+listData.data.inst.iforms[0].pk_bo+'&pkBoins='+listData.data.inst.formDataList[0].pk_boins;
-                            }
-                            if(_this.processMapDefId.indexOf('processKey')===-1&&_this.processMapDefId.indexOf('tempSave')===-1){
-                                _this.setHeader(processMapIdUrl,iformBrowserUrl);
-                            } else if(_this.processMapDefId.indexOf('processKey')>0||_this.processMapDefId.indexOf('tempSave')===-1){
-                                _this.setHeader('',iformBrowserUrl);
-                            }
-                        }
-
-
-                        if (listData.data) {
-                            _this.processDefInsIdTempSave = listData.data.inst.id;
-                            window.gonggaoUrl = listData.data.inst.variables;
-                        }
-                        /**
-                         * 会议公文详情展示
-                         */
-                        if (listData.data&&listData.data.inst&&listData.data.inst.variables) {
-                            var tempVariables = listData.data.inst.variables;
-                            for(var ii=0;ii<tempVariables.length;ii++){
-                                if(tempVariables[ii].name==="sourceInfo"){
-                                    _this.sourceInfoFlag=false;
-                                    _this.pageview.showLoading({
-                                        text: language.formTips.onLoading,
-                                        timeout: 1000,
-                                    });
-                                    $('.iframe_pub').show();
-                                    $('.detail_repeat').hide();
-                                    var value=JSON.parse(tempVariables[ii].value);
-                                    var url=value.url;
-                                    if(value.meetingId&&value.source==='meeting'){
-                                        url=url+'?qzId='+value.qzId+'&meetingId='+value.meetingId+'&memberId='+value.memberId;
-                                    }
-                                    var iframe="<iframe src="+url+" style='width: 100%;border:none;'></iframe>";
-                                    $('.iframe_pub').append(iframe);
-                                }
-                            }
-                        }
                         if(listData.data&&listData.data.inst&&listData.data.inst.iforms&&listData.data.inst.iforms[0]&&listData.data.inst.iforms[0].jsontemp){
                             _this.hideProcessAnnex=JSON.parse(listData.data.inst.iforms[0].jsontemp).form.hideProcessAnnex;
                         }
@@ -155,19 +99,6 @@ define(["../parts/common", "utils", "../../../components/dialog", "../libs/plupl
                                 _this.pageview.refs.segment.$el.show();
                             }
 
-                            var EsnDocumentUrl=listData.data.inst.variables.some(function (item,index) {
-                                return item.name==="EsnDocumentUrl";
-                            });
-                            if(EsnDocumentUrl){
-                                _this.pageview.refs.segment.$el.hide();
-                                _this.pageview.refs.segmentdocument.$el.show();
-                            }
-
-                            if(_this.documentMobile){
-                                _this.pageview.refs.segment.$el.hide();
-                                _this.pageview.refs.segmentdocument.$el.hide();
-                                _this.pageview.refs.segmentdocumentmobile.$el.show();
-                            }
 
                             window.needRefresCopyApproveListData = true;
                             var viewpager = _this.pageview.refs.top_view.components.viewpager;
@@ -891,12 +822,7 @@ define(["../parts/common", "utils", "../../../components/dialog", "../libs/plupl
         segment_init:function (sender,params) {
             sender.config.items=[{'title':language.formTips.formDetail},{'title':language.formTips.processDetail},{'title':language.formTips.attachment}];
         },
-        segmentdocument_init:function (sender,params) {
-            sender.config.items=[{'title':language.formTips.formDetail},{'title':language.formTips.documentDetail},{'title':language.formTips.processDetail},{'title':language.formTips.attachment}];
-        },
-        segmentdocumentmobile_init:function (sender,params) {
-            sender.config.items=[{'title':language.formTips.formDetail},{'title':language.formTips.documentDetail},{'title':language.formTips.attachment}];
-        },
+        
         segment_change: function (sender, params) {
             var _this = this;
             if (!params.nochange) {
@@ -973,12 +899,6 @@ define(["../parts/common", "utils", "../../../components/dialog", "../libs/plupl
                                     }
                                 }
                             }
-
-                            //@add huangzhenyu 被加签出来的人审批同意后隐藏上传附件按钮
-                            // if(_this.applyHistory.currentDoneTask&&_this.applyHistory.currentDoneTask.taskAuditDesc.indexOf("被加签")>-1&&_this.applyHistory.currentDoneTask.finished){
-                            //     _this.pageview.refs.bottomToolBar.$el.hide();
-                            // }
-
                         } else {
                             _this.pageview.refs.bottomToolBar.$el.hide();
                         }
@@ -992,125 +912,6 @@ define(["../parts/common", "utils", "../../../components/dialog", "../libs/plupl
                         // 异步因为需要新的dom渲染完
                         _this.initUploader(_this.pageview.refs.buttonGroup);
                     }, 500);
-                }else if (itemTitle === "公文正文"||itemTitle === "Document") {
-                    this.pageview.refs.splitline.$el.hide();
-                    this.pageview.refs.moreBtn.$el.hide();
-                    _this.pageview.refs.buttonGroup.$el.hide();
-                    this.viewpager.showItem("detailDocument_detail", {type: "document", parent: this});
-                }
-            }
-        },
-        segmentdocument_change: function (sender, params) {
-            var _this = this;
-            if (!params.nochange) {
-                var item = params.item;
-                var itemData = item.datasource;
-                var itemTitle = $.trim(itemData.title);
-                _this.getSort();
-                if (itemTitle === "详情"||itemTitle === "Form") {
-                    this.initBtn();
-                    this.viewpager.showItem("detailContent_detail", {type: "content"});
-                } else if (itemTitle === "流程"||itemTitle === "Process") {
-                    this.initBtn();
-                    this.viewpager.showItem("detailProcess_detail", {type: "process", parentThis: this});
-                    window.setTimeout(function () {
-                        _this.viewpager.curPageViewItem.contentInstance.refs.middle_flow_repeat.bindData(_this.applyHistory.processInstances);
-                        if(_this.detailData.inst.freeFlowActivityInfos){
-                            _this.viewpager.curPageViewItem.contentInstance.refs.all_flow_repeat.bindData(_this.detailData.inst.freeFlowActivityInfos);
-                        }
-                    }, 200);
-                } else if (itemTitle === "附件"||itemTitle === "Attachment") {
-                    if (!this.applyHistory.instData.endTime) {
-                        if (!this.applyHistory.instData.deleteReason) {
-                            var userInAssignees = false; //added by liuhca 如果当前用户在待审人列表
-                            for (var i = 0; i < _this.applyHistory.processInstances.length; i++) {
-                                if (_this.applyHistory.currentUserId === _this.applyHistory.processInstances[i].assignee) {
-//	                        		console.log(i);
-                                    userInAssignees = true;
-                                    break;
-                                }
-                            }
-                            var curTaskIdInTaskIds = false; //added by liuhca 当前人的任务id在任务列表里
-                            for (var j = 0; j < _this.applyHistory.processInstances.length; j++) {
-                                if (_this.applyHistory.taskId === _this.applyHistory.processInstances[j].taskId) {
-//	                        		console.log(i);
-                                    curTaskIdInTaskIds = true;
-                                    break;
-                                }
-                            }
-//                          if (_this.applyHistory.currentUserId === _this.applyHistory.processInstances[0].assignee && _this.applyHistory.taskId === _this.applyHistory.processInstances[0].taskId) {
-                            _this.detailData.inst.historicTasks.forEach(function (items, indexs) {
-                                if (items.assignee === _this.detailData.currentUserId) {
-                                    if (items.deleteReason === "withdraw") {
-                                        _this.detailData.inst.hasTaskFinished = false;
-                                    }
-                                    if (items.deleteReason === "completed") {
-                                        _this.detailData.inst.hasTaskFinished = true;
-                                    }
-                                }
-                            });
-                            if (userInAssignees && curTaskIdInTaskIds) {
-                                _this.pageview.refs.buttonGroup.bindData([{label: language.formTips.uploadFile}]);
-                            } else {
-                                _this.pageview.refs.bottomToolBar.$el.hide();
-                            }
-                            if (_this.detailData.inst.historicActivityInstances) {
-                                _this.detailData.inst.historicActivityInstances.forEach(function (item, index) {
-                                    if (_this.detailData.inst.currentActivityId === item.activityId && !_this.detailData.inst.endTime) {
-                                        _this.pageview.refs.bottomToolBar.$el.show();
-                                    } else {
-                                        _this.pageview.refs.bottomToolBar.$el.hide();
-                                    }
-                                });
-                            }
-                            //@add huangzhenyu 被加签出来的人审批同意后隐藏上传附件按钮
-                            // if(_this.applyHistory.currentDoneTask&&_this.applyHistory.currentDoneTask.taskAuditDesc.indexOf("被加签")>-1&&_this.applyHistory.currentDoneTask.finished){
-                            //     _this.pageview.refs.bottomToolBar.$el.hide();
-                            // }
-
-                            if(_this.detailData.inst.hasTaskFinished){
-                                _this.pageview.refs.bottomToolBar.$el.hide();
-                            }else{
-                                _this.pageview.refs.bottomToolBar.$el.show();
-                            }
-                        } else {
-                            _this.pageview.refs.bottomToolBar.$el.hide();
-                        }
-                    }
-                    this.pageview.refs.splitline.$el.hide();
-                    this.pageview.refs.moreBtn.$el.hide();
-                    this.viewpager.showItem("detailAttachment_detail", {type: "attachment", parent: this});
-
-                    // 给上传组件传入dom
-                    setTimeout(function () {
-                        // 异步因为需要新的dom渲染完
-                        _this.initUploader(_this.pageview.refs.buttonGroup);
-                    }, 500);
-                }else if (itemTitle === "公文正文"||itemTitle === "Document") {
-                    this.initBtn();
-                    this.pageview.refs.splitline.$el.hide();
-                    this.pageview.refs.moreBtn.$el.hide();
-                    this.viewpager.showItem("detailDocument_detail", {type: "document", parent: this});
-                }
-            }
-        },
-        segmentdocumentmobile_change: function (sender, params) {
-            var _this = this;
-            if (!params.nochange) {
-                var item = params.item;
-                var itemData = item.datasource;
-                var itemTitle = $.trim(itemData.title);
-                _this.getSort();
-                if (itemTitle === "详情"||itemTitle === "Form") {
-                    this.viewpager.showItem("detailContent_detail", {type: "content"});
-                }else if (itemTitle === "附件"||itemTitle === "Attachment") {
-                    this.pageview.refs.splitline.$el.hide();
-                    this.pageview.refs.moreBtn.$el.hide();
-                    this.viewpager.showItem("detailAttachment_detail", {type: "attachment", parent: this});
-                }else if (itemTitle === "公文正文"||itemTitle === "Document") {
-                    this.pageview.refs.splitline.$el.hide();
-                    this.pageview.refs.moreBtn.$el.hide();
-                    this.viewpager.showItem("detailDocument_detail", {type: "document", parent: this});
                 }
             }
         },
@@ -1223,12 +1024,6 @@ define(["../parts/common", "utils", "../../../components/dialog", "../libs/plupl
                                 editPara.tempSaveReason=variables[i].value;
                             }
                         }
-                        // tempSaveReason=this.applyHistory.instData.variables.find(function (item,index) {
-                        //     return item.name==="tempSaveReason";
-                        // });
-                        // if(tempSaveReason){
-                        //     editPara.tempSaveReason=tempSaveReason.value;
-                        // }
                     }
                     if(_this.jumpToRejectActivity&&_this.jumpToRejectActivity==='jumpToRejectActivity'){
                         editPara.jumpToRejectActivity=_this.jumpToRejectActivity;
@@ -1373,12 +1168,8 @@ define(["../parts/common", "utils", "../../../components/dialog", "../libs/plupl
                     break;
                 case 'processFile'://上传流程附件
                     // 模拟点击
-                    if(false){
-                        this.uploaderFileByBridge();
-                    }else{
-                        if(this.fileNum<this.fileMaxNum){
-                            $('.moxie-shim.moxie-shim-html5 input').click();
-                        }
+                    if(this.fileNum<this.fileMaxNum){
+                        $('.moxie-shim.moxie-shim-html5 input').click();
                     }
                     break;
                 case 'reSubmit'://重新提交
@@ -2588,8 +2379,6 @@ define(["../parts/common", "utils", "../../../components/dialog", "../libs/plupl
                                     });
 
                                     _this.pageview.showTip({text: language.formTips.withdrawnSuccess, duration: 1000});
-                                    // _this.applyHistory = {};
-                                    // _this.item = [];
                                     _this.loadData();
                                 } else {
                                     _this.pageview.showTip({text: data.msg, duration: 1000});
@@ -2635,94 +2424,6 @@ define(["../parts/common", "utils", "../../../components/dialog", "../libs/plupl
                     console.error(token);
                 }
             });
-        },
-        uploaderFileByBridge:function () {
-            var contentText=[],_this=this;
-            var typeFunction=function (type) {
-                switch (type.type){
-                    case 'photo':
-                        _this.selectType=4;
-                        break;
-                    case 'files':
-                        _this.selectType=3;
-                        break;
-                    case 'pic':
-                        _this.selectType=1;
-                        break;
-                    case 'video':
-                        _this.selectType=2;
-                        break;
-                }
-
-                window.yyesn.client.selectAttachment(function (res) {
-                    // 先请求授权，然后回调
-                    var data=res.data;
-                    var fileData = {},fileList=[];
-                    try{
-                        data.forEach(function (item,index) {
-                            var temp={};
-                            temp.id = item.fid;
-                            temp.name = item.fname;
-                            temp.url = item.path;
-                            temp.type = item.type;
-                            temp.dir = window.ossMapdir;
-                            fileList.push(temp);
-                        });
-
-                        // fileData.id = data.id;
-                        // fileData.name = data.name;
-                        // fileData.type = data.type;
-                        // fileData.dir = window.ossMap.key;
-                        fileData.fileList=fileList;
-                        fileData.taskId = _this.pageview.params.taskId <= -1 ? "" : _this.pageview.params.taskId;
-                        fileData.processInstanceId = '';
-                        if(_this.pageview.params.curPage==='myapprove'){
-                            fileData.taskId=null;
-                            fileData.processInstanceId =_this.applyHistory.instData.historicActivityInstances[0].processInstanceId;
-                        }
-
-                        _this.pageview.ajax({
-                            url:  "/file/saveFileModel",
-                            data: JSON.stringify(fileData),
-                            type: 'POST',
-                            dataType: "json",
-                            contentType: "application/json",
-                            success: function (data) {
-                                _this.pageview.hideLoading(true);
-                                if (data.success) {
-                                    _this.pageview.showTip({text: language.formTips.uploadedSuccess, duration: 1000});
-                                    _this.loadFilesData(data.data);
-                                } else {
-                                    _this.pageview.showTip({text:  language.formTips.uploadedSuccess + data.msg, duration: 2000});
-                                }
-                            }
-                        });
-                    }catch (e){
-                        console.log(e);
-                    }
-                },{
-                    type:_this.selectType,
-                    maxselectnum:_this.fileMaxNum,
-                },function (b) {
-                });
-            };
-
-            if(utils.deviceInfo().isIOS){
-                contentText=[{type:'photo',text:language.selectAttachment.photo,onClick: typeFunction},{type:'video',text:language.selectAttachment.video,onClick: typeFunction},{type:'pic',text:language.selectAttachment.pic,onClick: typeFunction}];
-            }else{
-                contentText=[{type:'photo',text:language.selectAttachment.photo,onClick: typeFunction},{type:'video',text:language.selectAttachment.video,onClick: typeFunction},{type:'pic',text:language.selectAttachment.pic,onClick: typeFunction},{type:'files',text:language.selectAttachment.files,onClick: typeFunction}];
-            }
-            this.FileTypeSelect = new Filetypeselect({
-                mode: 3,
-                wrapper: _this.pageview.$el,
-                contentText: contentText,
-                btnDirection: "row",
-                className: "dialog-custom-className",
-            });
-            this.FileTypeSelect.show();
-        },
-        saveFileModel:function (ossMap,data) {
-
         },
 
         /**

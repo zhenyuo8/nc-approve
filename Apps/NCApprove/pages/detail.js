@@ -150,40 +150,7 @@ define(["../logic/detail", "../parts/common", 'utils'], function (pluginClass, c
                     paddingBottom: 2
                 }
             },
-            segmentdocument: {
-                type: "segment_android",
-                ref: true,
-                items: [{title: "详情"},{title: "公文正文"}, {title: "流程"}, {title: "附件"}],
-                root: ["segment_item"],
-                className:"bottom-half-line",
-                style: {
-                    display: "none",
-                    height: 38,
-                    color: "#262626",
-                    backgroundColor: "#fff",
-                    // borderBottom: "solid 1px #EDEDED"
-                },
-                itemStyle: {
-                    paddingBottom: 2
-                }
-            },
-            segmentdocumentmobile: {
-                type: "segment_android",
-                ref: true,
-                items: [{title: "详情"},{title: "公文正文"}, {title: "附件"}],
-                root: ["segment_item"],
-                className:"bottom-half-line",
-                style: {
-                    display: "none",
-                    height: 38,
-                    color: "#262626",
-                    backgroundColor: "#fff",
-                    // borderBottom: "solid 1px #EDEDED"
-                },
-                itemStyle: {
-                    paddingBottom: 2
-                }
-            },
+            
             segment_item: {
                 type: "text",
                 text: "加载中...",

@@ -59,7 +59,6 @@ define(["utils"], function(utils) {
                                 } catch (e) {}
                             }
                         }
-
                     }
                 }
             });
