@@ -16,7 +16,7 @@ define(["../logic/detail", "../parts/common", 'utils'], function (pluginClass, c
                     flex: 1,
                     background: "#f2f3f4"
                 },
-                root: ["userinfo_warp", "segment","segmentdocument","segmentdocumentmobile", "viewpager"]
+                root: ["userinfo_warp", "segment", "viewpager"]
             },
             userinfo_warp: {
                 type: "view",
@@ -27,7 +27,7 @@ define(["../logic/detail", "../parts/common", 'utils'], function (pluginClass, c
                     alignItems: "flex-start",
                     background: "#fff",
                     // borderBottom: "solid 1px #EDEDED",
-                    padding: "20px 0 24px 0",
+                    padding: 20,
                     zIndex: 11
                 },
                 root: ["user_icon", "userinfo_rightwarp", "result_logo", "result_text"]
@@ -55,7 +55,7 @@ define(["../logic/detail", "../parts/common", 'utils'], function (pluginClass, c
                     justifyContent: "center",
                     minHeight: 55
                 },
-                root: ["userinfo_name", "userinfo_repeat"]
+                root: ["userinfo_name"]
             },
             result_text: {
                 type: "text",
@@ -103,48 +103,17 @@ define(["../logic/detail", "../parts/common", 'utils'], function (pluginClass, c
                     paddingRight: 80,
                 }
             },
-            userinfo_repeat: {
-                type: "repeat",
-                ref: true,
-                style: {
-                    display: "inline",
-                    paddingTop: 8
-                },
-                root: ["userinfo_view"]
-            },
-            userinfo_view: {
-                type: "view",
-                root: ["userinfo_status"],
-                style:{
-                    flex:1,
-                    paddingRight:12
-                }
-            },
-            userinfo_status: {
-                type: "text",
-                text: "加载中...",
-                text_bind: "text",
-                ref: true,
-                numberofline: 1,
-                style: {
-                    fontSize: 13,
-                    lineHeight: 18,
-                    height: 18,
-                    color: "#ADADAD"
-                }
-            },
             segment: {
                 type: "segment_android",
                 ref: true,
-                items: [{title: "详情"}, {title: "流程"}, {title: "附件"}],
+                items: [{title: "详情"}, {title: "流程"}],
                 root: ["segment_item"],
                 className:"bottom-half-line",
                 style: {
-                    display: "none",
+                    // display: "none",
                     height: 38,
                     color: "#262626",
                     backgroundColor: "#fff",
-                    // borderBottom: "solid 1px #EDEDED"
                 },
                 itemStyle: {
                     paddingBottom: 2

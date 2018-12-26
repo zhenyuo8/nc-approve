@@ -15,8 +15,6 @@ define(["../parts/common", "utils","../../../components/calendarbetween","../par
             if (window.changeFormStatus) {
                 this.viewpager.curPageViewItem.contentInstance.refs.listview.loadFirstPageData({parentAnimate: true});
             }
-            window.localStorage.removeItem('BATCHFAILURENUM');
-            this.loadNum();
         },
         loadNum: function () {
             var _this = this;
@@ -26,6 +24,7 @@ define(["../parts/common", "utils","../../../components/calendarbetween","../par
                 url: "/process/myDataCount",
                 data: {},
                 success: function (data) {
+                    console.log(2)
                     if (data.code === 0) {
                         if (data.data.todo !== undefined && data.data.todo !== null) {
                             if(_this.waitmeapproveLabel){

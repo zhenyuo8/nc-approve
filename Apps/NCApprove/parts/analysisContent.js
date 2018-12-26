@@ -300,18 +300,8 @@ define(["./common", "utils","../parts/language"], function (c, utils,language) {
                     var leftLength = sender.datasource.title.length,
                         rightLength = sender.datasource.content ? sender.datasource.content.length : 0,
                         totalLength = rightLength + leftLength;
-                    if (leftLength <= 6) {
-                        sender.config.style.width = 'auto';
-                        sender.config.style.maxWidth = '76%';
-                        sender.config.style.paddingLeft = '10px';
-                    } else {
-                        sender.config.style.width = 'auto';
-                        sender.config.style.maxWidth = '70%';
-                        sender.config.style.paddingLeft = '10px';
-                    }
                 case "TextEditor":
-                    // sender.$el.addClass("line_clamp10");
-                    sender.config.text = sender.datasource.content && sender.datasource.content.replace(/\n/ig, "<br/>");
+                    
                     break;
                 case "DateInterval":
                     try {

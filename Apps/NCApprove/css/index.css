@@ -479,9 +479,7 @@ input, textarea {
 .datatable_view_item_title{
     max-width: 50% !important;
 }
-.datatable_view_item_content {
-    max-width: 60%!important;
-}
+
 .yy-input-index-state:before{
     display: none;
 }

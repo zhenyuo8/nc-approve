@@ -99,16 +99,6 @@ define(["utils", "pageview", "$", "tip"], function(utils, PageView, $, Tip) {
 
             if (isPrevent) {
                 isPrevent = false;
-                // if(this.firstLoadToChangeHash){
-                //   if (this.config.routerChange) {
-                //        this.config.routerChange({
-                //           fromPage: this.fromPage,
-                //           toPage: toPage,
-                //           isForward: this.isForward,
-                //           params: this.getParamsFromUrl()
-                //       });
-                //   }
-                // }
                 this.firstLoadToChangeHash = false;
 
                 return;
@@ -155,7 +145,6 @@ define(["utils", "pageview", "$", "tip"], function(utils, PageView, $, Tip) {
                     }
                 }
             }
-            // console.log("from : "+this.fromPage+(this.isForward?"前进到":"后退")+toPage);
             if (this.config.routerChange) {
                 var routeChangeRe = this.config.routerChange({
                     fromPage: this.fromPage,
@@ -175,16 +164,6 @@ define(["utils", "pageview", "$", "tip"], function(utils, PageView, $, Tip) {
             }
             this.blur();
             this._renderNextPage(toPage, this.fromPage, this.isForward, fromPageInstance, function(fromPage, _isForWard, _fromPageInstance) {
-                // if(fromPage){
-                //     var fromPageInstance = _this.pages[fromPage];
-                //     if(fromPageInstance){
-                //         var fromClassName ="yy-pageview displayflex "+(_isForWard? "left-out":"right-out");
-                //         fromPageInstance.$el[0].className = fromClassName;
-                //     }
-                // }
-                // if(_fromPageInstance){
-                //    _fromPageInstance.hideLoadingProgressbar();
-                // }
                 if (_isForWard) {
                     if(isReplaceGo){
                         isReplaceGo = false;

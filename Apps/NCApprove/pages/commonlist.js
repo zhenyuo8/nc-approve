@@ -15,91 +15,6 @@ define(["../logic/commonlist", "../parts/common", 'utils'], function (pluginClas
                 },
                 root: ["listview"]
             },
-
-            buttonGroup: {
-                type: "view",
-                ref: true,
-                root: ["approveMore","selectAll","confirm","cancel"],
-                className:"top-half-line",
-                style: {
-                    alignItems: "center",
-                    backgroundColor: "#fff",
-                    height: 42,
-                    fontSize: 16,
-                    flexDirection:'row',
-                    display:'none'
-                },
-            },
-            approveMore: {
-                type: "text",
-                text: "批量审批",
-                ref: true,
-                style: {
-                    margin: "auto",
-                    color:'#29b6f6',
-                    flex:1,
-                    textAlign:'center',
-                    backgroundColor: "#fff",
-                }
-            },
-            selectAll:{
-                type: "view",
-                ref: true,
-                root: ["selectAllIcon","selectAllText"],
-                style: {
-                    margin: "auto",
-                    color:'red',
-                    flex:1,
-                    textAlign:'center',
-                    backgroundColor: "#fff",
-                    display:'none',
-                    flexDirection:'row'
-                }
-            },
-            selectAllText:{
-                type: "text",
-                text: "全选",
-                ref: true,
-                style: {
-                    margin: "auto",
-                    color:'red',
-                    flex:1,
-                    textAlign:'left',
-                    marginLeft:10,
-                }
-            },
-            selectAllIcon: {
-                type: "checkbox",
-                ref: true,
-                style: {
-                    marginLeft:20
-                },
-            },
-            cancel: {
-                type: "text",
-                text: "取消",
-                ref: true,
-                style: {
-                    margin: "auto",
-                    color:'#333',
-                    flex:1,
-                    textAlign:'center',
-                    display:'none',
-                }
-            },
-            confirm: {
-                type: "text",
-                text: "批量同意",
-                mode: 2,
-                ref: true,
-                style: {
-                    margin: "auto",
-                    color:'#29b6f6',
-                    flex:1,
-                    textAlign:'center',
-                    display:'none'
-                }
-            },
             icons: {
                 type: "icon",
                 font: "ap_e903"
@@ -157,8 +72,6 @@ define(["../logic/commonlist", "../parts/common", 'utils'], function (pluginClas
                 },
                 menu0Col: 2
             },
-
-
             searchBtn: {
                 type: "icon",
                 ref: true,
@@ -183,8 +96,6 @@ define(["../logic/commonlist", "../parts/common", 'utils'], function (pluginClas
                 style: {
                     backgroundColor: "#fff",
                     display: "none"
-                    // borderBottom: "1px solid rgb(226, 232, 237)"
-
                 },
                 iconStyle: {},
                 placeholder: "搜索标题",
@@ -200,8 +111,6 @@ define(["../logic/commonlist", "../parts/common", 'utils'], function (pluginClas
                 style: {
                     backgroundColor: "#fff",
                     display: "none",
-                    // borderBottom: "1px solid rgb(226, 232, 237)"
-
                 },
                 iconStyle: {},
                 placeholder: "搜索标题",
@@ -247,56 +156,7 @@ define(["../logic/commonlist", "../parts/common", 'utils'], function (pluginClas
                     flexDirection: "column",
 
                 },
-                root: ["row_check","row_left", "row_mide", "row_right","row_batch"]
-            },
-            row_check:{
-                type: "view",
-                ref:true,
-                className:'yy-checkbox-list',
-                style: {
-                    alignItems: "center",
-                    justifyContent: "center",
-                    minHeight:40,
-                    display:'none',
-                    marginLeft:13
-                },
-                root: ["row_check_icon"]
-            },
-            row_batch:{
-                type: "text",
-                ref:true,
-                text:'批审失败',
-                style: {
-                    alignItems: "center",
-                    justifyContent: "center",
-                    minHeight:20,
-                    fontSize:14,
-                    display:'none',
-                    color:'red',
-                    position:'absolute',
-                    bottom:0,
-                    right:0,
-                    transform: 'scale(0.8) translateY(0px)'
-                },
-            },
-            row_check_icon:{
-                type: "checkbox",
-                style: {
-                    width: 20,
-                    height: 20,
-                    justifyContent: "center",
-                    alignItems: "center",
-                }
-            },
-            row_left: {
-                type: "view",
-                style: {
-                    width: 70,
-                    alignItems: "center",
-                    justifyContent: "center",
-                    minHeight:40
-                },
-                root: ["row_image"]
+                root: ["row_mide", "row_right"]
             },
             row_mide: {
                 type: "view",
@@ -304,7 +164,8 @@ define(["../logic/commonlist", "../parts/common", 'utils'], function (pluginClas
                 style: {
                     flex: 1,
                     flexDirection: "column",
-                    justifyContent: "center"
+                    justifyContent: "center",
+                    paddingLeft: 15
                 },
                 root: ["row_title", "row_feature_repeat"]
             },
@@ -321,9 +182,7 @@ define(["../logic/commonlist", "../parts/common", 'utils'], function (pluginClas
                 type: "view",
                 root: ["row_state", "row_status"],
                 style: {
-                    // width: "100%",
                     marginTop: 6,
-                    // minHeight: 14,
                     flexDirection: "row"
                 }
             },
@@ -347,27 +206,14 @@ define(["../logic/commonlist", "../parts/common", 'utils'], function (pluginClas
             row_status: {
                 type: "text",
                 style: {
-                    fontSize: 14,
-                    // lineHeight: "14px",
+                    fontSize: 12,
                     color: "#8C8D8E",
                     width:'100%',
-                    // position: "absolute",
-                    // right: 0,
-                    // verticalAlign: "middle"
                 },
                 textStyle:{
-                    // whiteSpace:'nowrap',
                     wordBreak:'break-word',
                     width:'100%',
                     textAlign:'right'
-                }
-            },
-            row_image: {
-                type: "image",
-                style: {
-                    w: 40,
-                    borderRadius: "100%",
-                    backgroundColor: "#eee"
                 }
             },
             row_title: {
@@ -375,9 +221,9 @@ define(["../logic/commonlist", "../parts/common", 'utils'], function (pluginClas
                 numberofline: 2,
                 style: {
                     color: "#292F33",
-                    fontSize: 16,
+                    fontSize: 14,
                     lineHeight: "18px",
-                    maxWidth:"80%"
+                    maxWidth:"100%"
                 },
                 text_bind: "processInstance.name"
             },
