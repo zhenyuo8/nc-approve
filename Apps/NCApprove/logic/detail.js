@@ -229,23 +229,23 @@ define(["../parts/common", "utils", "../../../components/dialog", "../libs/plupl
                                             ]
                                         }
                                     }
-                                ]                            
+                                ];                          
                                 
                                 _this.pageview.delegate('userinfo_name', function (target) {
                                     _this.instName = data[0].billtypename;
                                     target.setText(_this.instName);
                                 });
-                                _this.pageview.refs.result_text.innerText.html('审批中')
-                                _this.pageview.refs.result_text.innerText.css('color','#e7a757')
-                                _this.pageview.refs.result_text.$el.show()
+                                _this.pageview.refs.result_text.innerText.html('审批中');
+                                _this.pageview.refs.result_text.innerText.css('color','#e7a757');
+                                _this.pageview.refs.result_text.$el.show();
                                 
                                 var viewpager = _this.pageview.refs.top_view.components.viewpager;
                                 jsonList = analysis.getAnalysis_ifroms(data);
                                 viewpager.curPageViewItem.contentInstance.refs.detail_repeat.bindData(jsonList);
-                                _this.item.push({label:'同意',id:'',type:'agree'})
-                                _this.item.push({label:'驳回',id:'',type:'reject'})
+                                _this.item.push({label:'同意',id:'',type:'agree'});
+                                _this.item.push({label:'驳回',id:'',type:'reject'});
                                 _this.initBtn();
-                            },500)
+                            },500);
                         }
                     },
                     error: function (listData) {
@@ -462,7 +462,7 @@ define(["../parts/common", "utils", "../../../components/dialog", "../libs/plupl
                                 }
                             ]
                         }
-                    ]
+                    ];
                     
                     this.viewpager.showItem("detailProcess_detail", {type: "process", parentThis: this});
                     window.setTimeout(function () {
@@ -474,8 +474,8 @@ define(["../parts/common", "utils", "../../../components/dialog", "../libs/plupl
         },
         processInstancesHistory:function (processInstances){
             var list=processInstances[0].approvehistorylinelist,arr=[];
-            var startUser=processInstances[0].flowhistory
-            var obj={}
+            var startUser=processInstances[0].flowhistory;
+            var obj={};
             for(var i=0;i<list.length;i++){
                 arr.push({
                     activityType:'approveStartEvent',
@@ -490,8 +490,8 @@ define(["../parts/common", "utils", "../../../components/dialog", "../libs/plupl
                     taskComments:list[i].note||'',
                     taskId:'',
                     userName:list[i].handlername||'',
-                    currentUserId:''
-                })
+                    currentUserId:'',
+                });
             }
             startUser.forEach(function(item,index){
                 if(item.unittype==="submit"){
@@ -510,10 +510,10 @@ define(["../parts/common", "utils", "../../../components/dialog", "../libs/plupl
                         taskId:'',
                         userName:item.personlist[0].name,
                         currentUserId:''
-                    })
+                    });
                 }
-            })
-            return arr
+            });
+            return arr;
         },
         morePopover_init: function (sender, params) {
             this.morePopver = sender;

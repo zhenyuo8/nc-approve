@@ -240,7 +240,7 @@ define(["../parts/common", "utils", '../parts/language',"../../../components/dia
                     "taskid":"1002ZZ1000000000C5V2",
                     "title":"张大明 提交单据, 单据号: 0001, 请审批单据"
                 }
-            ]
+            ];
             return data.data.list;
         },
         listview_init: function (sender) {

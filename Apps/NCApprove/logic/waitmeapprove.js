@@ -24,7 +24,6 @@ define(["../parts/common", "utils","../../../components/calendarbetween","../par
                 url: "/process/myDataCount",
                 data: {},
                 success: function (data) {
-                    console.log(2)
                     if (data.code === 0) {
                         if (data.data.todo !== undefined && data.data.todo !== null) {
                             if(_this.waitmeapproveLabel){

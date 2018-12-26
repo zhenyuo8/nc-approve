@@ -12,7 +12,7 @@ define(["../parts/common", "utils", "../../../components/dialog","../../../compo
         flow_right_content_right_init: function (sender, params) {
             if (sender.datasource.activityType === "startEvent") {
                 var operateTime = (sender.datasource.endTime === null ? sender.datasource.startTime : sender.datasource.endTime);
-                if(!operateTime) return
+                if(!operateTime) return;
                 sender.config.text = utils.timestampToTimeStr(new Date(operateTime).getTime(), true);
             } else if (sender.datasource.activityType) {
                 this.setAnalysis(sender, "time");
