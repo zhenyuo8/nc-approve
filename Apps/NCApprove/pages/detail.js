@@ -26,7 +26,6 @@ define(["../logic/detail", "../parts/common", 'utils'], function (pluginClass, c
                     flexDirection: "row",
                     alignItems: "flex-start",
                     background: "#fff",
-                    // borderBottom: "solid 1px #EDEDED",
                     padding: 20,
                     zIndex: 11
                 },
@@ -34,7 +33,6 @@ define(["../logic/detail", "../parts/common", 'utils'], function (pluginClass, c
             },
             user_icon: {
                 type: "image",
-                // title:"name",
                 ref: true,
                 src: "./imgs/unknow_person.png",
                 title: "",
@@ -53,7 +51,7 @@ define(["../logic/detail", "../parts/common", 'utils'], function (pluginClass, c
                 style: {
                     flex: 1,
                     justifyContent: "center",
-                    minHeight: 55
+                    height: 55
                 },
                 root: ["userinfo_name"]
             },
@@ -99,18 +97,16 @@ define(["../logic/detail", "../parts/common", 'utils'], function (pluginClass, c
                 style: {
                     color: "#262626",
                     fontSize: 16,
-                    // lineHeight: 16,
                     paddingRight: 80,
                 }
             },
             segment: {
                 type: "segment_android",
                 ref: true,
-                items: [{title: "详情"}, {title: "流程"}],
+                items: [{title: "详情"}, {title: "流程"},{title: "附件"}],
                 root: ["segment_item"],
                 className:"bottom-half-line",
                 style: {
-                    // display: "none",
                     height: 38,
                     color: "#262626",
                     backgroundColor: "#fff",
@@ -169,7 +165,6 @@ define(["../logic/detail", "../parts/common", 'utils'], function (pluginClass, c
                     alignItems: "center",
                     backgroundColor: "rgb(247, 247, 247)",
                     height: 46,
-                    // borderTop: "1px solid #eee"
                 },
                 itemStyle: {
                     flex: 1,
@@ -200,7 +195,7 @@ define(["../logic/detail", "../parts/common", 'utils'], function (pluginClass, c
                     marginLeft: 5,
                     width:'100%',
                     textAlign:'center',
-                    fontSize: 16 //14 huangzhy 0704
+                    fontSize: 16 
                 }
             },
             moreBtn: {
@@ -253,7 +248,6 @@ define(["../logic/detail", "../parts/common", 'utils'], function (pluginClass, c
                     flex: 1
                 },
                 itemStyle: {
-                    // flex: 1,
                     justifyContent: "center",
                     alignItems: "stretch",
                     height: 40,
@@ -264,9 +258,6 @@ define(["../logic/detail", "../parts/common", 'utils'], function (pluginClass, c
                 type: "icon",
                 text: "按钮",
                 text_bind: "label",
-                style: {
-                    // flex: 1
-                },
                 textStyle: {
                     fontSize: 14,
                     color: "#292f33"

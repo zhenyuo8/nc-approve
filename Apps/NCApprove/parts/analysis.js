@@ -5,19 +5,20 @@ define([], function () {
             this.getComponentData(data);
             return jsonList;
         },
+        // 处理数据展示格式化
         getComponentData: function (layoutDetail) {
             var jsonContent = {};
             jsonList = [];
-            console.log(layoutDetail[0].taskbill);
+            // head 主表数据 body 子表数据
             var head=layoutDetail[0].taskbill.head[0].tabContent.billItemData;
             var body=layoutDetail[0].taskbill.body[0].tabContent;
-            console.log(body)
             for(var i=0;i<head.length;i++){
                 var cur=head[i];
                 jsonContent = {};
                 jsonContent=this.processContent(cur)
                 jsonList.push(jsonContent);
             }
+            
             // 子表数据处理
             jsonContent={};
             jsonContent.title='明细子表';
@@ -31,9 +32,7 @@ define([], function () {
                 jsonTable.num=n+1,
                 jsonTable.items=[];
                 var bodyItem=body[n].billItemData;
-                console.log(2)
                 for(var j=0;j<bodyItem.length;j++){
-                    console.log(444)
                     var jsonComponet={};
                     var cur=bodyItem[j];
                     jsonComponet = {};
@@ -41,11 +40,10 @@ define([], function () {
                     jsonTable.items.push(jsonComponet);
                 }
                 jsonContent.items.push(jsonTable);
-           }
-            
-            
+           }    
             jsonList.push(jsonContent);
         }, 
+        // 处理内容item
         processContent: function (obj) {
             var data={};
             obj=obj||{};

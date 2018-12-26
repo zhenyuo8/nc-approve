@@ -30,20 +30,19 @@ define(["../parts/common", "utils", "../../../components/dialog", "../parts/lang
         _loadData: function () {
             var _this = this,
                 ajaxConfig = {
-                    url: '/process/getInstAttachments',
+                    url: 'servlet/ncAttachList',
                     type: 'POST',
                     data: {
-                        instId: this.parentThis.detailData.inst.id || ''
+                        taskId: ''
                     },
                     success: function (listData) {
                         _this.pageview.hideLoading(true);
-                        _this.parentThis.fileNum = listData.data.length;
                         _this.pageview.delegate('flow_repeat', function (target) {
                             target.bindData(listData.data);
                         });
                     },
                     error: function (err) {
-
+                        _this.pageview.hideLoading(true);
                     }
                 };
             this.pageview.ajax(ajaxConfig);
@@ -68,23 +67,7 @@ define(["../parts/common", "utils", "../../../components/dialog", "../parts/lang
             }
         },
         atta_contributor_init: function (sender, params) {
-            this.applyHistory = window._applyHistory;
-            // 文件是当前用户上传的，而且在该环节上传的
-            var _this = this;
-            sender.config.text=language.formAction.delete;
-            if (!this.applyHistory.taskList[this.applyHistory.taskList.length - 1].deleteReason && this.applyHistory.currentUserId === sender.datasource.userId) {
-                this.applyHistory.instData.historicActivityInstances.forEach(function (value, key) {
-                    if (value.assignee === sender.datasource.userId && _this.applyHistory.currentUserId === sender.datasource.userId) {
-                        sender.config.style.display = "block";
-                    }
-                });
-            }
-            if(_this.applyHistory.currentDoneTask&&_this.applyHistory.currentDoneTask.deleteReason==="completed"){
-                sender.config.style.display = "none";
-            }
-            if(_this.applyHistory.taskId!==sender.datasource.taskId){
-                sender.config.style.display = "none";
-            }
+            
         },
         file_size_init: function (sender, params) {
             var text = language.formAction.attaContributor;

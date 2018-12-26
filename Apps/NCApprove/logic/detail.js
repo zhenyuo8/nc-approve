@@ -1,9 +1,8 @@
 
-define(["../parts/common", "utils", "../../../components/dialog", "../libs/plupload/form-file-uploader", "../parts/analysis",  "../parts/analysisContent", "../../../components/filetypeselect", "../parts/language"], function (c, utils, Dialog, FileUploader, analysis, analysisContent,Filetypeselect,language) {
+define(["../parts/common", "utils", "../libs/plupload/form-file-uploader", "../parts/analysis",  "../parts/language"], function (c, utils, FileUploader, analysis,language) {
 
     function PageLogic(config) {
         var _this = this;
-        this.applyHistory = {};
         this.item = [];
         this.pageview = config.pageview;
         this.currentTodoTaskInitAttCnt = 0;//当前待办任务初始时已上传附件数
@@ -20,7 +19,6 @@ define(["../parts/common", "utils", "../../../components/dialog", "../libs/plupl
 
     PageLogic.prototype = {
         onPageResume: function () {
-            this.applyHistory = {};
             this.item = [];
             this.loadData();
         },
@@ -48,26 +46,12 @@ define(["../parts/common", "utils", "../../../components/dialog", "../libs/plupl
                         category: this.pageview.params.category || ''
                     },
                     success: function (listData) {
-                        _this.applyHistory = {};
-                        _this.pageview.hideLoading(true);
-                        _this.item=[];
                         setTimeout(function () {
                             _this.pageview.hideLoading(true);
-                        },4000);
+                        },2000);
                         if (listData.code === 0) {
                             _this.pageview.refs.segment.$el.show();
-                            var viewpager = _this.pageview.refs.top_view.components.viewpager;
-                            _this.pageview.delegate('userinfo_name', function (target) {
-                                _this.instName = listData.data.inst.name;
-                                target.setText(listData.data.inst.name);
-                            });
-                            var jsonList = [];
                             
-                            if (fields.length === 0 && listData.data.inst.iforms) {
-
-                                jsonList = analysis.getAnalysis_ifroms(listData.data.inst.iforms, listData.data.inst.formDataList, listData.data.inst.currentActivityId,listData.data.inst.formDataExtraInfo);
-                            }   
-                            _this.initBtn();
                         } else {
                             // _this.pageview.showTip({text: listData.msg, duration: 2000});
                             setTimeout(function(){
@@ -243,12 +227,190 @@ define(["../parts/common", "utils", "../../../components/dialog", "../libs/plupl
                                 jsonList = analysis.getAnalysis_ifroms(data);
                                 viewpager.curPageViewItem.contentInstance.refs.detail_repeat.bindData(jsonList);
                                 _this.item.push({label:'同意',id:'',type:'agree'});
+                                _this.item.push({label:'不同意',id:'',type:'disagree'});
                                 _this.item.push({label:'驳回',id:'',type:'reject'});
                                 _this.initBtn();
                             },500);
                         }
                     },
                     error: function (listData) {
+                        setTimeout(function(){
+                            var data=[
+                                {
+                                    "billtypename":"通讯费报销单",
+                                    "des":"获取单据明细成功",
+                                    "flag":"0",
+                                    "taskbill":{
+                                        "head":[
+                                            {
+                                                "tabCode":"djbh",
+                                                "tabName":"单据编号",
+                                                "tabContent":{
+                                                    "billItemData":[
+                                                        {
+                                                            "djbhitemShowName":"单据编号",
+                                                            "djbh":"264X201812250050",
+                                                            "digest":false
+                                                        },
+                                                        {
+                                                            "djrqitemShowName":"单据日期",
+                                                            "djrq":{
+                                                                "day":25,
+                                                                "daysMonth":31,
+                                                                "enMonth":"Dec",
+                                                                "enWeek":"Tue",
+                                                                "leapYear":false,
+                                                                "localDay":25,
+                                                                "localMonth":12,
+                                                                "localYear":2018,
+                                                                "millis":1545729208000,
+                                                                "month":12,
+                                                                "strDay":"25",
+                                                                "strMonth":"12",
+                                                                "week":2,
+                                                                "weekOfYear":52,
+                                                                "year":2018
+                                                            },
+                                                            "digest":false
+                                                        },
+                                                        {
+                                                            "ybjeitemShowName":"报销原币金额",
+                                                            "ybje":{
+                                                                "dV":[
+                                                                    0,
+                                                                    1,
+                                                                    0,
+                                                                    0,
+                                                                    0
+                                                                ],
+                                                                "double":1,
+                                                                "power":-2,
+                                                                "sIValue":1,
+                                                                "trimZero":false
+                                                            },
+                                                            "digest":false
+                                                        },
+                                                        {
+                                                            "bzbmitemShowName":"币种",
+                                                            "bzbm":"人民币",
+                                                            "bzbm_ID":"1002Z0100000000001K1",
+                                                            "digest":false
+                                                        },
+                                                        {
+                                                            "zy2itemShowName":"事由",
+                                                            "zy2":"",
+                                                            "digest":false
+                                                        },
+                                                        {
+                                                            "jkbxritemShowName":"报销人",
+                                                            "jkbxr":"张大明",
+                                                            "jkbxr_ID":"0001A910000000005T8A",
+                                                            "digest":false
+                                                        },
+                                                        {
+                                                            "deptiditemShowName":"报销人部门",
+                                                            "deptid":"质检部",
+                                                            "deptid_ID":"1002A91000000000030X",
+                                                            "digest":false
+                                                        },
+                                                        {
+                                                            "pk_orgitemShowName":"报销单位",
+                                                            "pk_org":"新世纪纸业集团总公司",
+                                                            "pk_org_ID":"0001A910000000005R3C",
+                                                            "digest":false
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ],
+                                        "tail":[
+                                            {
+                                                "tabCode":"tail",
+                                                "tabName":"表尾信息",
+                                                "tabContent":{
+                                                    "billItemData":[
+                            
+                                                    ],
+                                                    "group":[
+                                                        {
+                                                            "tabCode":"audit",
+                                                            "tabName":"审计信息",
+                                                            "tabContent":{
+                                                                "billItemData":[
+                            
+                                                                ]
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ],
+                                        "body":[
+                                            {
+                                                "tabCode":"er_busitem",
+                                                "tabName":"报销单业务行",
+                                                "tabContent":[
+                                                    {
+                                                        "billItemData":[
+                                                            {
+                                                                "szxmiditemShowName":"收支项目",
+                                                                "szxmid":"购买辅助材料",
+                                                                "szxmid_ID":"1002A810000000001KE8",
+                                                                "digest":true
+                                                            },
+                                                            {
+                                                                "amountitemShowName":"金额",
+                                                                "amount":{
+                                                                    "dV":[
+                                                                        0,
+                                                                        1,
+                                                                        0,
+                                                                        0,
+                                                                        0
+                                                                    ],
+                                                                    "double":1,
+                                                                    "power":-2,
+                                                                    "sIValue":1,
+                                                                    "trimZero":false
+                                                                },
+                                                                "digest":true
+                                                            },
+                                                            {
+                                                                "szxm1itemShowName":"收支项目",
+                                                                "szxm1":"购买辅助材料",
+                                                                "digest":false
+                                                            },
+                                                            {
+                                                                "jeitemShowName":"金额",
+                                                                "je":"1.00",
+                                                                "digest":false
+                                                            }
+                                                        ]
+                                                    }
+                                                ],
+                                                "rowcnt":"1"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ];                          
+                            
+                            _this.pageview.delegate('userinfo_name', function (target) {
+                                _this.instName = data[0].billtypename;
+                                target.setText(_this.instName);
+                            });
+                            _this.pageview.refs.result_text.innerText.html('审批中');
+                            _this.pageview.refs.result_text.innerText.css('color','#e7a757');
+                            _this.pageview.refs.result_text.$el.show();
+                            
+                            var viewpager = _this.pageview.refs.top_view.components.viewpager;
+                            jsonList = analysis.getAnalysis_ifroms(data);
+                            viewpager.curPageViewItem.contentInstance.refs.detail_repeat.bindData(jsonList);
+                            _this.item.push({label:'同意',id:'',type:'agree'});
+                            _this.item.push({label:'不同意',id:'',type:'disagree'});
+                            _this.item.push({label:'驳回',id:'',type:'reject'});
+                            _this.initBtn();
+                        },500);
                     }
                 };
 
@@ -315,55 +477,8 @@ define(["../parts/common", "utils", "../../../components/dialog", "../libs/plupl
             sender.config.text=language.formTips.onLoading;
         },
 
-        getSort: function () {
-            var _this = this;
-            var startTaskInstances = {};
-            this.applyHistory.processInstances = [];
-            this.applyHistory.instData.historicActivityInstances.forEach(function (item, index) {
-                if (item.activityType === "startEvent"&&item.userName) {
-                    startTaskInstances.userName = item.userName;
-                    startTaskInstances.activityType = item.activityType;
-                    startTaskInstances.startTime = item.startTime;
-                    startTaskInstances.endTime = item.endTime;
-                    startTaskInstances.pic = item.pic;
-                    startTaskInstances.assignee = _this.applyHistory.instData.startUserId;
-                    startTaskInstances.memberId = item.memberId;
-                }
-            });
-            // for (var i = 0; i < this.applyHistory.instData.historicTasks.length; i++) {
-            // }
-            var item = this.applyHistory.instData.historicTasks;
-            // this.applyHistory.instData.historicTasks.forEach(function (item, idx) {
-            if (item) {
-                for (var x = item.length - 1; x >= 0; x--) {
-                    var historicActivityInstances = _this.applyHistory.instData.historicActivityInstances;
-                    var taskInstances = {};
-                    // for (var i = 0; i < historicActivityInstances.length; i++) {
-                    // if (item[x].taskDefinitionKey === historicActivityInstances[i].activityId) {
-                    taskInstances.userName = item[x].userName;
-                    taskInstances.activityType = "userTask";
-                    taskInstances.startTime = item[x].startTime;
-                    taskInstances.endTime = item[x].endTime;
-                    taskInstances.pic = item[x].pic;
-                    taskInstances.assignee = item[x].assignee;
-                    taskInstances.taskId = item[x].id;
-                    taskInstances.taskComments = item[x].taskComments;
-                    taskInstances.dueDate = item[x].dueDate;
-                    taskInstances.deleteReason = item[x].deleteReason;
-                    taskInstances.taskAuditDesc = item[x].taskAuditDesc;
-                    taskInstances.processDefinitionId = item[x].processDefinitionId;
-                    taskInstances.memberId = item[x].memberId;
-                    taskInstances.name = item[x].name;
-                    // }
-                    // }
-                    _this.applyHistory.processInstances.push(taskInstances);
-                }
-            }
-            // });
-            this.applyHistory.processInstances.push(startTaskInstances);
-        },
         segment_init:function (sender,params) {
-            sender.config.items=[{'title':language.formTips.formDetail},{'title':language.formTips.processDetail}];
+            sender.config.items=[{'title':language.formTips.formDetail},{'title':language.formTips.processDetail},{'title':language.formTips.attachment}];
         },
         
         segment_change: function (sender, params) {
@@ -469,7 +584,9 @@ define(["../parts/common", "utils", "../../../components/dialog", "../libs/plupl
                         _this.viewpager.curPageViewItem.contentInstance.refs.middle_flow_repeat.bindData(_this.processInstancesHistory(_this.processInstances));
                         
                     }, 200);
-                } 
+                } else{
+                    this.viewpager.showItem("detailAttachment_detail", {type: "attachment", parent: this});
+                }
             }
         },
         processInstancesHistory:function (processInstances){
@@ -526,12 +643,17 @@ define(["../parts/common", "utils", "../../../components/dialog", "../libs/plupl
             this.morePopver.hide();
         },
         buttonGroup_itemclick: function (sender, params) {
-            window.localStorage.setItem('SETBTNVAL',JSON.stringify(this.setBtnVal));
             this.buttonGroupClick(sender);
         },
         // 显示出来的和pop隐藏的按钮公用点击
         buttonGroupClick: function (sender) {
-            
+            var paras={
+                taskId:this.pageview.params.taskId,
+                action:sender.datasource.type,
+                userid:'',
+                groupid:'',
+            };
+            this.pageview.go("deal", paras);
         },
         
         //文件上传控件
