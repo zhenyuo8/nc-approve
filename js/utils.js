@@ -124,7 +124,6 @@ define(["md5"],
         }
 
         function processStyleValue(key, val_arr, screenSize, style) {
-            // console.log(key)
             var Re = [];
             if ((val_arr.length > 1 && val_arr.length < 4) || key == "padding" || key == "margin") {
                 //padding or  margin
@@ -398,16 +397,7 @@ define(["md5"],
                 info.min = info.min < 10 ? "0" + info.min : info.min;
                 info.second = info.second < 10 ? "0" + info.second : info.second;
                 info.hour = info.hour < 10 ? "0" + info.hour : info.hour;
-                // if(formart == "yyyy-MM-dd"){
-                //   return info.year+"-"+info.month+"-"+info.day;
-                // }
 
-                // if(formart == "yyyy-MM"){
-                //   return info.year+"-"+info.month;
-                // }
-                // if(formart == "yyyy-MM-dd hh:mm:ss"){
-                //   return info.year+"-"+info.month+"-"+info.day+" "+info.hour+":"+info.min+":"+info.second;
-                // }
 
                 if (formart == "yyyy-MM-dd") {
                     return info.year + "-" + info.month + "-" + info.day;
@@ -739,19 +729,6 @@ define(["md5"],
                     curText: curText
                 };
             },
-            getQyZoneLanguage:function () {
-                var lang='';
-                var query=window.navigator.userAgent.split(" ");
-                for(var i=0;i<query.length;i++){
-                    if(query[i].indexOf('youZoneLanguage=')>-1){
-                        lang=query[i].split('=')[1];
-                    }
-                }
-                if(lang.toLowerCase()=='tw'){
-                    lang='zh-CN';
-                }
-                return lang;
-            },
             ajax: function (config) {
                 var _this = this;
                 var pageviewInstance = config.pageviewInstance;
@@ -790,10 +767,6 @@ define(["md5"],
                     ajaxConfig.dataType = "json";
                 } else {
                     ajaxConfig.contentType = "application/x-www-form-urlencoded";
-                }
-
-                if(this.getQyZoneLanguage()){
-                    ajaxConfig.language = this.getQyZoneLanguage();
                 }
 
                 // 允许cookie跨域传输 TODO 正式时去掉

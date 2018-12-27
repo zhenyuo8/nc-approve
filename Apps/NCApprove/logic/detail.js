@@ -206,6 +206,42 @@ define(["../parts/common", "utils", "../libs/plupload/form-file-uploader", "../p
                                                                     "digest":false
                                                                 }
                                                             ]
+                                                        },{
+                                                            "billItemData":[
+                                                                {
+                                                                    "szxmiditemShowName":"收支项目",
+                                                                    "szxmid":"购买体育用品",
+                                                                    "szxmid_ID":"1002A810000000001KE8",
+                                                                    "digest":true
+                                                                },
+                                                                {
+                                                                    "amountitemShowName":"金额",
+                                                                    "amount":{
+                                                                        "dV":[
+                                                                            0,
+                                                                            2031,
+                                                                            0,
+                                                                            0,
+                                                                            0
+                                                                        ],
+                                                                        "double":1,
+                                                                        "power":-2,
+                                                                        "sIValue":1,
+                                                                        "trimZero":false
+                                                                    },
+                                                                    "digest":true
+                                                                },
+                                                                {
+                                                                    "szxm1itemShowName":"收支项目",
+                                                                    "szxm1":"购买家具",
+                                                                    "digest":false
+                                                                },
+                                                                {
+                                                                    "jeitemShowName":"金额",
+                                                                    "je":"2031.00",
+                                                                    "digest":false
+                                                                }
+                                                            ]
                                                         }
                                                     ],
                                                     "rowcnt":"1"

@@ -153,10 +153,10 @@ define(["../logic/detailProcess", "../parts/common", 'utils'], function (pluginC
                 style: {
                     borderLeft: "solid 1px #e6e6e6",
                     background: "#e6e6e6",
-                    height: "92%",
+                    height: "82%",
                     position: "absolute",
                     left: 22,
-                    bottom: 34
+                    bottom: '50%'
                 }
             },
             left_round: {
@@ -217,7 +217,8 @@ define(["../logic/detailProcess", "../parts/common", 'utils'], function (pluginC
                 style: {
                     flexDirection: "row",
                     alignItems: "flex-start",
-                    padding: "12px 0",
+                    paddingTop:12,
+                    paddingBottom:12,
                     position:"relative"
                 }
             },

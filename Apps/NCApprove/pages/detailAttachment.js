@@ -27,7 +27,7 @@ define(["../logic/detailAttachment", "../parts/common", 'utils'], function (plug
                     borderBottom: "solid 1px #EDEDED"
                 },
                 nodata: "list_nodata",
-                items: [{name: "测试word文档", status: "审批中",time:'2018-12-05 12:55:30',author:'陈展鹏',type:'word'}, {name: "八卦图片", status: "审批中",time:'2018-11-12 12:55:30',author:'周武王',type:'application/pdf'}],
+                items: [],
                 root: ["flow_view"]
             },
             list_nodata: {

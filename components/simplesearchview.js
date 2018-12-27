@@ -14,7 +14,7 @@ define(["utils", "base"], function (utils, baseClass) {
         var inputMarginLeft = utils.getRealWidth(10);
         var inputHeight = utils.getRealHeight(30);
         var offset = utils.getRealHeight(10);
-        var inputPaddingLeft = utils.getRealWidth(30);
+        var inputPaddingLeft = utils.getRealWidth(0);
         this.inputFocusWidth = this.inputWidth - this.cancelBtnWidth + offset;
 
         this.searchBarClassName = "yy-sv-bar yy-fd-row displayflex yy-ai-center";

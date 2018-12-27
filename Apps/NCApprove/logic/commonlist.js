@@ -199,6 +199,7 @@ define(["../parts/common", "utils", '../parts/language',"../../../components/dia
         },
 
         body_pulltorefresh: function (sender, params) {
+            console.log(this.pageview.refs)
             this.pageview.refs.listview.ajaxConfig.data.start = 0;
             this.pageview.refs.listview.ajaxConfig.data.pageNum = 1;
 
