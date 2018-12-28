@@ -1,9 +1,5 @@
-/**
- * Created by Gin on 17/2/27.
- */
-define(["../parts/common", "utils", "../../../components/dialog","../../../components/allcomments","../parts/language"], function (c, utils, Dialog, Allcomments,language) {
+define(["../parts/common", "utils", "../../../components/dialog","../parts/language"], function (c, utils, Dialog,language) {
     function PageLogic(config) {
-        var _this = this;
         this.pageview = config.pageview;
         this.parentThis = this.pageview.viewpagerParams.parentThis;
     }

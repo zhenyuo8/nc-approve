@@ -1,6 +1,4 @@
-/**
- * Created by Gin on 17/2/28.
- */
+
 define(["../parts/common", "utils", "../../../components/dialog", "../parts/language","../parts/format"], function (c, utils, Dialog, language,format) {
     function pageLogic(config) {
         var _this = this;
@@ -30,10 +28,13 @@ define(["../parts/common", "utils", "../../../components/dialog", "../parts/lang
         _loadData: function () {
             var _this = this,
                 ajaxConfig = {
-                    url: 'servlet/ncAttachList',
-                    type: 'POST',
+                    url: '/process/getTaskAttachments',
+                    type: 'GET',
                     data: {
-                        taskId: ''
+                        taskId: _this.parentThis.pageview.params.taskId,
+                        cuserId:_this.parentThis.pageview.params.cuserId,
+                        billId:_this.parentThis.pageview.params.billId,
+                        billType:_this.parentThis.pageview.params.billType,
                     },
                     success: function (listData) {
                         _this.pageview.hideLoading(true);
@@ -42,9 +43,8 @@ define(["../parts/common", "utils", "../../../components/dialog", "../parts/lang
                         });
                     },
                     error: function (err) {
-                        console.log(err)
                         _this.pageview.hideLoading(true);
-                        var data=[{name: "测试word文档", status: "审批中",time:'2018-12-05 12:55:30',author:'陈展鹏',type:'png',"aliOSSUrl":"https://static.yonyoucloud.com/102136/3160785/201812/7/1544162843134f4e62c39e5228c660471c4397a1cb.jpg"}, {name: "八卦图片", status: "审批中",time:'2018-11-12 12:55:30',author:'周武王',type:'application/pdf',"aliOSSUrl":"https://ncc-ys-prod-oss.oss-cn-beijing.aliyuncs.com/xcnisnhw/52d5f399-47f7-4ce1-b7bf-6a4d9374cdda/1545881640347_3.%20%E5%91%98%E5%B7%A5%E8%BD%AC%E6%AD%A3%E5%AE%A1%E6%89%B9%E8%A1%A8.pdf"}]
+                        var data=[{name: "测试word文档", status: "审批中",time:'2018-12-05 12:55:30',author:'陈展鹏',type:'png',"aliOSSUrl":"https://static.yonyoucloud.com/102136/3160785/201812/7/1544162843134f4e62c39e5228c660471c4397a1cb.jpg"}, {name: "八卦图片", status: "审批中",time:'2018-11-12 12:55:30',author:'周武王',type:'application/pdf',"aliOSSUrl":"https://ncc-ys-prod-oss.oss-cn-beijing.aliyuncs.com/xcnisnhw/52d5f399-47f7-4ce1-b7bf-6a4d9374cdda/1545881640347_3.%20%E5%91%98%E5%B7%A5%E8%BD%AC%E6%AD%A3%E5%AE%A1%E6%89%B9%E8%A1%A8.pdf"}];
                         _this.pageview.delegate('flow_repeat', function (target) {
                             target.bindData(data);
                         });
@@ -70,9 +70,6 @@ define(["../parts/common", "utils", "../../../components/dialog", "../parts/lang
             } else {
                 sender.config.src = "./imgs/" + (format.getFormat(fileType) ? format.getFormat(fileType).ext : format.getFormat('unkonw').ext);
             }
-        },
-        atta_contributor_init: function (sender, params) {
-            
         },
         file_size_init: function (sender, params) {
             var text = language.formAction.attaContributor;
@@ -127,8 +124,7 @@ define(["../parts/common", "utils", "../../../components/dialog", "../parts/lang
         flow_repeat_itemclick: function (sender, params) {
             var _this=this;
             var fileType = sender.datasource.type?sender.datasource.type:'';
-            window.open(sender.datasource.aliOSSUrl)
-            console.log(sender)
+            window.open(sender.datasource.aliOSSUrl);
         },
         downloadFile: function (fileName, url) {
             window.open(url);

@@ -1,6 +1,3 @@
-/**
- * Created by Gin on 17/3/21.
- */
 define(["./common", "utils","../parts/language"], function (c, utils,language) {
     var Re = {
         getAnalysisContent: function (sender, _this) {

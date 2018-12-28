@@ -49,9 +49,9 @@ app.get('/getlistdata', function(req, res, next) {
     }, 1000);
 });
 
-app.use('/approve-app', proxy('https://ys.esn.ren/approve-app',{
+app.use('/approve-client-adapter', proxy('http://10.4.111.31:8080/approve-client-adapter/',{
     proxyReqPathResolver:function(req){
-        return '/approve-app'+require('url').parse(req.url).path
+        return '/approve-client-adapter'+require('url').parse(req.url).path
     }
 }))
 

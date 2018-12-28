@@ -1,6 +1,4 @@
-/**
- * Created by Gin on 17/2/25.
- */
+
 define(["../logic/detailContent", "../parts/common", 'utils'], function (pluginClass, c, utils) {
     var Re = {
         pluginClass: pluginClass,

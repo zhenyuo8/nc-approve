@@ -24,12 +24,8 @@
     -moz-osx-font-smoothing: grayscale;
 }
 [class*="_title"], [class$="_title"]{
-    /*height: auto!important;*/
     min-height: 30px;
 
-}
-[class*="_rootitle"] .yy-inner-text, [class*="_title"] .yy-inner-text, [class$="_title"] .yy-inner-text {
-    /*width: 96%!important;*/
 }
 .checkbox_select_icon + [class$="_text"],.item_select_icon + [class$="_text"]{
     width: 94%;
@@ -97,16 +93,6 @@ body {
     background-color: #eee;
 }
 
-/*.form-upper-warp:before {*/
-/*position: absolute;*/
-/*top: 0;*/
-/*left: 14px;*/
-/*right: 0;*/
-/*height: 1px;*/
-/*content: "";*/
-/*background-color: #eee;*/
-/*}*/
-
 input, textarea {
     font-weight: 300;
 }
@@ -131,16 +117,6 @@ input, textarea {
     bottom: 0;
     right: 0;
 }
-/* 暂时不使用1px的样式 */
-/*.app-repeat .yy-repeatitem:before {*/
-    /*position: absolute;*/
-    /*right: 0;*/
-    /*width: 1px;*/
-    /*background-color: #eee;*/
-    /*top: 0;*/
-    /*bottom: 0;*/
-    /*content: "";*/
-/*}*/
 
 .app-repeat .yy-repeatitem:active {
     background-color: #EEEEEE;
@@ -189,11 +165,6 @@ input, textarea {
 
 .line-repeat .yy-repeatitem:nth-last-child(2) .repeat_line {
     right: 20px !important;
-}
-
-/* 审批详情 */
-.ApplyLayoutStart_1 {
-
 }
 
 .applyLayout {
@@ -258,35 +229,20 @@ input, textarea {
     margin: 15px 0 8px 0;
 }
 
-.approveSelector,.approveSelector1 {
-    padding: 0 0 0 3px;
-}
-
-.searchInput .yy-sv-bar,
-.searchInput1 .yy-sv-bar {
+.searchInput .yy-sv-bar{
     padding-bottom: 1px;
     padding-top: 1px;
     height:43px;
 }
 
-.searchInput .yy-sv-input-div,
-.searchInput1 .yy-sv-input-div {
+.searchInput .yy-sv-input-div {
     border-radius: 25px;
 }
 
-.searchInput .yy-sv-input-div:before,
-.searchInput1 .yy-sv-input-div:before {
+.searchInput .yy-sv-input-div:before {
     font-family: 'cap' !important;
     content: "\e90c";
     left:36%
-}
-
-.searchInput1 .yy-sv-input-div {
-    background-color: #fff;
-}
-
-.searchInput1 .yy-sv-bar {
-    background-color: #f7f7f7;
 }
 
 .yy-cs-selector-item-selected:before, .yy-cs-muselector-item-selected:before {
@@ -305,17 +261,7 @@ input, textarea {
     box-shadow: rgba(214, 214, 214, .9) 2px 8px 13px !important;
 }
 
-.reject_process_selected .reject_process_repeat_item_right {
-    display: block !important;
-}
 
-.add_sign_bottom_poplayer_select .add_sign_bottom_poplayer_repeat_item_right {
-    display: block !important;
-}
-
-/*.reject_process_repeat .yy-repeatitem:last-child {*/
-    /*border: none !important;*/
-/*}*/
 
 .list_repeat .yy-repeatitem:last-child {
     border: none !important;
@@ -329,11 +275,6 @@ input, textarea {
     padding-left: 30px;
     padding-right: 30px;
     line-height: 2;
-}
-
-.row_right_radiobox.yy-radio-selected .yy-radio {
-    /*border: 1px solid #29B6F6 !important;*/
-    /*background-color: #29B6F6 !important;*/
 }
 
 .line_clamp10 .yy-inner-text.yy-text-box {
@@ -452,8 +393,6 @@ input, textarea {
     border: none;
     color:#fff;
     margin: 2%;
-    marginTop:2%;
-    marginBottom:2%;
 }
 .drawing-board-control-item_hor{
     width:16%;
@@ -494,10 +433,6 @@ input, textarea {
 .title-line-clamp .yy-inner-text{
     -webkit-line-clamp: 2;
     line-clamp: 2;
-}
-
-.copyuser_name{
-    text-align: center!important;
 }
 
 .yy_deal_title {

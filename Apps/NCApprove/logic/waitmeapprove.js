@@ -1,5 +1,4 @@
 define(["../parts/common", "utils","../parts/language"], function (c, utils,language) {
-
     function pageLogic(config) {
         this.pageview = config.pageview;
         this.countNum = this.pageview.params.countNum;
@@ -15,23 +14,6 @@ define(["../parts/common", "utils","../parts/language"], function (c, utils,lang
         },
         loadNum: function () {
             var _this = this;
-            this.pageview.ajax({
-                type: "GET",
-                url: "/process/myDataCount",
-                data: {},
-                success: function (data) {
-                    if (data.code === 0) {
-                        if (data.data.todo !== undefined && data.data.todo !== null) {
-                            if(_this.waitmeapproveLabel){
-                                _this.waitmeapproveLabel.setText(language.tasksToProcess+"(" + data.data.todo + ")");
-                            }
-                        }
-                    }
-                },
-                error: function (e) {
-
-                }
-            });
         },
         searchview_init: function (sender, params) {
             this.searchview = sender;

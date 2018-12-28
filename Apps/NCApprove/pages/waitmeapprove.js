@@ -1,6 +1,4 @@
-/**
- * 首页的上下分类
- **/
+
 define(["../logic/waitmeapprove", "../parts/common", 'utils'], function (pluginClass, c, utils) {
     var Re = {
         pluginClass: pluginClass,

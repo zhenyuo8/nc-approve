@@ -38,399 +38,16 @@ define(["../parts/common", "utils", "../libs/plupload/form-file-uploader", "../p
             var _this = this,
                 listAjaxConfig = {
                     url: '/process/getApply',
-                    type: 'POST',
+                    type: 'GET',
                     data: {
-                        instId: this.pageview.params.instId || '',
                         taskId: this.pageview.params.taskId || '',
-                        copyToId: this.pageview.params.copyToId || '',
-                        category: this.pageview.params.category || ''
+                        cuserId:this.pageview.params.cuserId||'',
+                        billId:this.pageview.params.billId||'',
+                        billType:this.pageview.params.billType||'',
                     },
                     success: function (listData) {
-                        setTimeout(function () {
-                            _this.pageview.hideLoading(true);
-                        },2000);
-                        if (listData.code === 0) {
-                            _this.pageview.refs.segment.$el.show();
-                            
-                        } else {
-                            // _this.pageview.showTip({text: listData.msg, duration: 2000});
-                            setTimeout(function(){
-                                var data=[
-                                    {
-                                        "billtypename":"通讯费报销单",
-                                        "des":"获取单据明细成功",
-                                        "flag":"0",
-                                        "taskbill":{
-                                            "head":[
-                                                {
-                                                    "tabCode":"djbh",
-                                                    "tabName":"单据编号",
-                                                    "tabContent":{
-                                                        "billItemData":[
-                                                            {
-                                                                "djbhitemShowName":"单据编号",
-                                                                "djbh":"264X201812250050",
-                                                                "digest":false
-                                                            },
-                                                            {
-                                                                "djrqitemShowName":"单据日期",
-                                                                "djrq":{
-                                                                    "day":25,
-                                                                    "daysMonth":31,
-                                                                    "enMonth":"Dec",
-                                                                    "enWeek":"Tue",
-                                                                    "leapYear":false,
-                                                                    "localDay":25,
-                                                                    "localMonth":12,
-                                                                    "localYear":2018,
-                                                                    "millis":1545729208000,
-                                                                    "month":12,
-                                                                    "strDay":"25",
-                                                                    "strMonth":"12",
-                                                                    "week":2,
-                                                                    "weekOfYear":52,
-                                                                    "year":2018
-                                                                },
-                                                                "digest":false
-                                                            },
-                                                            {
-                                                                "ybjeitemShowName":"报销原币金额",
-                                                                "ybje":{
-                                                                    "dV":[
-                                                                        0,
-                                                                        1,
-                                                                        0,
-                                                                        0,
-                                                                        0
-                                                                    ],
-                                                                    "double":1,
-                                                                    "power":-2,
-                                                                    "sIValue":1,
-                                                                    "trimZero":false
-                                                                },
-                                                                "digest":false
-                                                            },
-                                                            {
-                                                                "bzbmitemShowName":"币种",
-                                                                "bzbm":"人民币",
-                                                                "bzbm_ID":"1002Z0100000000001K1",
-                                                                "digest":false
-                                                            },
-                                                            {
-                                                                "zy2itemShowName":"事由",
-                                                                "zy2":"",
-                                                                "digest":false
-                                                            },
-                                                            {
-                                                                "jkbxritemShowName":"报销人",
-                                                                "jkbxr":"张大明",
-                                                                "jkbxr_ID":"0001A910000000005T8A",
-                                                                "digest":false
-                                                            },
-                                                            {
-                                                                "deptiditemShowName":"报销人部门",
-                                                                "deptid":"质检部",
-                                                                "deptid_ID":"1002A91000000000030X",
-                                                                "digest":false
-                                                            },
-                                                            {
-                                                                "pk_orgitemShowName":"报销单位",
-                                                                "pk_org":"新世纪纸业集团总公司",
-                                                                "pk_org_ID":"0001A910000000005R3C",
-                                                                "digest":false
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ],
-                                            "tail":[
-                                                {
-                                                    "tabCode":"tail",
-                                                    "tabName":"表尾信息",
-                                                    "tabContent":{
-                                                        "billItemData":[
-                                
-                                                        ],
-                                                        "group":[
-                                                            {
-                                                                "tabCode":"audit",
-                                                                "tabName":"审计信息",
-                                                                "tabContent":{
-                                                                    "billItemData":[
-                                
-                                                                    ]
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ],
-                                            "body":[
-                                                {
-                                                    "tabCode":"er_busitem",
-                                                    "tabName":"报销单业务行",
-                                                    "tabContent":[
-                                                        {
-                                                            "billItemData":[
-                                                                {
-                                                                    "szxmiditemShowName":"收支项目",
-                                                                    "szxmid":"购买辅助材料",
-                                                                    "szxmid_ID":"1002A810000000001KE8",
-                                                                    "digest":true
-                                                                },
-                                                                {
-                                                                    "amountitemShowName":"金额",
-                                                                    "amount":{
-                                                                        "dV":[
-                                                                            0,
-                                                                            1,
-                                                                            0,
-                                                                            0,
-                                                                            0
-                                                                        ],
-                                                                        "double":1,
-                                                                        "power":-2,
-                                                                        "sIValue":1,
-                                                                        "trimZero":false
-                                                                    },
-                                                                    "digest":true
-                                                                },
-                                                                {
-                                                                    "szxm1itemShowName":"收支项目",
-                                                                    "szxm1":"购买辅助材料",
-                                                                    "digest":false
-                                                                },
-                                                                {
-                                                                    "jeitemShowName":"金额",
-                                                                    "je":"1.00",
-                                                                    "digest":false
-                                                                }
-                                                            ]
-                                                        },{
-                                                            "billItemData":[
-                                                                {
-                                                                    "szxmiditemShowName":"收支项目",
-                                                                    "szxmid":"购买体育用品",
-                                                                    "szxmid_ID":"1002A810000000001KE8",
-                                                                    "digest":true
-                                                                },
-                                                                {
-                                                                    "amountitemShowName":"金额",
-                                                                    "amount":{
-                                                                        "dV":[
-                                                                            0,
-                                                                            2031,
-                                                                            0,
-                                                                            0,
-                                                                            0
-                                                                        ],
-                                                                        "double":1,
-                                                                        "power":-2,
-                                                                        "sIValue":1,
-                                                                        "trimZero":false
-                                                                    },
-                                                                    "digest":true
-                                                                },
-                                                                {
-                                                                    "szxm1itemShowName":"收支项目",
-                                                                    "szxm1":"购买家具",
-                                                                    "digest":false
-                                                                },
-                                                                {
-                                                                    "jeitemShowName":"金额",
-                                                                    "je":"2031.00",
-                                                                    "digest":false
-                                                                }
-                                                            ]
-                                                        }
-                                                    ],
-                                                    "rowcnt":"1"
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ];                          
-                                
-                                _this.pageview.delegate('userinfo_name', function (target) {
-                                    _this.instName = data[0].billtypename;
-                                    target.setText(_this.instName);
-                                });
-                                _this.pageview.refs.result_text.innerText.html('审批中');
-                                _this.pageview.refs.result_text.innerText.css('color','#e7a757');
-                                _this.pageview.refs.result_text.$el.show();
-                                
-                                var viewpager = _this.pageview.refs.top_view.components.viewpager;
-                                jsonList = analysis.getAnalysis_ifroms(data);
-                                viewpager.curPageViewItem.contentInstance.refs.detail_repeat.bindData(jsonList);
-                                _this.item.push({label:'同意',id:'',type:'agree'});
-                                _this.item.push({label:'不同意',id:'',type:'disagree'});
-                                _this.item.push({label:'驳回',id:'',type:'reject'});
-                                _this.initBtn();
-                            },500);
-                        }
-                    },
-                    error: function (listData) {
-                        setTimeout(function(){
-                            var data=[
-                                {
-                                    "billtypename":"通讯费报销单",
-                                    "des":"获取单据明细成功",
-                                    "flag":"0",
-                                    "taskbill":{
-                                        "head":[
-                                            {
-                                                "tabCode":"djbh",
-                                                "tabName":"单据编号",
-                                                "tabContent":{
-                                                    "billItemData":[
-                                                        {
-                                                            "djbhitemShowName":"单据编号",
-                                                            "djbh":"264X201812250050",
-                                                            "digest":false
-                                                        },
-                                                        {
-                                                            "djrqitemShowName":"单据日期",
-                                                            "djrq":{
-                                                                "day":25,
-                                                                "daysMonth":31,
-                                                                "enMonth":"Dec",
-                                                                "enWeek":"Tue",
-                                                                "leapYear":false,
-                                                                "localDay":25,
-                                                                "localMonth":12,
-                                                                "localYear":2018,
-                                                                "millis":1545729208000,
-                                                                "month":12,
-                                                                "strDay":"25",
-                                                                "strMonth":"12",
-                                                                "week":2,
-                                                                "weekOfYear":52,
-                                                                "year":2018
-                                                            },
-                                                            "digest":false
-                                                        },
-                                                        {
-                                                            "ybjeitemShowName":"报销原币金额",
-                                                            "ybje":{
-                                                                "dV":[
-                                                                    0,
-                                                                    1,
-                                                                    0,
-                                                                    0,
-                                                                    0
-                                                                ],
-                                                                "double":1,
-                                                                "power":-2,
-                                                                "sIValue":1,
-                                                                "trimZero":false
-                                                            },
-                                                            "digest":false
-                                                        },
-                                                        {
-                                                            "bzbmitemShowName":"币种",
-                                                            "bzbm":"人民币",
-                                                            "bzbm_ID":"1002Z0100000000001K1",
-                                                            "digest":false
-                                                        },
-                                                        {
-                                                            "zy2itemShowName":"事由",
-                                                            "zy2":"",
-                                                            "digest":false
-                                                        },
-                                                        {
-                                                            "jkbxritemShowName":"报销人",
-                                                            "jkbxr":"张大明",
-                                                            "jkbxr_ID":"0001A910000000005T8A",
-                                                            "digest":false
-                                                        },
-                                                        {
-                                                            "deptiditemShowName":"报销人部门",
-                                                            "deptid":"质检部",
-                                                            "deptid_ID":"1002A91000000000030X",
-                                                            "digest":false
-                                                        },
-                                                        {
-                                                            "pk_orgitemShowName":"报销单位",
-                                                            "pk_org":"新世纪纸业集团总公司",
-                                                            "pk_org_ID":"0001A910000000005R3C",
-                                                            "digest":false
-                                                        }
-                                                    ]
-                                                }
-                                            }
-                                        ],
-                                        "tail":[
-                                            {
-                                                "tabCode":"tail",
-                                                "tabName":"表尾信息",
-                                                "tabContent":{
-                                                    "billItemData":[
-                            
-                                                    ],
-                                                    "group":[
-                                                        {
-                                                            "tabCode":"audit",
-                                                            "tabName":"审计信息",
-                                                            "tabContent":{
-                                                                "billItemData":[
-                            
-                                                                ]
-                                                            }
-                                                        }
-                                                    ]
-                                                }
-                                            }
-                                        ],
-                                        "body":[
-                                            {
-                                                "tabCode":"er_busitem",
-                                                "tabName":"报销单业务行",
-                                                "tabContent":[
-                                                    {
-                                                        "billItemData":[
-                                                            {
-                                                                "szxmiditemShowName":"收支项目",
-                                                                "szxmid":"购买辅助材料",
-                                                                "szxmid_ID":"1002A810000000001KE8",
-                                                                "digest":true
-                                                            },
-                                                            {
-                                                                "amountitemShowName":"金额",
-                                                                "amount":{
-                                                                    "dV":[
-                                                                        0,
-                                                                        1,
-                                                                        0,
-                                                                        0,
-                                                                        0
-                                                                    ],
-                                                                    "double":1,
-                                                                    "power":-2,
-                                                                    "sIValue":1,
-                                                                    "trimZero":false
-                                                                },
-                                                                "digest":true
-                                                            },
-                                                            {
-                                                                "szxm1itemShowName":"收支项目",
-                                                                "szxm1":"购买辅助材料",
-                                                                "digest":false
-                                                            },
-                                                            {
-                                                                "jeitemShowName":"金额",
-                                                                "je":"1.00",
-                                                                "digest":false
-                                                            }
-                                                        ]
-                                                    }
-                                                ],
-                                                "rowcnt":"1"
-                                            }
-                                        ]
-                                    }
-                                }
-                            ];                          
-                            
+                        var data=JSON.parse(listData.data);
+                        setTimeout(function(){                         
                             _this.pageview.delegate('userinfo_name', function (target) {
                                 _this.instName = data[0].billtypename;
                                 target.setText(_this.instName);
@@ -446,7 +63,34 @@ define(["../parts/common", "utils", "../libs/plupload/form-file-uploader", "../p
                             _this.item.push({label:'不同意',id:'',type:'disagree'});
                             _this.item.push({label:'驳回',id:'',type:'reject'});
                             _this.initBtn();
+                            _this.loadProcessData();
+                            _this.pageview.hideLoading(true);
                         },500);
+                    },
+                    error: function (listData) {
+                        _this.pageview.showTip({text: listData.msg, duration: 2000});
+                    }
+                };
+
+            this.pageview.ajax(listAjaxConfig);
+        },
+        loadProcessData: function () {
+            var _this = this,
+                listAjaxConfig = {
+                    url: '/process/getApprove',
+                    type: 'GET',
+                    data: {
+                        taskId: this.pageview.params.taskId || '',
+                        cuserId:this.pageview.params.cuserId||'',
+                        billId:this.pageview.params.billId||'',
+                        billType:this.pageview.params.billType||'',
+                    },
+                    success: function (listData) {
+                        var data=JSON.parse(listData.data);
+                        _this.processInstances=data;
+                    },
+                    error: function (listData) {
+                        _this.pageview.showTip({text: listData, duration: 2000});
                     }
                 };
 
@@ -528,97 +172,9 @@ define(["../parts/common", "utils", "../libs/plupload/form-file-uploader", "../p
                     this.viewpager.showItem("detailContent_detail", {type: "content"});
                 } else if (itemTitle === "流程"||itemTitle === "Process") {
                     this.initBtn();
-                    this.processInstances=[
-                        {
-                            "approvehistorylinelist":[
-                                {
-                                    "action":"",
-                                    "approvedid":"0001AA1000000003TBSP",
-                                    "attachstructlist":[
-                    
-                                    ],
-                                    "count":"0",
-                                    "handledate":"",
-                                    "handlername":"杨堃",
-                                    "psnid":"1002AA1000000000BLFW"
-                                },
-                                {
-                                    "action":"批准",
-                                    "approvedid":"1002ZZ1000000000C5WB",
-                                    "attachstructlist":[
-                    
-                                    ],
-                                    "count":"0",
-                                    "handledate":"2018-12-25 20:46:30",
-                                    "handlername":"王晓米",
-                                    "note":"tesgt",
-                                    "psnid":"10029910000000005BFS"
-                                }
-                            ],
-                            "des":"获取审批明细成功",
-                            "flag":"0",
-                            "flowhistory":[
-                                {
-                                    "personlist":[
-                                        {
-                                            "id":"100299100000000045FQ",
-                                            "isPerson":[
-                                                "contact"
-                                            ],
-                                            "name":"张大明"
-                                        }
-                                    ],
-                                    "time":"2018-12-25 17:14:56",
-                                    "unittype":"submit"
-                                },
-                                {
-                                    "actionname":"",
-                                    "handwriteflag":"N",
-                                    "itemlist":[
-                                        {
-                                            "key":"key",
-                                            "value":"value"
-                                        }
-                                    ],
-                                    "personlist":[
-                                        {
-                                            "id":"100299100000000045FQ",
-                                            "isPerson":[
-                                                "contact"
-                                            ],
-                                            "name":"杨堃"
-                                        }
-                                    ],
-                                    "remindflag":"N",
-                                    "unittype":"solved"
-                                },
-                                {
-                                    "itemlist":[
-                                        {
-                                            "key":"key",
-                                            "value":"value"
-                                        }
-                                    ],
-                                    "personlist":[
-                                        {
-                                            "id":"100299100000000045FQ",
-                                            "isPerson":[
-                                                "contact"
-                                            ],
-                                            "name":"王晓米"
-                                        }
-                                    ],
-                                    "remindflag":"N",
-                                    "unittype":"handling"
-                                }
-                            ]
-                        }
-                    ];
-                    
                     this.viewpager.showItem("detailProcess_detail", {type: "process", parentThis: this});
                     window.setTimeout(function () {
-                        _this.viewpager.curPageViewItem.contentInstance.refs.middle_flow_repeat.bindData(_this.processInstancesHistory(_this.processInstances));
-                        
+                        _this.viewpager.curPageViewItem.contentInstance.refs.middle_flow_repeat.bindData(_this.processInstancesHistory(_this.processInstances));   
                     }, 200);
                 } else{
                     this.viewpager.showItem("detailAttachment_detail", {type: "attachment", parent: this});

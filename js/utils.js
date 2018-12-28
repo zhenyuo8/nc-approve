@@ -740,7 +740,7 @@ define(["md5"],
                 var ajaxConfig = {
                     type: config.type,
                     url: this.getUrl(config.url),
-                    timeout: config.timeout || 20000,
+                    // timeout: config.timeout,
                     data: config.data,
                     success: function (data) {
                         var responseMethod = _this.appConfig.onAjaxResponse;
@@ -768,10 +768,8 @@ define(["md5"],
                 } else {
                     ajaxConfig.contentType = "application/x-www-form-urlencoded";
                 }
-
-                // 允许cookie跨域传输 TODO 正式时去掉
                 if (config.xhrFields) {
-                    ajaxConfig.xhrFields = {withCredentials: true};
+                    // ajaxConfig.xhrFields = {withCredentials: true};
                 }
 
 

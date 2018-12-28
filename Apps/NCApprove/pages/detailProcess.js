@@ -7,123 +7,6 @@ define(["../logic/detailProcess", "../parts/common", 'utils'], function (pluginC
         },
         root: ["middle_flow_repeat"],
         components: {
-            flow_left_all: {
-                type: "view",
-                ref: true,
-                root: ["left_line_all", "left_round"],
-                style: {
-                    width: 24
-                }
-            },
-            left_line_all: {
-                type: "text",
-                text: " ",
-                ref: true,
-                style: {
-                    borderLeft: "solid 1px #e6e6e6",
-                    background: "#e6e6e6",
-                    height: "95%",
-                    position: "absolute",
-                    left: 22,
-                    bottom: 29
-                }
-            },
-            flow_right_all: {
-                type: "view",
-                ref: true,
-                root: ["flow_right_content_all"],
-                style: {
-                    flex: 1,
-                    borderRadius: 6,
-                    backgroundColor:"#fff"
-                }
-            },
-            flow_right_content_all: {
-                type: "view",
-                ref: true,
-                root: ["flow_right_content_left_all_wrap","right_arrow_all","right_arrow_all_middle"],
-                style: {
-                    flexDirection: "row",
-                    alignItems: "flex-start",
-                    position:"relative"
-                }
-            },
-            flow_right_content_left_all_wrap:{
-                type: "view",
-                ref: true,
-                root: ["flow_right_content_left_all_wrap2","flow_right_content_middle_top_all"],
-                style: {
-                    flexDirection: "column",
-                    alignItems: "flex-start",
-                    position:"relative"
-                }
-            },
-            flow_right_content_left_all_wrap2:{
-                type: "view",
-                ref: true,
-                root: ["flow_right_content_left_all"],
-                style:{
-                    width:44,
-                    height:37
-                }
-            },
-            flow_right_content_left_all: {
-                type: "image",
-                src_bind: "pic",
-                src: "pic",
-                title_bind: "userName",
-                style: {
-                    w: 37,
-                    backgroundColor: "#eee",
-                    borderRadius: "50%",
-                    margin:"auto",
-                    top: 1
-                }
-            },
-            right_arrow_all:{
-                type: "text",
-                text: " ",
-                ref: true,
-                style: {
-                    content:"",
-                    position:"absolute",
-                    width:24,
-                    borderTop:"1px dotted #e0e0e0",
-                    top:20,
-                    right:"2%"
-                }
-            },
-            right_arrow_all_middle:{
-                type: "text",
-                text: " ",
-                ref: true,
-                style: {
-                    content:"",
-                    position:"absolute",
-                    width:6,
-                    height:6,
-                    background:"#e0e0e0",
-                    borderRadius:"50%",
-                    top:18,
-                    right:10
-                }
-            },
-            flow_right_content_middle_top_all: {
-                type: "text",
-                text_bind: "userName",
-                style: {
-                    fontSize: 12,
-                    lineHeight: 16,
-                    width:44,
-                    overflow:"hide",
-                    textAlign:"center",
-                    // marginBottom: 4,
-                    color: "#999",
-                    marginTop:6,
-
-                }
-            },
-
             middle_flow_repeat: {
                 type: "repeat",
                 ref: true,
@@ -153,10 +36,10 @@ define(["../logic/detailProcess", "../parts/common", 'utils'], function (pluginC
                 style: {
                     borderLeft: "solid 1px #e6e6e6",
                     background: "#e6e6e6",
-                    height: "82%",
+                    height: "100",
                     position: "absolute",
                     left: 22,
-                    bottom: '50%'
+                    bottom: 22
                 }
             },
             left_round: {

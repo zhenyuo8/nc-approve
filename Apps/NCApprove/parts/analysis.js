@@ -53,22 +53,30 @@ define(["./common"], function (c) {
                 var total={
                     title:'',
                     content:0,
-                    type:'Money',
+                    type:'Number',
                 }
                 for(var m=0;m<totalJsonContent.length;m++){
                     total.title=totalJsonContent[m].title +"(合计)";
-                    total.content+=(c.sumVal(totalJsonContent[m].amount.dV,2)-0);
-                }
-                // amount 大写
-                var totalAmount={
-                    title:total.title+('大写'),
-                    content: c.MoneyDX(total.content),
-                    type:'Money',
-                }
-                console.log(c.thousandthValue(total.content))
+                    total.amount=totalJsonContent[m].amount
+                    if(totalJsonContent[m].amount&&totalJsonContent[m].amount.dV){
+                        total.type='Money'
+                        total.content+=(c.sumVal(totalJsonContent[m].amount.dV,2)-0);
+                    }else{
+                        totalJsonContent[m].type='Number'
+                    }    
+                }   
                 total.content=c.thousandthValue(total.content)
                 jsonList.push(total);
-                jsonList.push(totalAmount);
+                // amount 大写
+                if(total.amount){
+                    var totalAmount={
+                        title:total.title+('大写'),
+                        content: c.MoneyDX(total.content.replace(/,/g,'')),
+                        type:'Money',
+                    }
+                    jsonList.push(totalAmount);
+                }
+                
             }
         }, 
         // 处理内容item

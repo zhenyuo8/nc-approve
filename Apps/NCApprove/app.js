@@ -1,14 +1,14 @@
 define(["utils"], function(utils) {
     var p = "local";
-    var host ="https://ys.esn.ren/approve-app";
+    var host ="http://10.4.111.31:8080/approve-client-adapter";
     if(p==="正式"){
-        host ="https://ys.yonyoucloud.com/approve-app";
+        host ="http://10.4.111.31:8080/approve-client-adapter";
     }else if(p==="pre-rel"){
-        host ="https://ys.esn.ren/approve-app";
-    }  else if (p === "dev") {//容器使用的配置项
-        host = "http://ys.chaoke.com:91/approve-app";
+        host ="http://10.4.111.31:8080/approve-client-adapter";
+    }  else if (p === "dev") {
+        host = "http://10.4.111.31:8080/approve-client-adapter";
     } else {
-        host = "https://ys.esn.ren/approve-app";
+        host = "http://10.4.111.31:8080/approve-client-adapter";
     }
 
     return {
@@ -17,7 +17,7 @@ define(["utils"], function(utils) {
                 host: host,
                 version:"1.2.0",
                 versionkey:"approveversionkey",
-                feature:"<div style='text-align:left'><div style='color:#666;font-size:15px;padding-bottom:2px'>新版本更新：</div><div class='feature-item'>1.支持多种应用场景的审批</div><div class='feature-item'>2.一键提交审批单据，快速了解审批流转情况</div><div class='feature-item'>3.审批消息推送，防止漏审</div></div>",
+                feature:"<div style='text-align:left'>审批</div>",
                 customerComponents: {
                     ApproveSearchView:"./components/ApproveSearchView",
                 },

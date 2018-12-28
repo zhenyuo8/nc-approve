@@ -1,11 +1,4 @@
-/**
- *
- *  修改说明：
- *      该js文件主要移植于云审的上传，另外云审中对于app的依赖也都相应引入了，主要用到了上传， 删除功能（界面也已不在使用该js中操作dom的方法），预览以及显示功能暂未使用，因整体逻辑复杂，故没有删除未用功能代码。
- *  reviser: 3fuyu
- *  date: 2017/3/7
- *
- */
+
 define(["../../parts/common", "utils", "./plupload.full.min","../../parts/language"], function (c, utils, plupload,language) {
 
     function formUploader(parentPageview, parent) {

@@ -1,10 +1,4 @@
-/**
- * Created by xiaoz on 16/8/13.
- */
-
 define(["utils", "pageview", "$", "tip"], function(utils, PageView, $, Tip) {
-
-
     var isPrevent = false,isReplaceGo = false,wantToPreventHashChange=false;
 
     function PageViewManager() {

@@ -1,14 +1,9 @@
-/**
- * Created by Gin on 17/2/25.
- */
-define(["../parts/currency", "utils", "../parts/format", "../parts/analysisContent","../../../components/dialog","../../../components/mapdialog","../parts/language"], function (c, utils, format, ac,Dialog,Mapdialog,language) {
+
+define(["utils", "../parts/format", "../parts/analysisContent","../../../components/dialog","../parts/language"], function (utils, format, ac,Dialog,language) {
     function PageLogic(config) {
         var _this = this;
         this.pageview = config.pageview;
         this.itemNum = 1;
-        var mapKey = '608d75903d29ad471362f8c58c550daf';
-        this.center = '';
-        this.locationObj='';
 
         this.classContent = {
             "alert-none": {
