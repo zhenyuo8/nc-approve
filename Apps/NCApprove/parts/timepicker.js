@@ -64,12 +64,6 @@ define(["utils",'../parts/language'],function(utils,language){
             "dd(c)": { "label": '', "start": 1, "end": 31 },
             "hh": { "label": '', "start": 0, "end": 23 },
             "mm": { "label": '', "start": 0, "end": 59 }
-            // "yyyy": { "label": language.datePicker.year, "start": 1950, "end": 2040 },
-            // "MM": { "label": language.datePicker.month, "start": 1, "end": 12 },
-            // "dd": { "label": language.datePicker.day, "start": 1, "end": 31 },
-            // "dd(c)": { "label": language.datePicker.day, "start": 1, "end": 31 },
-            // "hh": { "label": language.datePicker.hour, "start": 0, "end": 23 },
-            // "mm": { "label": language.datePicker.min, "start": 0, "end": 59 }
         };
 
         me.DTP_Conatiner = document.createElement("DIV");
@@ -91,7 +85,7 @@ define(["utils",'../parts/language'],function(utils,language){
         var CancelCol = document.createElement("DIV");
         var cancelBtnClassName = config.cancelBtnClassName||"";
         CancelCol.className = "tmpk-top-col tmpk-cancel "+cancelBtnClassName;
-        CancelCol.innerHTML =config.cancelText||language.cancel;
+        CancelCol.innerHTML =config.cancelText||language.formAction.cancel;
         CancelCol.addEventListener("click", function (e) {
             me.CancelClick(e);
         });
@@ -106,14 +100,14 @@ define(["utils",'../parts/language'],function(utils,language){
         var OkCol = document.createElement("DIV");
         var okBtnClassName = config.okBtnClassName||"";
         OkCol.className = "tmpk-top-col "+okBtnClassName;
-        OkCol.innerHTML = language.confirm;
+        OkCol.innerHTML = language.formTips.confirm;
         OkCol.addEventListener("click", function (e) {
             me.OkClick(e);
         })
 
         var ClearCol = document.createElement("DIV");
         ClearCol.className = "tmpk-top-col tmpk-clear";
-        ClearCol.innerHTML = language.clear;
+        ClearCol.innerHTML = language.formAction.clear;
         ClearCol.addEventListener("click", function (e) {
             me.ClearClick(e);
         })

@@ -30,7 +30,7 @@ define(["../parts/common", "utils", '../parts/language',"../../../components/dia
             sender.config.style.display = "none";
         },
         nodata_init:function (sender,params) {
-            sender.config.text=language.noContent;
+            sender.config.text=language.formTips.noContent;
         },
         searchInput_cancel: function (sender, params) {
             var value = params.value;
@@ -125,7 +125,7 @@ define(["../parts/common", "utils", '../parts/language',"../../../components/dia
             sender.config.autoLoadData = true;
         },
         row_status_init: function (sender, params) {//判断审批阶段状态
-            sender.config.text = language.status.going;
+            sender.config.text = language.formTips.going;
             sender.config.style.color = 'rgb(231, 167, 87)';
         },
         row_title_init: function (sender, params) {

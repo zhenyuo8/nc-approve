@@ -83,7 +83,7 @@ define(["../parts/common", "utils", "../../../components/dialog", "../parts/lang
                 contentText: language.formTips.makeSureDeleteFile,
                 btnDirection: "row",
                 buttons: [{
-                    title: language.cancel,
+                    title: language.formAction.cancel,
                     style: {
                         height: 45,
                         fontSize: 16,
@@ -94,7 +94,7 @@ define(["../parts/common", "utils", "../../../components/dialog", "../parts/lang
                         _this.deleteDialog.hide();
                     }
                 }, {
-                    title: language.confirm,
+                    title: language.formAction.confirm,
                     style: {
                         height: 45,
                         fontSize: 16,

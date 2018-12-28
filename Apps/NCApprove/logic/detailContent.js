@@ -47,80 +47,14 @@ define(["utils", "../parts/format", "../parts/analysisContent","../../../compone
             }
         },
 
-        assignbehind_title_init:function (sender,prams) {
-            sender.config.text=language.dealPage.assignParticipants;
-        },
-        copyuser_title_init:function (sender,prams) {
-            sender.config.text=language.componentTitle.copyuser;
-        },
         detail_item_content_init: function (sender, params) {
+            if(sender.datasource.type==="DataTable"){
+                sender.$el.hide();
+            }
             ac.getAnalysisContent(sender, this);
         },
         detail_item_content_click: function (sender, params) {
-            var _this=this;
-            if(sender.datasource.type==="Paragraph"){
-                if(params.e.target.tagName.toLowerCase()==="a"&&params.e.target.href){
-                    window.yyesn.client.openWindow(function () {},{
-                        orientation:'1',
-                        url:params.e.target.href,
-                    },function (b) {
-                        console.log(b);
-                    });
-                }
-            }
-            if(sender.datasource.detailUrl){
-                window.yyesn.client.openWindow(function () {},{
-                    orientation:'1',
-                    url:sender.datasource.detailUrl ,
-                },function (b) {
-                    console.log(b);
-                });
-            }else if(sender.datasource.refUrl){
-                this.pageview.ajax({
-                    url: "/process/getProcInsByFormId",
-                    timeout: 15000,
-                    type: "POST",
-                    data: {
-                        pk_bo:sender.datasource.refUrl.instId,
-                        pk_boins:sender.datasource.refUrl.taskId
-                    },
-                    success: function (data) {
-                        if (data.success) {
-                            _this.pageview.go('detail',{
-                                taskId: data.data.procDefId,
-                                instId: data.data.procInsId,
-                            });
-                        } else {
-                            _this.pageview.showTip({text: data.msg, duration: 1000});
-                        }
-                    },
-                    error: function (data) {
-                        _this.pageview.showTip({text: data.msg, duration: 1000});
-                    }
-                });
-            }
-
-            if(sender.datasource.type==='Location'){
-                params.e.preventDefault();
-                params.e.stopPropagation();
-                //如果已存地址，则展示改地址；如果开启自动定位则获取当前经纬度
-                if(sender.datasource.trueValue){
-                    _this.pageview.showLoading();
-                    try{
-                        _this.locationObj = JSON.parse(sender.datasource.trueValue);
-                        _this.center +=_this.locationObj.location;
-                    }catch(e){
-
-                    }
-                    setTimeout(function () {
-                        _this.renderMap();
-                    },100);
-
-                }
-            }
-            if(sender.datasource.type==="Hyperlink"&&sender.datasource.trueValue){
-                window.open(sender.datasource.trueValue,'_self');
-            }
+            
         },
         detail_item_title_init: function (sender, params) {
             switch (sender.datasource.type) {
@@ -223,36 +157,7 @@ define(["utils", "../parts/format", "../parts/analysisContent","../../../compone
         },
         detail_item_files_itemclick: function (sender, params) {
             var fileType = sender.datasource.type;
-            var previewFileName="";
-            if(!sender.datasource.url){
-                sender.datasource.url=sender.datasource.src||sender.datasource.aliOSSUrl;
-            }
-            var previewUrl=sender.datasource.url;
-            if(!sender.datasource.filename){
-                sender.datasource.filename=sender.datasource.name;
-            }
-            previewUrl=previewUrl?previewUrl:sender.datasource.aliOSSUrl;
-            if(previewUrl.indexOf('+')>-1&&decodeURIComponent(previewUrl).indexOf(sender.datasource.filename)===-1){
-                previewUrl=decodeURIComponent(previewUrl).replace(/\+/g,' ');
-            }
-            if(previewUrl.indexOf('https:')===-1&&previewUrl.indexOf('http:')===-1){
-                previewUrl=window.location.protocol+'//'+previewUrl;
-            }
-
-            if (!fileType && sender.datasource.filename) {
-                var filename = sender.datasource.filename;
-
-                if (filename.indexOf('jpeg') > -1 || filename.indexOf('bmp') > -1|| filename.indexOf('JPG') > -1 || filename.indexOf('gif') > -1 || filename.indexOf('png') > -1|| filename.indexOf('PNG') > -1|| filename.indexOf('JPEG') > -1|| filename.indexOf('GIF') > -1|| filename.indexOf('BMP') > -1) {
-                    fileType = 'image';
-                } else {
-                    fileType = '';
-                }
-            }
-
-            var cur=sender.datasource.url.split(".");
-            var curLast=cur[[cur.length-1]].toLocaleLowerCase();
-            previewFileName=language.previewExtra.name+curLast;
-            var _this=this;
+            
         },
         detail_files_view_left_init: function (sender, params) {
             if(!sender.datasource.url){
@@ -282,106 +187,11 @@ define(["utils", "../parts/format", "../parts/analysisContent","../../../compone
             }
         },
         detail_repeat_itemclick: function (sender, params) {
-            if (sender.datasource.type === "link" || sender.datasource.type === "Hyperlink") {
-                if (sender.datasource.content.indexOf("http://") === -1 && sender.datasource.content.indexOf("https://") === -1) {
-                    sender.datasource.content = window.location.protocol+"//" + sender.datasource.content;
-                }
-                window.open(sender.datasource.content, '_self');
-            }
-        },
-        moreBill_click: function (sender, params) {
-            var bpmActivityForms = window._applyHistory.bpmActivityForms;
-
-            localStorage.setItem("_applyHistory", JSON.stringify(window._applyHistory));
-            if (bpmActivityForms.length === 1) {
-                this.pageview.go("subformDetail", {id: bpmActivityForms[0].id});
-            } else {
-                this.pageview.go("subformList");
-            }
-        },
-        subform_view_title_init: function (sender, params) {
-            sender.config.preText = this.itemNum;
-            this.itemNum++;
-        },
-        subform_view_item_init: function (sender, params) {
-            sender.bindData(sender.rowInstance.datasource.item);
-        },
-        subform_view_item_content_init: function (sender, params) {
-            ac.getAnalysisContent(sender, this);
-        },
-        subform_view_item_title: function (sender, params) {
-            switch (sender.datasource.type) {
-                case "file":
-                case "File":
-                    sender.config.style.minHeight = 30;
-                    break;
-                case "Paragraph":
-                case "Picture":
-                case "DividingLine":
-                case "DataTable":
-                    sender.$el.hide();
-                    break;
-                default:
-                    var leftLength = sender.datasource.title.length,
-                        rightLength = sender.datasource.content ? sender.datasource.content.length : 0,
-                        totalLength = rightLength + leftLength;
-
-                    if (totalLength <= 24) {
-                        sender.config.style.width = 'auto';
-                        sender.config.style.paddingRight = '10';
-                    } else {
-                        sender.config.style.width = 'auto';
-                        sender.config.style.maxWidth = '110px';
-                        sender.config.style.paddingRight = '10';
-                    }
-
-                    break;
-            }
+            
         },
 
         datatable_view_item_content_click: function (sender, params) {
-            var _this=this;
-            if (sender.datasource.type === "link" || sender.datasource.type === "Hyperlink") {
-                if(sender.datasource.type==="Hyperlink"&&sender.datasource.trueValue){
-                    window.open(sender.datasource.trueValue,'_self');
-                }else{
-                    if (sender.datasource.content.indexOf("http://") === -1 && sender.datasource.content.indexOf("https://") === -1) {
-                        sender.datasource.content = window.location.protocol+"//" + sender.datasource.content;
-                    }
-                    window.open(sender.datasource.content,'_self');
-                }
-            }
-            if(sender.datasource.detailUrl){
-                window.yyesn.client.openWindow(function () {},{
-                    orientation:'1',
-                    url: sender.datasource.detailUrl,
-                },function (b) {
-                    console.log(b);
-                });
-            }else if(sender.datasource.refUrl){
-                this.pageview.ajax({
-                    url: "/process/getProcInsByFormId",
-                    timeout: 15000,
-                    type: "POST",
-                    data: {
-                        pk_bo:sender.datasource.refUrl.instId,
-                        pk_boins:sender.datasource.refUrl.taskId
-                    },
-                    success: function (data) {
-                        if (data.success) {
-                            _this.pageview.go('detail',{
-                                taskId: data.data.procDefId,
-                                instId: data.data.procInsId,
-                            });
-                        } else {
-                            _this.pageview.showTip({text: data.msg, duration: 1000});
-                        }
-                    },
-                    error: function (data) {
-                        _this.pageview.showTip({text: data.msg, duration: 1000});
-                    }
-                });
-            }
+            
         },
         datatable_view_item_content_init: function (sender, params) {
             ac.getAnalysisContent(sender, this);
@@ -390,43 +200,21 @@ define(["utils", "../parts/format", "../parts/analysisContent","../../../compone
             sender.config.preText = sender.datasource.num;
         },
         datatable_view_item_title_init: function (sender, params) {
-            switch (sender.datasource.type) {
-                case "file":
-                case "File":
-                    sender.config.style.minHeight = 30;
-                    // sender.config.style.backgroundColor = "rgb(251,251,251)";
-                    break;
-                case "Paragraph":
-                case "Picture":
-                case "DividingLine":
-                case "DataTable":
-                    sender.$el.hide();
-                    break;
-                default:
-                    var leftLength = sender.datasource.title.length,
-                        rightLength = sender.datasource.content ? sender.datasource.content.length : 0,
-                        totalLength = rightLength + leftLength;
-
-                    if (totalLength <= 24) {
-                        sender.config.style.width = 'auto';
-                        sender.config.style.paddingRight = '10';
-                    } else {
-                        sender.config.style.width = 'auto';
-                        sender.config.style.maxWidth = '50%';
-                        sender.config.style.paddingRight = '10';
-                    }
-
-                    break;
+            var leftLength = sender.datasource.title.length,
+                rightLength = sender.datasource.content ? sender.datasource.content.length : 0,
+                totalLength = rightLength + leftLength;
+            if (totalLength <= 24) {
+                sender.config.style.width = 'auto';
+                sender.config.style.paddingRight = '10';
+            } else {
+                sender.config.style.width = 'auto';
+                sender.config.style.maxWidth = '50%';
+                sender.config.style.paddingRight = '10';
             }
         },
 
         datatable_view_item_init: function (sender, params) {
             sender.bindData(sender.rowInstance.datasource.items);
-        },
-        copyuser_img_init: function (sender, params) {
-            if (!sender.datasource.pic) {
-                sender.config.src = "none.png";
-            }
         },
     };
     return PageLogic;

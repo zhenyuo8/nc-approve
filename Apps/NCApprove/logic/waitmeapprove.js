@@ -28,12 +28,12 @@ define(["../parts/common", "utils","../parts/language"], function (c, utils,lang
             }
         },
         segment_item_init: function (sender) {
-            sender.config.text=language.tasksProcessed;
+            sender.config.text=language.formTips.tasksProcessed;
             var title = sender.datasource.title;
             if (title === "待我审批"||title === "Pending") {
                 this.waitmeapproveLabel = sender;
                 if (this.countNum !== undefined && this.countNum !== null) {
-                    sender.config.text = language.tasksToProcess;
+                    sender.config.text = language.formTips.tasksToProcess;
                 }
             }
         },
@@ -56,7 +56,7 @@ define(["../parts/common", "utils","../parts/language"], function (c, utils,lang
             }
         },
         searchInput_init: function (sender, params) {
-            sender.config.cancel=language.cancel;
+            sender.config.cancel=language.formAction.cancel;
         },
 
         searchInput_cancel: function (sender, params) {

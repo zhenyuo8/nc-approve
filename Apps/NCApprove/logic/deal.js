@@ -35,14 +35,16 @@ define(["../parts/language"], function (language) {
         submitbtn_click:function (sender, params) {
             var para = {};
             try{
-                para.comment = sender.parent.parent.components.input_textarea_container.$el.find('textarea').val() || '';
+                para.approveMessage = sender.parent.parent.components.input_textarea_container.$el.find('textarea').val() || '';
             }catch(e){
                 console.log(e);
             }
             para.taskId=this.params.taskId;
             para.action=this.params.action;
+            para.cuserId=this.params.cuserId;
+            para.billId=this.params.billId;
+            para.billType=this.params.billType;
             para.groupid=this.params.groupid;
-            para.approveMessage=para.comment;
 
             if (this.params.action === 'agree') {
                 para.comment = this.beforeSubmit(para.comment)||language.formAction.agree;
@@ -59,12 +61,15 @@ define(["../parts/language"], function (language) {
         // 同意
         doAgree: function (_para) {
             var _this = this,
-                para = _para;
+                para = _para,url='/process/audit';
+                if(para.action==='reject'){
+                    url='/process/rejectTask';
+                }
             this.pageview.showLoading({text: language.formTips.onLoading, timeout: 8000});
             this.pageview.ajax({
-                url: 'servlet/ncExeAction',
+                url: url,
                 data: para,
-                type: 'POST',
+                type: 'GET',
                 success: function (data) {
                     _this.pageview.hideLoading(true);
                     if (data.code === 0) {
@@ -73,7 +78,7 @@ define(["../parts/language"], function (language) {
                             _this.pageview.goBack(-1);
                         }, 800);
                     } else {
-                        _this.pageview.showTip({text: data.msg, duration: 2000});
+                        _this.pageview.showTip({text: data.desc, duration: 2000});
                     }
                 },
                 error: function (data) {

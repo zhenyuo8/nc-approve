@@ -173,9 +173,11 @@ define(["../parts/common", "utils", "../libs/plupload/form-file-uploader", "../p
                 } else if (itemTitle === "流程"||itemTitle === "Process") {
                     this.initBtn();
                     this.viewpager.showItem("detailProcess_detail", {type: "process", parentThis: this});
-                    window.setTimeout(function () {
-                        _this.viewpager.curPageViewItem.contentInstance.refs.middle_flow_repeat.bindData(_this.processInstancesHistory(_this.processInstances));   
-                    }, 200);
+                    if(_this.processInstances){    
+                        window.setTimeout(function () {
+                            _this.viewpager.curPageViewItem.contentInstance.refs.middle_flow_repeat.bindData(_this.processInstancesHistory(_this.processInstances));   
+                        }, 200);
+                    }                
                 } else{
                     this.viewpager.showItem("detailAttachment_detail", {type: "attachment", parent: this});
                 }
@@ -240,10 +242,11 @@ define(["../parts/common", "utils", "../libs/plupload/form-file-uploader", "../p
         // 显示出来的和pop隐藏的按钮公用点击
         buttonGroupClick: function (sender) {
             var paras={
-                taskId:this.pageview.params.taskId,
                 action:sender.datasource.type,
-                userid:'',
-                groupid:'',
+                taskId: this.pageview.params.taskId || '',
+                cuserId:this.pageview.params.cuserId||'',
+                billId:this.pageview.params.billId||'',
+                billType:this.pageview.params.billType||'',
             };
             this.pageview.go("deal", paras);
         },

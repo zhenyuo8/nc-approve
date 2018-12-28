@@ -38,9 +38,9 @@ define(["./common"], function (c) {
                     if(!isNaN(jsonComponet.content-0)){
                         jsonComponet.type='Money';
                     }
-                    if(!jsonComponet.digest){
+                    if((!bodyItem[j].digest||bodyItem[j].hasOwnProperty('leavebegintime')||bodyItem[j].hasOwnProperty('leaveendtime')||bodyItem[j].hasOwnProperty('leavehour'))&&!bodyItem[j].hasOwnProperty('leavebegintimeother')&&!bodyItem[j].hasOwnProperty('leavehourother')){
                         jsonTable.items.push(jsonComponet);
-                    }else if(jsonComponet.type==='Money'){
+                    }else if(jsonComponet.type==='Money'&&!bodyItem[j].hasOwnProperty('leavehourother')&&!bodyItem[j].hasOwnProperty('leavebegintimeother')){
                         totalJsonContent.push(jsonComponet)
                     }    
                 }
@@ -97,16 +97,23 @@ define(["./common"], function (c) {
             if(obj[contentKey] instanceof Object){
                 if(obj[contentKey].hasOwnProperty('year')){
                     var arr=[obj[contentKey].year,obj[contentKey].month,obj[contentKey].day];
-                    data.content=arr.join('-');
+                    data.content=arr.join('-') + " "+(obj[contentKey].time?obj[contentKey].time:'');
                 }else{
                     data.content='';
                 }
             }else{
                 data.content=obj[contentKey];
             }
+            if(obj.hasOwnProperty('leavehour')){
+                data.content+=(c.sumVal(obj.leavehour.dV,0)-0);
+            }
+            if(contentKey.indexOf('pk_leavetype')>-1){
+                data.content=obj[contentKey].text;
+            }
             if(obj.hasOwnProperty('amount')){
                 data.amount=obj.amount;
             }
+
             data.title=obj[titleKey];
             data.type='Text';
             data.digest=obj.digest

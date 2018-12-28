@@ -18,7 +18,7 @@ define(["../parts/common", "utils", "../../../components/dialog","../parts/langu
         },
         flow_right_content_middle_bottom_title_init: function (sender, params) {
             if (sender.datasource.activityType === "startEvent") {
-                sender.config.text = language.status.SubmitApplication;
+                sender.config.text = language.formTips.SubmitApplication;
             } else {
                 this.setAnalysis(sender, "status");
             }
@@ -43,7 +43,7 @@ define(["../parts/common", "utils", "../../../components/dialog","../parts/langu
             } else if (type === "status") {
                 var msg = sender.datasource.taskComments?sender.datasource.taskComments:'';
                 
-                var taskAuditDesc = sender.datasource.taskAuditDesc || (sender.datasource.endTime && sender.datasource.endTime.indexOf("9999") === -1 ? language.formAction.agree : language.tasksToProcess);
+                var taskAuditDesc = sender.datasource.taskAuditDesc || (sender.datasource.endTime && sender.datasource.endTime.indexOf("9999") === -1 ? language.formAction.agree : language.formTips.tasksToProcess);
                 sender.config.text = taskAuditDesc + " " + msg;
             } else if (type === "icon") {
                 if(!sender.datasource.endTime&&!sender.datasource.taskAuditDesc){
