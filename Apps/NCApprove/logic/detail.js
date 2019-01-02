@@ -60,7 +60,7 @@ define(["../parts/common", "utils", "../libs/plupload/form-file-uploader", "../p
                             jsonList = analysis.getAnalysis_ifroms(data);
                             viewpager.curPageViewItem.contentInstance.refs.detail_repeat.bindData(jsonList);
                             _this.item.push({label:'同意',id:'',type:'agree'});
-                            _this.item.push({label:'不同意',id:'',type:'disagree'});
+                            // _this.item.push({label:'不同意',id:'',type:'disagree'});
                             _this.item.push({label:'驳回',id:'',type:'reject'});
                             _this.initBtn();
                             _this.loadProcessData();
@@ -98,19 +98,12 @@ define(["../parts/common", "utils", "../libs/plupload/form-file-uploader", "../p
         },
         //显示按钮
         initBtn: function () {
-            for (var idx = 0; idx < this.item.length; idx++) {
-                if (this.item[idx].label.indexOf("撤回申请") > -1) {
-                    this.item.splice(idx, 1);
-                    break;
-                }
-            }
             if (this.item.length > 4) {
                 var btnItem = [];
                 var moreItem = [];
                 for (var itemIdx = 0; itemIdx < this.item.length; itemIdx++) {
                     if (itemIdx >= 3) {
                         moreItem.push(this.item[itemIdx]);
-                        // item.remove(itemIdx);
                     } else {
                         btnItem.push(this.item[itemIdx]);
                     }
