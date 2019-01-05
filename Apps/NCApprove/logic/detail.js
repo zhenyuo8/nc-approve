@@ -265,7 +265,7 @@ define(["../parts/common", "utils", "../libs/plupload/form-file-uploader", "../p
                 var _this=this;
                 if(this.billMaker){
                     _this.pageview.delegate('userinfo_name', function (target) {
-                        var name=_this.billMaker.personlist[0].name+'的' +_this.instName           
+                        var name=_this.billMaker.personlist[0].name+'的' +_this.instName;           
                         target.setText(name);
                     }); 
                 }
