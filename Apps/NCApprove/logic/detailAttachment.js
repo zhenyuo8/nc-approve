@@ -39,16 +39,15 @@ define(["../parts/common", "utils", "../../../components/dialog", "../parts/lang
                     },
                     success: function (listData) {
                         _this.pageview.hideLoading(true);
-                        console.log(listData.data)
                         if(listData.data&&listData instanceof Array){
                             _this.pageview.delegate('flow_repeat', function (target) {
                                 target.bindData(listData.data);
                             });
                         }else{
-                            var data=[{name: "测试word文档", status: "审批中",time:'2018-12-05 12:55:30',author:'陈展鹏',type:'png',"aliOSSUrl":"https://static.yonyoucloud.com/102136/3160785/201812/7/1544162843134f4e62c39e5228c660471c4397a1cb.jpg"}, {name: "八卦图片", status: "审批中",time:'2018-11-12 12:55:30',author:'周武王',type:'application/pdf',"aliOSSUrl":"https://ncc-ys-prod-oss.oss-cn-beijing.aliyuncs.com/xcnisnhw/52d5f399-47f7-4ce1-b7bf-6a4d9374cdda/1545881640347_3.%20%E5%91%98%E5%B7%A5%E8%BD%AC%E6%AD%A3%E5%AE%A1%E6%89%B9%E8%A1%A8.pdf"}];
-                            _this.pageview.delegate('flow_repeat', function (target) {
-                                target.bindData(data);
-                            });
+                            // var data=[{name: "测试word文档", status: "审批中",time:'2018-12-05 12:55:30',author:'陈展鹏',type:'png',"aliOSSUrl":"https://static.yonyoucloud.com/102136/3160785/201812/7/1544162843134f4e62c39e5228c660471c4397a1cb.jpg"}, {name: "八卦图片", status: "审批中",time:'2018-11-12 12:55:30',author:'周武王',type:'application/pdf',"aliOSSUrl":"https://ncc-ys-prod-oss.oss-cn-beijing.aliyuncs.com/xcnisnhw/52d5f399-47f7-4ce1-b7bf-6a4d9374cdda/1545881640347_3.%20%E5%91%98%E5%B7%A5%E8%BD%AC%E6%AD%A3%E5%AE%A1%E6%89%B9%E8%A1%A8.pdf"}];
+                            // _this.pageview.delegate('flow_repeat', function (target) {
+                            //     target.bindData(data);
+                            // });
                         }
                        
                     },

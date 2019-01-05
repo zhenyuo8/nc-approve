@@ -181,11 +181,11 @@ define(["../parts/common", "utils", "../libs/plupload/form-file-uploader", "../p
             }
         },
         processInstancesHistory:function (processInstances){
-            var arr=[]
+            var arr=[];
             if(processInstances&&processInstances instanceof Array&&processInstances[0]){
                 var list=processInstances[0].approvehistorylinelist[0].flowhistory;
                 var startUser=processInstances[0].approvehistorylinelist[0].flowhistory;
-                var timeList=processInstances[0].approvehistorylinelist[0].approvehistorylinelist
+                var timeList=processInstances[0].approvehistorylinelist[0].approvehistorylinelist;
 
                 for(var i=0;i<list.length;i++){
                     if(list[i].unittype!=='submit'){
@@ -206,7 +206,7 @@ define(["../parts/common", "utils", "../libs/plupload/form-file-uploader", "../p
                                 currentUserId:'',
                             });
                         }else{
-                            this.currentTodoTask=list[i]
+                            this.currentTodoTask=list[i];
                             arr.unshift({
                                 activityType:list[i].unittype,
                                 assignee:'',
@@ -224,7 +224,7 @@ define(["../parts/common", "utils", "../libs/plupload/form-file-uploader", "../p
                             });
                         }
                     }else{
-                        this.billMaker=list[i]
+                        this.billMaker=list[i];
                     } 
                 }
                 // 处理handledate
@@ -232,14 +232,14 @@ define(["../parts/common", "utils", "../libs/plupload/form-file-uploader", "../p
                     timeList.forEach(function(item,index){    
                         arr.forEach(function(its,ind){
                             if(item.handlername==its.userName){
-                                its.endTime=item.handledate
+                                its.endTime=item.handledate;
                             }
-                        })
-                    })
+                        });
+                    });
                 }
                 arr.sort(function(a,b){
-                    return new Date(b.endTime).getTime()-new Date(a.endTime).getTime()
-                })
+                    return new Date(b.endTime).getTime()-new Date(a.endTime).getTime();
+                });
                 if(startUser){
                     startUser.forEach(function(item,index){
                         if(item.unittype==="submit"){
@@ -262,7 +262,7 @@ define(["../parts/common", "utils", "../libs/plupload/form-file-uploader", "../p
                         }
                     });
                 }
-                var _this=this
+                var _this=this;
                 if(this.billMaker){
                     _this.pageview.delegate('userinfo_name', function (target) {
                         var name=_this.billMaker.personlist[0].name+'的' +_this.instName           
@@ -303,7 +303,7 @@ define(["../parts/common", "utils", "../libs/plupload/form-file-uploader", "../p
                 groupid:this.pageview.params.groupid||'0001V610000000000EEN'
             };
             // 指派检查
-            this.AgreeAndAssign(paras)
+            this.AgreeAndAssign(paras);
         },
         AgreeAndAssign: function (_para) {
             var _this = this,

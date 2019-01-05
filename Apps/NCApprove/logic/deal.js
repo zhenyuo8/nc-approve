@@ -3,7 +3,6 @@ define(["../parts/language"], function (language) {
         this.pageview = config.pageview;
         this.params = this.pageview.params || {};
         this.comment = '';
-        console.log(this)
        
     }
 
