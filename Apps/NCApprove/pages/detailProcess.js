@@ -36,10 +36,10 @@ define(["../logic/detailProcess", "../parts/common", 'utils'], function (pluginC
                 style: {
                     borderLeft: "solid 1px #e6e6e6",
                     background: "#e6e6e6",
-                    height: "100",
+                    height: "95%",
                     position: "absolute",
                     left: 22,
-                    bottom: 22
+                    bottom: 29
                 }
             },
             left_round: {

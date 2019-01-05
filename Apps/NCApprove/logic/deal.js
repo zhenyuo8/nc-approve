@@ -3,13 +3,11 @@ define(["../parts/language"], function (language) {
         this.pageview = config.pageview;
         this.params = this.pageview.params || {};
         this.comment = '';
+        console.log(this)
        
     }
 
     pageLogic.prototype = {
-        onPageResume: function () {
-
-        },
         // 意见输入框初始化
         input_textarea_init: function (sender, params) {
             if (this.params.action === 'agree') {
@@ -41,9 +39,9 @@ define(["../parts/language"], function (language) {
             }
             para.taskId=this.params.taskId;
             para.action=this.params.action;
-            para.cuserId=this.params.cuserId;
+            para.userid=this.params.userid;
             para.billId=this.params.billId;
-            para.billType=this.params.billType;
+            para.billtype=this.params.billtype;
             para.groupid=this.params.groupid;
 
             if (this.params.action === 'agree') {
@@ -79,6 +77,9 @@ define(["../parts/language"], function (language) {
                         }, 800);
                     } else {
                         _this.pageview.showTip({text: data.desc, duration: 2000});
+                        setTimeout(function () {
+                            _this.pageview.goBack(-2);
+                        }, 2000);
                     }
                 },
                 error: function (data) {

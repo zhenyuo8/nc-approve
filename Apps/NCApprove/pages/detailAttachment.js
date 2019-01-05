@@ -120,7 +120,6 @@ define(["../logic/detailAttachment", "../parts/common", 'utils'], function (plug
             flow_right: {
                 type: "view",
                 style: {
-                    // border:"solid 1px #000",
                     width: 120,
                     flexDirection: "column",
                     alignItems: "flex-end",
@@ -134,7 +133,8 @@ define(["../logic/detailAttachment", "../parts/common", 'utils'], function (plug
                 text: "00:00",
                 style: {
                     fontSize: 13,
-                    paddingBottom: 3
+                    paddingBottom: 3,
+                    textAlign:'right'
                 }
             },
             //先存放删除按钮

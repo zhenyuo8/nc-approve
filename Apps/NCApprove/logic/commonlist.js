@@ -4,7 +4,6 @@
 define(["../parts/common", "utils", '../parts/language',"../../../components/dialog",], function (c, utils, language,Dialog) {
     function pageLogic(config) {
         this.pageview = config.pageview;
-        var type = this.pageview.params.type;
         this.fullPageKey = this.pageview.config.fullPageKey;
         this.listDataSource = [];
         this.searchValue = false;
@@ -22,10 +21,7 @@ define(["../parts/common", "utils", '../parts/language',"../../../components/dia
             this.pageview.refs.searchInput._focus();
             this.pageview.refs.approveSelector.hideDropDown();
         },
-        loadNum: function () {
-            var _this = this;
 
-        },
         searchview_init: function (sender, params) {
             sender.config.style.display = "none";
         },
@@ -139,9 +135,9 @@ define(["../parts/common", "utils", '../parts/language',"../../../components/dia
         listview_rowclick: function (sender, params) {
             this.pageview.go("detail", {
                 taskId: sender.datasource.taskid,
-                cuserId:sender.datasource.cuserId,
+                userid:sender.datasource.cuserId,
                 billId:sender.datasource.billId,
-                billType:sender.datasource.billType,
+                billtype:sender.datasource.billType,
             });
         },
     };

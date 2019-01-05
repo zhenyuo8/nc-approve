@@ -5,7 +5,6 @@ define(["../parts/common", "utils", "../libs/plupload/form-file-uploader", "../p
         var _this = this;
         this.item = [];
         this.pageview = config.pageview;
-        this.currentTodoTaskInitAttCnt = 0;//当前待办任务初始时已上传附件数
         this.fileMaxNum = 50; // 附件默认最大数量
         this.fileNum = 0; // 附件现有数量
         if (utils.deviceInfo().isAndroid) {
@@ -41,17 +40,21 @@ define(["../parts/common", "utils", "../libs/plupload/form-file-uploader", "../p
                     type: 'GET',
                     data: {
                         taskId: this.pageview.params.taskId || '',
-                        cuserId:this.pageview.params.cuserId||'',
                         billId:this.pageview.params.billId||'',
-                        billType:this.pageview.params.billType||'',
+                        billtype:this.pageview.params.billtype||this.pageview.params.pk_billtype||'',
+                        userid:this.pageview.params.userid||'',
+                        groupid:this.pageview.params.groupid||'0001V610000000000EEN'
                     },
                     success: function (listData) {
-                        var data=JSON.parse(listData.data);
-                        setTimeout(function(){                         
-                            _this.pageview.delegate('userinfo_name', function (target) {
-                                _this.instName = data[0].billtypename;
-                                target.setText(_this.instName);
-                            });
+                        var data;
+                        try{
+                            data=JSON.parse(listData.data);
+                        }catch(e){
+                            data=listData.data;
+                        }
+                        setTimeout(function(){
+                            _this.instName = data[0].billtypename;                      
+                            
                             _this.pageview.refs.result_text.innerText.html('审批中');
                             _this.pageview.refs.result_text.innerText.css('color','#e7a757');
                             _this.pageview.refs.result_text.$el.show();
@@ -59,10 +62,7 @@ define(["../parts/common", "utils", "../libs/plupload/form-file-uploader", "../p
                             var viewpager = _this.pageview.refs.top_view.components.viewpager;
                             jsonList = analysis.getAnalysis_ifroms(data);
                             viewpager.curPageViewItem.contentInstance.refs.detail_repeat.bindData(jsonList);
-                            _this.item.push({label:'同意',id:'',type:'agree'});
-                            // _this.item.push({label:'不同意',id:'',type:'disagree'});
-                            _this.item.push({label:'驳回',id:'',type:'reject'});
-                            _this.initBtn();
+                            
                             _this.loadProcessData();
                             _this.pageview.hideLoading(true);
                         },500);
@@ -75,19 +75,23 @@ define(["../parts/common", "utils", "../libs/plupload/form-file-uploader", "../p
             this.pageview.ajax(listAjaxConfig);
         },
         loadProcessData: function () {
-            var _this = this,
-                listAjaxConfig = {
+            var _this=this;
+            var listAjaxConfig = {
                     url: '/process/getApprove',
                     type: 'GET',
                     data: {
                         taskId: this.pageview.params.taskId || '',
-                        cuserId:this.pageview.params.cuserId||'',
                         billId:this.pageview.params.billId||'',
-                        billType:this.pageview.params.billType||'',
+                        billtype:this.pageview.params.billtype||this.pageview.params.pk_billtype||'',
+                        userid:this.pageview.params.userid||'',
+                        groupid:this.pageview.params.groupid||'0001V610000000000EEN'
                     },
                     success: function (listData) {
-                        var data=JSON.parse(listData.data);
-                        _this.processInstances=data;
+                        try{
+                            _this.processInstances=_this.processInstancesHistory(JSON.parse(listData.data));    
+                        }catch(e){
+                            _this.processInstances=_this.processInstancesHistory(listData.data);
+                        }
                     },
                     error: function (listData) {
                         _this.pageview.showTip({text: listData, duration: 2000});
@@ -166,9 +170,9 @@ define(["../parts/common", "utils", "../libs/plupload/form-file-uploader", "../p
                 } else if (itemTitle === "流程"||itemTitle === "Process") {
                     this.initBtn();
                     this.viewpager.showItem("detailProcess_detail", {type: "process", parentThis: this});
-                    if(_this.processInstances){    
+                    if(_this.processInstances){   
                         window.setTimeout(function () {
-                            _this.viewpager.curPageViewItem.contentInstance.refs.middle_flow_repeat.bindData(_this.processInstancesHistory(_this.processInstances));   
+                            _this.viewpager.curPageViewItem.contentInstance.refs.middle_flow_repeat.bindData(_this.processInstances);   
                         }, 200);
                     }                
                 } else{
@@ -177,46 +181,102 @@ define(["../parts/common", "utils", "../libs/plupload/form-file-uploader", "../p
             }
         },
         processInstancesHistory:function (processInstances){
-            var list=processInstances[0].approvehistorylinelist,arr=[];
-            var startUser=processInstances[0].flowhistory;
-            var obj={};
-            for(var i=0;i<list.length;i++){
-                arr.push({
-                    activityType:'approveStartEvent',
-                    assignee:'',
-                    deleteReason:'',
-                    dueDate:'',
-                    endTime:list[i].handledate||'',
-                    memberId:'',
-                    name:'',
-                    processDefinitionId:'',
-                    taskAuditDesc:list[i].action||'',
-                    taskComments:list[i].note||'',
-                    taskId:'',
-                    userName:list[i].handlername||'',
-                    currentUserId:'',
-                });
-            }
-            startUser.forEach(function(item,index){
-                if(item.unittype==="submit"){
-                    arr.push({
-                        activityType:'startEvent',
-                        assignee:'',
-                        deleteReason:'',
-                        dueDate:'',
-                        endTime:item.time,
-                        startTime:item.time,
-                        memberId:'',
-                        name:'',
-                        processDefinitionId:'',
-                        taskAuditDesc:'',
-                        taskComments:item.action,
-                        taskId:'',
-                        userName:item.personlist[0].name,
-                        currentUserId:''
+            var arr=[]
+            if(processInstances&&processInstances instanceof Array&&processInstances[0]){
+                var list=processInstances[0].approvehistorylinelist[0].flowhistory;
+                var startUser=processInstances[0].approvehistorylinelist[0].flowhistory;
+                var timeList=processInstances[0].approvehistorylinelist[0].approvehistorylinelist
+
+                for(var i=0;i<list.length;i++){
+                    if(list[i].unittype!=='submit'){
+                        if(list[i].unittype==="solved"){
+                            arr.push({
+                                activityType:list[i].unittype,
+                                assignee:'',
+                                deleteReason:'',
+                                dueDate:'',
+                                endTime:list[i].handledate||'',
+                                memberId:list[i].personlist[0].id,
+                                name:'',
+                                processDefinitionId:'',
+                                taskAuditDesc:list[i].actionname||'同意',
+                                taskComments:list[i].advice||'批准',
+                                taskId:'',
+                                userName:list[i].personlist[0].name||'',
+                                currentUserId:'',
+                            });
+                        }else{
+                            this.currentTodoTask=list[i]
+                            arr.unshift({
+                                activityType:list[i].unittype,
+                                assignee:'',
+                                deleteReason:'',
+                                dueDate:'',
+                                endTime:list[i].handledate||'',
+                                memberId:list[i].personlist[0].id,
+                                name:'',
+                                processDefinitionId:'',
+                                taskAuditDesc:list[i].actionname||'',
+                                taskComments:list[i].advice||'',
+                                taskId:'',
+                                userName:list[i].personlist[0].name||'',
+                                currentUserId:'',
+                            });
+                        }
+                    }else{
+                        this.billMaker=list[i]
+                    } 
+                }
+                // 处理handledate
+                if(timeList&&timeList instanceof Array){
+                    timeList.forEach(function(item,index){    
+                        arr.forEach(function(its,ind){
+                            if(item.handlername==its.userName){
+                                its.endTime=item.handledate
+                            }
+                        })
+                    })
+                }
+                arr.sort(function(a,b){
+                    return new Date(b.endTime).getTime()-new Date(a.endTime).getTime()
+                })
+                if(startUser){
+                    startUser.forEach(function(item,index){
+                        if(item.unittype==="submit"){
+                            arr.push({
+                                activityType:'startEvent',
+                                assignee:'',
+                                deleteReason:'',
+                                dueDate:'',
+                                endTime:item.time,
+                                startTime:item.time,
+                                memberId:'',
+                                name:'',
+                                processDefinitionId:'',
+                                taskAuditDesc:'',
+                                taskComments:item.action,
+                                taskId:'',
+                                userName:item.personlist[0].name,
+                                currentUserId:''
+                            });
+                        }
                     });
                 }
-            });
+                var _this=this
+                if(this.billMaker){
+                    _this.pageview.delegate('userinfo_name', function (target) {
+                        var name=_this.billMaker.personlist[0].name+'的' +_this.instName           
+                        target.setText(name);
+                    }); 
+                }
+                _this.item.push({label:'同意',id:'',type:'agree'});
+                // _this.item.push({label:'不同意',id:'',type:'disagree'});
+                _this.item.push({label:'驳回',id:'',type:'reject'});
+                _this.initBtn();
+            }
+            
+            
+            
             return arr;
         },
         morePopover_init: function (sender, params) {
@@ -237,11 +297,40 @@ define(["../parts/common", "utils", "../libs/plupload/form-file-uploader", "../p
             var paras={
                 action:sender.datasource.type,
                 taskId: this.pageview.params.taskId || '',
-                cuserId:this.pageview.params.cuserId||'',
                 billId:this.pageview.params.billId||'',
-                billType:this.pageview.params.billType||'',
+                billtype:this.pageview.params.billtype||this.pageview.params.pk_billtype||'',
+                userid:this.pageview.params.userid||'',
+                groupid:this.pageview.params.groupid||'0001V610000000000EEN'
             };
-            this.pageview.go("deal", paras);
+            // 指派检查
+            this.AgreeAndAssign(paras)
+        },
+        AgreeAndAssign: function (_para) {
+            var _this = this,
+                para = _para,url='/process/assignCheck';
+
+            this.pageview.showLoading({text: language.formTips.onLoading, timeout: 8000});
+            this.pageview.ajax({
+                url: url,
+                data: para,
+                type: 'GET',
+                success: function (data) {
+                    _this.pageview.hideLoading(true);
+                    if (data.flag === '0') {
+                        if(JSON.parse(data.data).psnstructlist&&JSON.parse(data.data).psnstructlist.length!=0){
+                            _this.pageview.showTip({text: '下一步为指派环节', duration: 2000});
+                        }else{
+                            _this.pageview.go("deal", para);
+                        }
+                    } else {
+                        _this.pageview.go("deal", para);
+                        // _this.pageview.showTip({text: data.desc, duration: 2000});   
+                    }
+                },
+                error: function (data) {
+                    
+                }
+            });
         },
         
         //文件上传控件

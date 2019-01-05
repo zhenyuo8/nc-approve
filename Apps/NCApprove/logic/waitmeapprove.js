@@ -49,8 +49,7 @@ define(["../parts/common", "utils","../parts/language"], function (c, utils,lang
                     this.searchview.show=true;
                 if (itemTitle === "我已审批"||itemTitle === "Approved") {
                     this.viewpager.showItem("commonlist_waitmyapprovedone", {type: "done"});
-                } else {
-                    
+                } else {    
                     this.viewpager.showItem("commonlist_waitmyapprove", {type: "waiting"});
                 }
             }
