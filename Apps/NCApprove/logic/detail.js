@@ -5,6 +5,7 @@ define(["../parts/common", "utils", "../libs/plupload/form-file-uploader", "../p
         var _this = this;
         this.item = [];
         this.pageview = config.pageview;
+        this.state=this.pageview.params.state;
         this.fileMaxNum = 50; // 附件默认最大数量
         this.fileNum = 0; // 附件现有数量
         if (utils.deviceInfo().isAndroid) {
@@ -165,10 +166,8 @@ define(["../parts/common", "utils", "../libs/plupload/form-file-uploader", "../p
                 var itemData = item.datasource;
                 var itemTitle = $.trim(itemData.title);
                 if (itemTitle === "详情"||itemTitle === "Form") {
-                    this.initBtn();
                     this.viewpager.showItem("detailContent_detail", {type: "content"});
                 } else if (itemTitle === "流程"||itemTitle === "Process") {
-                    this.initBtn();
                     this.viewpager.showItem("detailProcess_detail", {type: "process", parentThis: this});
                     if(_this.processInstances){   
                         window.setTimeout(function () {
@@ -229,7 +228,7 @@ define(["../parts/common", "utils", "../libs/plupload/form-file-uploader", "../p
                 }
                 // 处理handledate
                 if(timeList&&timeList instanceof Array){
-                    timeList.forEach(function(item,index){    
+                    timeList.forEach(function(item,index){   
                         arr.forEach(function(its,ind){
                             if(item.handlername==its.userName){
                                 its.endTime=item.handledate;
@@ -272,7 +271,9 @@ define(["../parts/common", "utils", "../libs/plupload/form-file-uploader", "../p
                 _this.item.push({label:'同意',id:'',type:'agree'});
                 // _this.item.push({label:'不同意',id:'',type:'disagree'});
                 _this.item.push({label:'驳回',id:'',type:'reject'});
-                _this.initBtn();
+                if(_this.state!==1&&_this.state!=='1'){
+                    _this.initBtn();
+                }    
             }
             
             
@@ -303,7 +304,12 @@ define(["../parts/common", "utils", "../libs/plupload/form-file-uploader", "../p
                 groupid:this.pageview.params.groupid||'0001V610000000000EEN'
             };
             // 指派检查
-            this.AgreeAndAssign(paras);
+            if(sender.datasource.type==='reject'){
+                this.pageview.go("deal", paras);
+            }else{
+                this.AgreeAndAssign(paras);
+            }
+           
         },
         AgreeAndAssign: function (_para) {
             var _this = this,

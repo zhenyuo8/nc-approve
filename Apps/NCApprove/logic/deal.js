@@ -62,6 +62,7 @@ define(["../parts/language"], function (language) {
                 if(para.action==='reject'){
                     url='/process/rejectTask';
                 }
+            
             this.pageview.showLoading({text: language.formTips.onLoading, timeout: 8000});
             this.pageview.ajax({
                 url: url,
@@ -69,11 +70,16 @@ define(["../parts/language"], function (language) {
                 type: 'GET',
                 success: function (data) {
                     _this.pageview.hideLoading(true);
-                    if (data.code === 0) {
-                        _this.pageview.showTip({text: language.formTips.successfullyApproved, duration: 800});
+                    if (data.flag === '0') {
+                        try{
+                            _this.pageview.showTip({text: JSON.parse(data.data)[0].des, duration: 3000});
+                        }catch(e){
+                            _this.pageview.showTip({text: _this.pageview.params.action==='reject'?language.formTips.rejectSucess:language.formTips.approvalSucess, duration: 3000});
+                        }
+                        
                         setTimeout(function () {
-                            _this.pageview.goBack(-1);
-                        }, 800);
+                            _this.pageview.goBack(-2);
+                        }, 2000);
                     } else {
                         _this.pageview.showTip({text: data.desc, duration: 2000});
                         setTimeout(function () {

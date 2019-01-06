@@ -30,6 +30,8 @@ define([], function () {
                 'deleteSuccess':' 删除成功！ ',
                 'deleteFail':' 删除失败，稍后再试 ',
                 'makeSureDeleteFile':'确定要删除该附件吗? ',
+                'approvalSucess':'审批成功',
+                'rejectSucess':'驳回成功'
             },
             'formAction':{
                 'agree':' 同意 ',
@@ -61,6 +63,8 @@ define([], function () {
                 'deleteSuccess':' Delete Success ',
                 'deleteFail':' Delete Fail, Please try again later ',
                 'makeSureDeleteFile':'Are you sure you wish to delete this attachment? ',
+                'approvalSucess':'Approval Success',
+                'rejectSucess':' Reject Success',
             },
             'formAction':{
                 'agree':' Consent ',
