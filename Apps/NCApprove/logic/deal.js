@@ -44,13 +44,13 @@ define(["../parts/language"], function (language) {
             para.groupid=this.params.groupid;
 
             if (this.params.action === 'agree') {
-                para.comment = this.beforeSubmit(para.comment)||language.formAction.agree;
+                para.approveMessage = this.beforeSubmit(para.approveMessage)||language.formAction.agree;
                 this.doAgree(para);
             } else if (this.params.action === 'disagree') {
-                para.comment = this.beforeSubmit(para.comment)||language.formAction.disagreee||'不同意';
+                para.approveMessage = this.beforeSubmit(para.approveMessage)||language.formAction.disagreee||'不同意';
                 this.doAgree(para);
             }else if(this.params.action==='reject'){
-                para.comment = this.beforeSubmit(para.comment)||language.formAction.reject;
+                para.approveMessage = this.beforeSubmit(para.approveMessage)||language.formAction.reject;
                 this.doAgree(para);
             }
         },
