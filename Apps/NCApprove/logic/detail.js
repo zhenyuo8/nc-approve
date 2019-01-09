@@ -8,13 +8,14 @@ define(["../parts/common", "utils", "../libs/plupload/form-file-uploader", "../p
         this.state=this.pageview.params.state;
         this.fileMaxNum = 50; // 附件默认最大数量
         this.fileNum = 0; // 附件现有数量
-        if (utils.deviceInfo().isAndroid) {
-            window.setTimeout(function () {
-                _this.loadData();
-            }, 300);
-        } else {
-            _this.loadData();
-        }
+        _this.loadData();
+        // if (utils.deviceInfo().isAndroid) {
+        //     window.setTimeout(function () {
+        //         _this.loadData();
+        //     }, 300);
+        // } else {
+        //     _this.loadData();
+        // }
     }
 
     PageLogic.prototype = {
