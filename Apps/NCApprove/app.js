@@ -8,7 +8,8 @@ define(["utils"], function(utils) {
     }  else if (p === "dev") {
         host = "http://10.4.111.31:8080/approve-client-adapter";
     } else {
-        host = "http://10.4.111.31:8080/approve-client-adapter";
+        // host = "http://10.4.111.31:8080/approve-client-adapter";
+        host="http://114.113.234.244:8095/approve-client-adapter"
     }
 
     return {

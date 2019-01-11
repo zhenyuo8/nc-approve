@@ -55,7 +55,7 @@ define(["../logic/detail", "../parts/common", 'utils'], function (pluginClass, c
             },
             result_text: {
                 type: "text",
-                text: "进行中",
+                text: "",
                 ref: true,
                 style: {
                     display: "none",

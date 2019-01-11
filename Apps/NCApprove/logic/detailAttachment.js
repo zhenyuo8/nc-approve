@@ -5,12 +5,12 @@ define(["../parts/common", "utils", "../../../components/dialog", "../parts/lang
         this.pageview = config.pageview;
         this._taskId = this.pageview.params.taskId;
         this.parentThis = this.pageview.viewpagerParams.parent;
-        this.loadData();
+        // this.loadData();
     }
 
     pageLogic.prototype = {
         onPageResume: function () {
-            this._loadData();
+            // this._loadData();
         },
         loadData: function () {
             var _this = this;
@@ -20,10 +20,10 @@ define(["../parts/common", "utils", "../../../components/dialog", "../parts/lang
                 text: language.formTips.onLoading,
                 timeout: 8000,
                 reLoadCallBack: function () {
-                    _this._loadData();
+                    // _this._loadData();
                 }
             });
-            _this._loadData();
+            // _this._loadData();
         },
         _loadData: function () {
             var _this = this,
@@ -60,17 +60,17 @@ define(["../parts/common", "utils", "../../../components/dialog", "../parts/lang
                             });
                             
                             var data=[{name: "测试word文档", status: "审批中",time:'2018-12-05 12:55:30',author:'陈展鹏',type:'png',"aliOSSUrl":"https://static.yonyoucloud.com/102136/3160785/201812/7/1544162843134f4e62c39e5228c660471c4397a1cb.jpg"}, {name: "八卦图片", status: "审批中",time:'2018-11-12 12:55:30',author:'周武王',type:'application/pdf',"aliOSSUrl":"https://ncc-ys-prod-oss.oss-cn-beijing.aliyuncs.com/xcnisnhw/52d5f399-47f7-4ce1-b7bf-6a4d9374cdda/1545881640347_3.%20%E5%91%98%E5%B7%A5%E8%BD%AC%E6%AD%A3%E5%AE%A1%E6%89%B9%E8%A1%A8.pdf"}];
-                            _this.pageview.delegate('flow_repeat', function (target) {
-                                target.bindData(listdata);
-                            });
+                            // _this.pageview.delegate('flow_repeat', function (target) {
+                            //     target.bindData(listdata);
+                            // });
                         }   
                     },
                     error: function (err) {
                         _this.pageview.hideLoading(true);
                         var data=[{name: "测试word文档", status: "审批中",time:'2018-12-05 12:55:30',author:'陈展鹏',type:'png',"aliOSSUrl":"https://static.yonyoucloud.com/102136/3160785/201812/7/1544162843134f4e62c39e5228c660471c4397a1cb.jpg"}, {name: "八卦图片", status: "审批中",time:'2018-11-12 12:55:30',author:'周武王',type:'application/pdf',"aliOSSUrl":"https://ncc-ys-prod-oss.oss-cn-beijing.aliyuncs.com/xcnisnhw/52d5f399-47f7-4ce1-b7bf-6a4d9374cdda/1545881640347_3.%20%E5%91%98%E5%B7%A5%E8%BD%AC%E6%AD%A3%E5%AE%A1%E6%89%B9%E8%A1%A8.pdf"}];
-                        _this.pageview.delegate('flow_repeat', function (target) {
-                            target.bindData(data);
-                        });
+                        // _this.pageview.delegate('flow_repeat', function (target) {
+                        //     target.bindData(data);
+                        // });
                     }
                 };
             this.pageview.ajax(ajaxConfig);
@@ -157,8 +157,12 @@ define(["../parts/common", "utils", "../../../components/dialog", "../parts/lang
         downloadFile: function (fileName, url) {
             window.open(url);
         },
-        atta_time_init: function (sender, params) {
-            sender.config.text = utils.timestampToTimeStr(sender.datasource.time);
+        atta_time_init: function (sender, params) {   
+            if(sender.datasource.time&&!isNaN(new Date(sender.datasource.time).getTime())){
+                sender.config.text = utils.timestampToTimeStr(sender.datasource.time);
+            } else{
+                sender.config.text='';
+            }   
         }
     };
     return pageLogic;

@@ -9,7 +9,12 @@ define(["../parts/common", "utils", "../../../components/dialog","../parts/langu
             if (sender.datasource.activityType === "startEvent") {
                 var operateTime = (sender.datasource.endTime === null ? sender.datasource.startTime : sender.datasource.endTime);
                 if(!operateTime) return;
-                sender.config.text = utils.timestampToTimeStr(new Date(operateTime).getTime(), true);
+                if(operateTime&&!isNaN(new Date(operateTime).getTime())){
+                    sender.config.text = utils.timestampToTimeStr(new Date(operateTime).getTime(), true);
+                }else{
+                    sender.config.text = '';
+                }
+                
             } else if (sender.datasource.activityType) {
                 this.setAnalysis(sender, "time");
             } else {
@@ -35,7 +40,7 @@ define(["../parts/common", "utils", "../../../components/dialog","../parts/langu
         },
         setAnalysis: function (sender, type) {
             if (type === "time") {
-                if (sender.datasource.endTime && sender.datasource.endTime.indexOf("9999") === -1) {
+                if (sender.datasource.endTime && sender.datasource.endTime.indexOf("9999") === -1&&!isNaN(new Date(sender.datasource.endTime).getTime())) {
                     sender.config.text = utils.timestampToTimeStr(new Date(sender.datasource.endTime).getTime(), true);
                 } else {
                     sender.config.text = "";

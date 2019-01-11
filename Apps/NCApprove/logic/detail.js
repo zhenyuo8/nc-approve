@@ -8,14 +8,13 @@ define(["../parts/common", "utils", "../libs/plupload/form-file-uploader", "../p
         this.state=this.pageview.params.state;
         this.fileMaxNum = 50; // 附件默认最大数量
         this.fileNum = 0; // 附件现有数量
-        _this.loadData();
-        // if (utils.deviceInfo().isAndroid) {
-        //     window.setTimeout(function () {
-        //         _this.loadData();
-        //     }, 300);
-        // } else {
-        //     _this.loadData();
-        // }
+        if (utils.deviceInfo().isAndroid) {
+            window.setTimeout(function () {
+                _this.loadData();
+            }, 300);
+        } else {
+            _this.loadData();
+        }
     }
 
     PageLogic.prototype = {
@@ -56,9 +55,6 @@ define(["../parts/common", "utils", "../libs/plupload/form-file-uploader", "../p
                         }
                         setTimeout(function(){
                             _this.instName = data[0].billtypename;                      
-                            
-                            _this.pageview.refs.result_text.innerText.html('审批中');
-                            _this.pageview.refs.result_text.innerText.css('color','#e7a757');
                             _this.pageview.refs.result_text.$el.show();
                             
                             var viewpager = _this.pageview.refs.top_view.components.viewpager;
@@ -177,12 +173,16 @@ define(["../parts/common", "utils", "../libs/plupload/form-file-uploader", "../p
                     }                
                 } else{
                     this.viewpager.showItem("detailAttachment_detail", {type: "attachment", parent: this});
+                    window.setTimeout(function () {
+                        _this.viewpager.curPageViewItem.contentInstance.refs.flow_repeat.bindData(_this.attachemntList);   
+                    }, 200);
                 }
             }
         },
         processInstancesHistory:function (processInstances){
             var arr=[];
-            if(processInstances&&processInstances instanceof Array&&processInstances[0]){
+            var _this=this;
+             if(processInstances&&processInstances instanceof Array&&processInstances[0]){
                 var list=processInstances[0].approvehistorylinelist[0].flowhistory;
                 var startUser=processInstances[0].approvehistorylinelist[0].flowhistory;
                 var timeList=processInstances[0].approvehistorylinelist[0].approvehistorylinelist;
@@ -222,14 +222,34 @@ define(["../parts/common", "utils", "../libs/plupload/form-file-uploader", "../p
                                 userName:list[i].personlist[0].name||'',
                                 currentUserId:'',
                             });
+                            
                         }
                     }else{
                         this.billMaker=list[i];
                     } 
                 }
                 // 处理handledate
+                if(!this.attachemntList){
+                    this.attachemntList=[];
+                }
+                
                 if(timeList&&timeList instanceof Array){
-                    timeList.forEach(function(item,index){   
+                    timeList.forEach(function(item,index){       
+                        if(item.attachstructlist&&item.attachstructlist.length!==0){
+                            item.attachstructlist.forEach(function(i,j){
+                                var typeArr=i.filename.split('.');
+
+                                _this.attachemntList.push({
+                                    name:i.filename,
+                                    filesize:i.filesize,
+                                    fileid:i.fileid,
+                                    aliOSSUrl:'',
+                                    type:typeArr[typeArr.length-1],
+                                    time:'',
+                                    author:''
+                                });
+                            });     
+                        }
                         arr.forEach(function(its,ind){
                             if(item.handlername==its.userName){
                                 its.endTime=item.handledate;
@@ -262,7 +282,7 @@ define(["../parts/common", "utils", "../libs/plupload/form-file-uploader", "../p
                         }
                     });
                 }
-                var _this=this;
+                
                 if(this.billMaker){
                     _this.pageview.delegate('userinfo_name', function (target) {
                         var name=_this.billMaker.personlist[0].name+'的' +_this.instName;           
@@ -270,13 +290,23 @@ define(["../parts/common", "utils", "../libs/plupload/form-file-uploader", "../p
                     }); 
                 }
                 _this.item.push({label:'同意',id:'',type:'agree'});
-                // _this.item.push({label:'不同意',id:'',type:'disagree'});
                 _this.item.push({label:'驳回',id:'',type:'reject'});
                 if(_this.state!==1&&_this.state!=='1'){
                     _this.initBtn();
                 }    
             }
-            
+
+            // 表单状态是否审批完成
+            var isFinished=arr.some(function(itee,innd){
+                return itee.activityType==='final';
+            });
+            if(isFinished){
+                this.pageview.refs.result_text.innerText.html('已完成');
+                _this.pageview.refs.result_text.innerText.css('color','blue');
+            }else{
+                _this.pageview.refs.result_text.innerText.css('color','#e7a757');
+                this.pageview.refs.result_text.innerText.html('审批中');
+            }
             
             
             return arr;
