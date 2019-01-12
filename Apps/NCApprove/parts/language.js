@@ -34,7 +34,7 @@ define([], function () {
                 'rejectSucess':'驳回成功'
             },
             'formAction':{
-                'agree':' 同意 ',
+                'agree':' 批准 ',
                 'attaContributor':' 贡献者：',
                 'reject':' 驳回 ',
                 'cancel':' 取消 ',

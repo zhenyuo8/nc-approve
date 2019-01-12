@@ -40,24 +40,36 @@ define(["../parts/common", "utils", "../../../components/dialog","../parts/langu
         },
         setAnalysis: function (sender, type) {
             if (type === "time") {
-                if (sender.datasource.endTime && sender.datasource.endTime.indexOf("9999") === -1&&!isNaN(new Date(sender.datasource.endTime).getTime())) {
-                    sender.config.text = utils.timestampToTimeStr(new Date(sender.datasource.endTime).getTime(), true);
-                } else {
+                if(sender.datasource.activityType==='handling'){
                     sender.config.text = "";
-                }
+                }else{
+                    if (sender.datasource.endTime && sender.datasource.endTime.indexOf("9999") === -1&&!isNaN(new Date(sender.datasource.endTime).getTime())) {
+                        sender.config.text = utils.timestampToTimeStr(new Date(sender.datasource.endTime).getTime(), true);
+                    } else {
+                        sender.config.text = "";
+                    }
+                }  
             } else if (type === "status") {
                 var msg = sender.datasource.taskComments?sender.datasource.taskComments:'';
-                
-                var taskAuditDesc = sender.datasource.taskAuditDesc || (sender.datasource.endTime && sender.datasource.endTime.indexOf("9999") === -1 ? language.formAction.agree : language.formTips.tasksToProcess);
-                sender.config.text = taskAuditDesc + " " + msg;
-            } else if (type === "icon") {
-                if(!sender.datasource.endTime&&!sender.datasource.taskAuditDesc){
-                    sender.config.font = "cap_e90b";
-                    sender.config.iconStyle.color = "#F39801";
+                if(sender.datasource.activityType==='handling'){
+                    sender.config.text=language.formTips.tasksToProcess;
                 }else{
-                    sender.config.iconStyle.color = "#56CFAE";
-                    sender.config.font = "cap_e90a";
-                } 
+                    var taskAuditDesc = sender.datasource.taskAuditDesc || (sender.datasource.endTime && sender.datasource.endTime.indexOf("9999") === -1 ? language.formAction.agree : language.formTips.tasksToProcess);
+                    sender.config.text = taskAuditDesc + " " + msg;
+                }   
+            } else if (type === "icon") {
+                if(sender.datasource.activityType==='handling'){
+                    sender.config.font = "cap_e90b";
+                        sender.config.iconStyle.color = "#F39801";
+                }else{
+                    if(!sender.datasource.endTime&&!sender.datasource.taskAuditDesc){
+                        sender.config.font = "cap_e90b";
+                        sender.config.iconStyle.color = "#F39801";
+                    }else{
+                        sender.config.iconStyle.color = "#56CFAE";
+                        sender.config.font = "cap_e90a";
+                    } 
+                }    
             }
         },
     };

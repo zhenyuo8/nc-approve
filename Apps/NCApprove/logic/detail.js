@@ -199,7 +199,7 @@ define(["../parts/common", "utils", "../libs/plupload/form-file-uploader", "../p
                                 memberId:list[i].personlist[0].id,
                                 name:'',
                                 processDefinitionId:'',
-                                taskAuditDesc:list[i].actionname||'同意',
+                                taskAuditDesc:list[i].actionname||'批准',
                                 taskComments:list[i].advice||'批准',
                                 taskId:'',
                                 userName:list[i].personlist[0].name||'',
@@ -207,21 +207,7 @@ define(["../parts/common", "utils", "../libs/plupload/form-file-uploader", "../p
                             });
                         }else{
                             this.currentTodoTask=list[i];
-                            arr.unshift({
-                                activityType:list[i].unittype,
-                                assignee:'',
-                                deleteReason:'',
-                                dueDate:'',
-                                endTime:list[i].handledate||'',
-                                memberId:list[i].personlist[0].id,
-                                name:'',
-                                processDefinitionId:'',
-                                taskAuditDesc:list[i].actionname||'',
-                                taskComments:list[i].advice||'',
-                                taskId:'',
-                                userName:list[i].personlist[0].name||'',
-                                currentUserId:'',
-                            });
+                            
                             
                         }
                     }else{
@@ -260,6 +246,21 @@ define(["../parts/common", "utils", "../libs/plupload/form-file-uploader", "../p
                 arr.sort(function(a,b){
                     return new Date(b.endTime).getTime()-new Date(a.endTime).getTime();
                 });
+                arr.unshift({
+                    activityType:this.currentTodoTask.unittype,
+                    assignee:'',
+                    deleteReason:'',
+                    dueDate:'',
+                    endTime:this.currentTodoTask.handledate||'',
+                    memberId:this.currentTodoTask.personlist[0].id,
+                    name:'',
+                    processDefinitionId:'',
+                    taskAuditDesc:this.currentTodoTask.actionname||'',
+                    taskComments:this.currentTodoTask.advice||'',
+                    taskId:'',
+                    userName:this.currentTodoTask.personlist[0].name||'',
+                    currentUserId:'',
+                });
                 if(startUser){
                     startUser.forEach(function(item,index){
                         if(item.unittype==="submit"){
@@ -289,7 +290,7 @@ define(["../parts/common", "utils", "../libs/plupload/form-file-uploader", "../p
                         target.setText(name);
                     }); 
                 }
-                _this.item.push({label:'同意',id:'',type:'agree'});
+                _this.item.push({label:'批准',id:'',type:'agree'});
                 _this.item.push({label:'驳回',id:'',type:'reject'});
                 if(_this.state!==1&&_this.state!=='1'){
                     _this.initBtn();
