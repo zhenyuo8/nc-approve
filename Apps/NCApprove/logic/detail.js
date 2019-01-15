@@ -5,7 +5,7 @@ define(["../parts/common", "utils", "../parts/analysis",  "../parts/language"], 
         var _this = this;
         this.item = [];
         this.pageview = config.pageview;
-        this.state=this.pageview.params.state;
+        this.taskId=this.pageview.params.taskId;
         if (utils.deviceInfo().isAndroid) {
             window.setTimeout(function () {
                 _this.loadData();
@@ -92,13 +92,13 @@ define(["../parts/common", "utils", "../parts/analysis",  "../parts/language"], 
                                         deleteReason:itemData.deleteReason,
                                         endTime:itemData.endTime,
                                         taskAuditDesc:itemData.deleteReason,
-                                        taskComments:itemData.taskComments&&itemData.taskComments[0]?itemData.taskComments[0].message:'',
+                                        taskComments:itemData.taskComments&&itemData.taskComments[0]?decodeURIComponent(itemData.taskComments[0].message):'',
                                         userName:itemData.userName,
                                     });
-                                }else{    
-                                    _this.processInstances.unshift({
+                                }else{
+                                    _this.currentToDoTask={
                                         activityType:activityType,
-                                        taskId:itemData.taskId,
+                                        taskId:itemData.id,
                                         assignee:itemData.assignee,
                                         currentUserId:'',
                                         deleteReason:itemData.deleteReason,
@@ -106,20 +106,22 @@ define(["../parts/common", "utils", "../parts/analysis",  "../parts/language"], 
                                         taskAuditDesc:itemData.deleteReason,
                                         taskComments:itemData.taskComments,
                                         userName:itemData.userName,
-                                    });
+                                    };    
                                 }    
                             }
-
+                            _this.processInstances.unshift(_this.currentToDoTask);
                             _this.pageview.delegate('userinfo_name', function (target) {
                                 var name=_this.startParticipant.userName+'的'+_this.instName;           
                                 target.setText(name);
                             });
-                            _this.item.push({label:'批准',id:'',type:'agree'});
-                            _this.item.push({label:'驳回',id:'',type:'reject'});
-                            if(_this.state!==1&&_this.state!=='1'){
+
+                            if(_this.currentToDoTask&&_this.taskId===_this.currentToDoTask.taskId){
+                                _this.item.push({label:'批准',id:'',type:'agree'});
+                                _this.item.push({label:'驳回',id:'',type:'reject'});
                                 _this.pageview.refs.bottomToolBar.$el.show();
                                 _this.initBtn();
                             }
+                           
 
                             if(data.inst.endTime||data.inst.deleteReason){
                                 _this.pageview.refs.result_text.innerText.html('已完成');
