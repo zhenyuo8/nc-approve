@@ -141,7 +141,8 @@ define(["../logic/detail", "../parts/common", 'utils'], function (pluginClass, c
                     height: 46,
                     flexDirection: "row",
                     backgroundColor: "#fff",
-                    alignItems: "center"
+                    alignItems: "center",
+                    display:'none'
                 },
                 root: ["buttonGroup", "splitline", "moreBtn"]
             },
@@ -162,7 +163,7 @@ define(["../logic/detail", "../parts/common", 'utils'], function (pluginClass, c
                     flex: 1,
                     alignItems: "center",
                     backgroundColor: "rgb(247, 247, 247)",
-                    height: 46,
+                    height: 46,    
                 },
                 itemStyle: {
                     flex: 1,

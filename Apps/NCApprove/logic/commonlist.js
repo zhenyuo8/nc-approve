@@ -138,6 +138,7 @@ define(["../parts/common", "utils", '../parts/language',"../../../components/dia
                 userid:sender.datasource.cuserId,
                 billId:sender.datasource.billId,
                 billtype:sender.datasource.billType,
+                // state:1
             });
         },
     };

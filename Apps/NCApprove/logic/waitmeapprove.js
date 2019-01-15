@@ -2,7 +2,6 @@ define(["../parts/common", "utils","../parts/language"], function (c, utils,lang
     function pageLogic(config) {
         this.pageview = config.pageview;
         this.countNum = this.pageview.params.countNum;
-        this.loadNum();
     }
 
     pageLogic.prototype = {
@@ -11,9 +10,6 @@ define(["../parts/common", "utils","../parts/language"], function (c, utils,lang
             if (window.changeFormStatus) {
                 this.viewpager.curPageViewItem.contentInstance.refs.listview.loadFirstPageData({parentAnimate: true});
             }
-        },
-        loadNum: function () {
-            var _this = this;
         },
         searchview_init: function (sender, params) {
             this.searchview = sender;

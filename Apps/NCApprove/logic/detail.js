@@ -1,13 +1,11 @@
 
-define(["../parts/common", "utils", "../libs/plupload/form-file-uploader", "../parts/analysis",  "../parts/language"], function (c, utils, FileUploader, analysis,language) {
+define(["../parts/common", "utils", "../parts/analysis",  "../parts/language"], function (c, utils, analysis,language) {
 
     function PageLogic(config) {
         var _this = this;
         this.item = [];
         this.pageview = config.pageview;
         this.state=this.pageview.params.state;
-        this.fileMaxNum = 50; // 附件默认最大数量
-        this.fileNum = 0; // 附件现有数量
         if (utils.deviceInfo().isAndroid) {
             window.setTimeout(function () {
                 _this.loadData();
@@ -53,46 +51,88 @@ define(["../parts/common", "utils", "../libs/plupload/form-file-uploader", "../p
                         }catch(e){
                             data=listData.data;
                         }
+                        _this.instName=data.inst.name;
+                        
                         setTimeout(function(){
-                            _this.instName = data[0].billtypename;                      
                             _this.pageview.refs.result_text.$el.show();
-                            
                             var viewpager = _this.pageview.refs.top_view.components.viewpager;
                             jsonList = analysis.getAnalysis_ifroms(data);
-                            viewpager.curPageViewItem.contentInstance.refs.detail_repeat.bindData(jsonList);
+                            viewpager.curPageViewItem.contentInstance.refs.detail_repeat.bindData(jsonList); 
                             
-                            _this.loadProcessData();
+                            // 处理流程
+                            var historicTasks=data.inst.historicTasks;
+                            _this.processInstances=[];
+                            _this.startParticipant={};
+                            data.inst.historicActivityInstances.forEach(function(item){
+                                if(item.activityType==='startEvent'){
+                                    _this.startParticipant=item;
+                                }
+                            });
+                            _this.processInstances.push({
+                                activityType:_this.startParticipant.activityType,
+                                taskId:_this.startParticipant.taskId,
+                                assignee:_this.startParticipant.assignee,
+                                currentUserId:'',
+                                deleteReason:_this.startParticipant.deleteReason,
+                                endTime:_this.startParticipant.endTime,
+                                taskAuditDesc:_this.startParticipant.deleteReason,
+                                taskComments:_this.startParticipant.taskComments,
+                                userName:_this.startParticipant.userName,
+                            });
+                            for(var i=0;i<historicTasks.length;i++){
+                                var itemData=historicTasks[i];
+                                var activityType='handling';
+                                if(itemData.endTime){
+                                    activityType="solved";
+                                    _this.processInstances.unshift({
+                                        activityType:activityType,
+                                        taskId:itemData.taskComments&&itemData.taskComments[0]?itemData.taskComments[0].taskId:itemData.taskId,
+                                        assignee:itemData.assignee,
+                                        currentUserId:'',
+                                        deleteReason:itemData.deleteReason,
+                                        endTime:itemData.endTime,
+                                        taskAuditDesc:itemData.deleteReason,
+                                        taskComments:itemData.taskComments&&itemData.taskComments[0]?itemData.taskComments[0].message:'',
+                                        userName:itemData.userName,
+                                    });
+                                }else{    
+                                    _this.processInstances.unshift({
+                                        activityType:activityType,
+                                        taskId:itemData.taskId,
+                                        assignee:itemData.assignee,
+                                        currentUserId:'',
+                                        deleteReason:itemData.deleteReason,
+                                        endTime:itemData.endTime,
+                                        taskAuditDesc:itemData.deleteReason,
+                                        taskComments:itemData.taskComments,
+                                        userName:itemData.userName,
+                                    });
+                                }    
+                            }
+
+                            _this.pageview.delegate('userinfo_name', function (target) {
+                                var name=_this.startParticipant.userName+'的'+_this.instName;           
+                                target.setText(name);
+                            });
+                            _this.item.push({label:'批准',id:'',type:'agree'});
+                            _this.item.push({label:'驳回',id:'',type:'reject'});
+                            if(_this.state!==1&&_this.state!=='1'){
+                                _this.pageview.refs.bottomToolBar.$el.show();
+                                _this.initBtn();
+                            }
+
+                            if(data.inst.endTime||data.inst.deleteReason){
+                                _this.pageview.refs.result_text.innerText.html('已完成');
+                                _this.pageview.refs.result_text.innerText.css('color','blue');
+                            }else{
+                                _this.pageview.refs.result_text.innerText.css('color','#e7a757');
+                                _this.pageview.refs.result_text.innerText.html('审批中');
+                            }
                             _this.pageview.hideLoading(true);
                         },500);
                     },
                     error: function (listData) {
                         _this.pageview.showTip({text: listData.msg, duration: 2000});
-                    }
-                };
-
-            this.pageview.ajax(listAjaxConfig);
-        },
-        loadProcessData: function () {
-            var _this=this;
-            var listAjaxConfig = {
-                    url: '/process/getApprove',
-                    type: 'GET',
-                    data: {
-                        taskId: this.pageview.params.taskId || '',
-                        billId:this.pageview.params.billId||'',
-                        billtype:this.pageview.params.billtype||this.pageview.params.pk_billtype||'',
-                        userid:this.pageview.params.userid||'',
-                        groupid:this.pageview.params.groupid||'0001V610000000000EEN'
-                    },
-                    success: function (listData) {
-                        try{
-                            _this.processInstances=_this.processInstancesHistory(JSON.parse(listData.data));    
-                        }catch(e){
-                            _this.processInstances=_this.processInstancesHistory(listData.data);
-                        }
-                    },
-                    error: function (listData) {
-                        _this.pageview.showTip({text: listData, duration: 2000});
                     }
                 };
 
@@ -179,139 +219,7 @@ define(["../parts/common", "utils", "../libs/plupload/form-file-uploader", "../p
                 }
             }
         },
-        processInstancesHistory:function (processInstances){
-            var arr=[];
-            var _this=this;
-             if(processInstances&&processInstances instanceof Array&&processInstances[0]){
-                var list=processInstances[0].approvehistorylinelist[0].flowhistory;
-                var startUser=processInstances[0].approvehistorylinelist[0].flowhistory;
-                var timeList=processInstances[0].approvehistorylinelist[0].approvehistorylinelist;
-
-                for(var i=0;i<list.length;i++){
-                    if(list[i].unittype!=='submit'){
-                        if(list[i].unittype==="solved"){
-                            arr.push({
-                                activityType:list[i].unittype,
-                                assignee:'',
-                                deleteReason:'',
-                                dueDate:'',
-                                endTime:list[i].handledate||'',
-                                memberId:list[i].personlist[0].id,
-                                name:'',
-                                processDefinitionId:'',
-                                taskAuditDesc:list[i].actionname||'批准',
-                                taskComments:list[i].advice||'批准',
-                                taskId:'',
-                                userName:list[i].personlist[0].name||'',
-                                currentUserId:'',
-                            });
-                        }else{
-                            this.currentTodoTask=list[i];
-                            
-                            
-                        }
-                    }else{
-                        this.billMaker=list[i];
-                    } 
-                }
-                // 处理handledate
-                if(!this.attachemntList){
-                    this.attachemntList=[];
-                }
-                
-                if(timeList&&timeList instanceof Array){
-                    timeList.forEach(function(item,index){       
-                        if(item.attachstructlist&&item.attachstructlist.length!==0){
-                            item.attachstructlist.forEach(function(i,j){
-                                var typeArr=i.filename.split('.');
-
-                                _this.attachemntList.push({
-                                    name:i.filename,
-                                    filesize:i.filesize,
-                                    fileid:i.fileid,
-                                    aliOSSUrl:'',
-                                    type:typeArr[typeArr.length-1],
-                                    time:'',
-                                    author:''
-                                });
-                            });     
-                        }
-                        arr.forEach(function(its,ind){
-                            if(item.handlername==its.userName){
-                                its.endTime=item.handledate;
-                            }
-                        });
-                    });
-                }
-                arr.sort(function(a,b){
-                    return new Date(b.endTime).getTime()-new Date(a.endTime).getTime();
-                });
-                arr.unshift({
-                    activityType:this.currentTodoTask.unittype,
-                    assignee:'',
-                    deleteReason:'',
-                    dueDate:'',
-                    endTime:this.currentTodoTask.handledate||'',
-                    memberId:this.currentTodoTask.personlist[0].id,
-                    name:'',
-                    processDefinitionId:'',
-                    taskAuditDesc:this.currentTodoTask.actionname||'',
-                    taskComments:this.currentTodoTask.advice||'',
-                    taskId:'',
-                    userName:this.currentTodoTask.personlist[0].name||'',
-                    currentUserId:'',
-                });
-                if(startUser){
-                    startUser.forEach(function(item,index){
-                        if(item.unittype==="submit"){
-                            arr.push({
-                                activityType:'startEvent',
-                                assignee:'',
-                                deleteReason:'',
-                                dueDate:'',
-                                endTime:item.time,
-                                startTime:item.time,
-                                memberId:'',
-                                name:'',
-                                processDefinitionId:'',
-                                taskAuditDesc:'',
-                                taskComments:item.action,
-                                taskId:'',
-                                userName:item.personlist[0].name,
-                                currentUserId:''
-                            });
-                        }
-                    });
-                }
-                
-                if(this.billMaker){
-                    _this.pageview.delegate('userinfo_name', function (target) {
-                        var name=_this.billMaker.personlist[0].name+'的' +_this.instName;           
-                        target.setText(name);
-                    }); 
-                }
-                _this.item.push({label:'批准',id:'',type:'agree'});
-                _this.item.push({label:'驳回',id:'',type:'reject'});
-                if(_this.state!==1&&_this.state!=='1'){
-                    _this.initBtn();
-                }    
-            }
-
-            // 表单状态是否审批完成
-            var isFinished=arr.some(function(itee,innd){
-                return itee.activityType==='final';
-            });
-            if(isFinished){
-                this.pageview.refs.result_text.innerText.html('已完成');
-                _this.pageview.refs.result_text.innerText.css('color','blue');
-            }else{
-                _this.pageview.refs.result_text.innerText.css('color','#e7a757');
-                this.pageview.refs.result_text.innerText.html('审批中');
-            }
-            
-            
-            return arr;
-        },
+  
         morePopover_init: function (sender, params) {
             this.morePopver = sender;
         },
@@ -367,39 +275,6 @@ define(["../parts/common", "utils", "../libs/plupload/form-file-uploader", "../p
                 },
                 error: function (data) {
                     
-                }
-            });
-        },
-        
-        //文件上传控件
-        initUploader: function (sender) {
-            var _this = this;
-            this.loadToken(function (token) {
-                _this.token = token;
-            });
-
-            var picker = sender.$el;
-            var container = $('.flow_repeat');
-            var fileLimit = this.fileMaxNum;
-            if (!this.fileUploader) {
-                this.fileUploader = new FileUploader(this.pageview, this);
-                this.uploaderId = this.fileUploader.initUploader(picker, container, this.pageview.params.taskId, fileLimit);
-                setTimeout(function () {
-                    _this.fileUploader.updateUploaderSize();
-                }, 100);
-            }
-        },
-        loadFilesData: function () {
-            this.viewpager.curPageViewItem.contentInstance.pageview.plugin._loadData();
-        },
-        loadToken: function (callbackFunc) {
-            this.pageview.ajax({
-                url: "user/getToken",
-                success: function (token) {
-                    callbackFunc(token);
-                },
-                error: function (token) {
-                    console.error(token);
                 }
             });
         },
