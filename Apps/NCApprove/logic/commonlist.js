@@ -138,7 +138,6 @@ define(["utils", '../parts/language'], function (utils, language) {
                 userid:sender.datasource.cuserId,
                 billId:sender.datasource.billId,
                 billtype:sender.datasource.billType,
-                // state:1
             });
         },
     };

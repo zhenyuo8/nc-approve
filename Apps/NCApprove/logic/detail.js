@@ -82,7 +82,7 @@ define(["utils", "../parts/analysis",  "../parts/language"], function (utils, an
                             for(var i=0;i<historicTasks.length;i++){
                                 var itemData=historicTasks[i];
                                 var activityType='handling';
-                                if(itemData.endTime){
+                                if(itemData.endTime||data.inst.deleteReason){
                                     activityType="solved";
                                     _this.processInstances.unshift({
                                         activityType:activityType,
@@ -107,7 +107,8 @@ define(["utils", "../parts/analysis",  "../parts/language"], function (utils, an
                                         taskComments:itemData.taskComments,
                                         userName:itemData.userName,
                                     };    
-                                }    
+                                }
+                                    
                             }
                             _this.processInstances.unshift(_this.currentToDoTask);
                             _this.pageview.delegate('userinfo_name', function (target) {
@@ -115,7 +116,7 @@ define(["utils", "../parts/analysis",  "../parts/language"], function (utils, an
                                 target.setText(name);
                             });
 
-                            if(_this.currentToDoTask&&_this.taskId===_this.currentToDoTask.taskId){
+                            if(_this.currentToDoTask&&_this.taskId===_this.currentToDoTask.taskId&&(!data.inst.endTime&&!data.inst.deleteReason)){
                                 _this.item.push({label:'批准',id:'',type:'agree'});
                                 _this.item.push({label:'驳回',id:'',type:'reject'});
                                 _this.pageview.refs.bottomToolBar.$el.show();

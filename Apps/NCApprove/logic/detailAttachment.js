@@ -29,7 +29,7 @@ define(["utils",  "../parts/language","../parts/format"], function ( utils, lang
                     data: {
                         taskId: _this.parentThis.pageview.params.taskId,
                         billId:_this.parentThis.pageview.params.billId,
-                        billtype:_this.parentThis.pageview.params.billtype||'',
+                        billtype:_this.parentThis.pageview.params.billtype||this.pageview.params.pk_billtype||'',
                         userid:_this.parentThis.pageview.params.userid||'',
                         groupid:_this.parentThis.pageview.params.groupid||'0001V610000000000EEN'
                     },
@@ -45,8 +45,8 @@ define(["utils",  "../parts/language","../parts/format"], function ( utils, lang
                                     aliOSSUrl:'',
                                     type:item.type,
                                     author:item.author
-                                 })
-                             })
+                                 });
+                             });
                             _this.pageview.delegate('flow_repeat', function (target) {
                                 target.bindData(temp);
                             });
