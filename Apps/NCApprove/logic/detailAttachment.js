@@ -1,11 +1,63 @@
 
-define(["../parts/common", "utils", "../../../components/dialog", "../parts/language","../parts/format"], function (c, utils, Dialog, language,format) {
+define(["utils",  "../parts/language","../parts/format"], function ( utils, language,format) {
     function pageLogic(config) {
         this.pageview = config.pageview;
         this.parentThis = this.pageview.viewpagerParams.parent;
+        this.loadData();
     }
 
     pageLogic.prototype = {
+        onPageResume: function () {
+            this._loadData();
+        },
+        loadData: function () {
+            var _this = this;
+            this.pageview.showLoading({
+                text: language.formTips.onLoading,
+                timeout: 8000,
+                reLoadCallBack: function () {
+                    _this._loadData();
+                }
+            });
+            _this._loadData();
+        },
+        _loadData: function () {
+            var _this = this,
+                ajaxConfig = {
+                    url: '/process/getTaskAttachments',
+                    type: 'GET',
+                    data: {
+                        taskId: _this.parentThis.pageview.params.taskId,
+                        billId:_this.parentThis.pageview.params.billId,
+                        billtype:_this.parentThis.pageview.params.billtype||'',
+                        userid:_this.parentThis.pageview.params.userid||'',
+                        groupid:_this.parentThis.pageview.params.groupid||'0001V610000000000EEN'
+                    },
+                    success: function (listData) {
+                        _this.pageview.hideLoading(true);
+                        if(listData.data&&listData.data instanceof Array){
+                             var temp=[];
+                             listData.data.forEach(function(item){
+                                 temp.push({
+                                    name:item.name,
+                                    filesize:item.filesize,
+                                    fileid:item.id,
+                                    aliOSSUrl:'',
+                                    type:item.type,
+                                    author:item.author
+                                 })
+                             })
+                            _this.pageview.delegate('flow_repeat', function (target) {
+                                target.bindData(temp);
+                            });
+                        }
+                    },
+                    error: function (err) {
+                        _this.pageview.hideLoading(true);
+                    }
+                };
+            this.pageview.ajax(ajaxConfig);
+        },
         list_nodata_text_init:function (sender, params) {
             sender.config.text=language.formTips.noAttachment;
         },
@@ -29,7 +81,7 @@ define(["../parts/common", "utils", "../../../components/dialog", "../parts/lang
             var text = language.formAction.attaContributor;
             sender.config.text = text + sender.datasource.author;
         },
-
+       
         title_view_init: function (sender, params) {
             sender.config.text = sender.datasource.name;
         },
@@ -40,9 +92,7 @@ define(["../parts/common", "utils", "../../../components/dialog", "../parts/lang
             }else{
                 _this.pageview.showTip({text: '暂不支持附件预览和下载', duration: 1000});
             }
-        },
-        downloadFile: function (fileName, url) {
-            window.open(url);
+            
         },
         atta_time_init: function (sender, params) {   
             if(sender.datasource.time&&!isNaN(new Date(sender.datasource.time).getTime())){

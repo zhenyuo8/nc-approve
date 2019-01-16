@@ -1,5 +1,5 @@
 
-define(["utils","../parts/language"], function (utils,language) {
+define([], function () {
     function PageLogic(config) {
         this.pageview = config.pageview;
     }

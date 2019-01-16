@@ -1,7 +1,7 @@
 /**
  *"待审批"
  */
-define(["../parts/common", "utils", '../parts/language',"../../../components/dialog",], function (c, utils, language,Dialog) {
+define(["utils", '../parts/language'], function (utils, language) {
     function pageLogic(config) {
         this.pageview = config.pageview;
         this.fullPageKey = this.pageview.config.fullPageKey;

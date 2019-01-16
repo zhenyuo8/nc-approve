@@ -1,5 +1,5 @@
 
-define(["../parts/common", "utils", "../parts/analysis",  "../parts/language"], function (c, utils, analysis,language) {
+define(["utils", "../parts/analysis",  "../parts/language"], function (utils, analysis,language) {
 
     function PageLogic(config) {
         var _this = this;
@@ -215,9 +215,6 @@ define(["../parts/common", "utils", "../parts/analysis",  "../parts/language"], 
                     }                
                 } else{
                     this.viewpager.showItem("detailAttachment_detail", {type: "attachment", parent: this});
-                    window.setTimeout(function () {
-                        _this.viewpager.curPageViewItem.contentInstance.refs.flow_repeat.bindData(_this.attachemntList);   
-                    }, 200);
                 }
             }
         },

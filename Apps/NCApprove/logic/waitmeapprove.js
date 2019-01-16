@@ -1,4 +1,4 @@
-define(["../parts/common", "utils","../parts/language"], function (c, utils,language) {
+define(["../parts/language"], function (language) {
     function pageLogic(config) {
         this.pageview = config.pageview;
         this.countNum = this.pageview.params.countNum;

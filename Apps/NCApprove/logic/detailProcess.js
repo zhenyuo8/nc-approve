@@ -1,4 +1,4 @@
-define(["../parts/common", "utils", "../../../components/dialog","../parts/language"], function (c, utils, Dialog,language) {
+define(["utils", "../parts/language"], function (utils,language) {
     function PageLogic(config) {
         this.pageview = config.pageview;
         this.parentThis = this.pageview.viewpagerParams.parentThis;
