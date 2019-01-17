@@ -14,9 +14,6 @@ define(["utils", "base"], function (utils, baseClass) {
             config.style["float"] = "left";
             config.style["display"] = "inline-block";
         }
-        if(config.$$datasource.picOnly){
-            config.style["float"] = "left";
-        }
         RepeatItem.baseConstructor.call(this, config);
         if (!this.parent.rowMarkSeed) {
             this.parent.rowMarkSeed = 0;
