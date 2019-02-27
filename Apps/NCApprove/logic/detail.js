@@ -100,7 +100,9 @@ define(["utils", "../parts/analysis",  "../parts/language"], function (utils, an
                                 }     
                             }
                             _this.processInstances.sort(function(a,b){
-                                return a.endTime-b.endTime;
+                                var aValue=utils.convertStrToDate(a.endTime).getTime()
+                                var bValue=utils.convertStrToDate(b.endTime).getTime()
+                                return -(aValue-bValue);
                             });
                             _this.processInstances.push({
                                 activityType:_this.startParticipant.activityType,
