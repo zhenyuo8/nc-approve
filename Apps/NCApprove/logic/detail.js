@@ -101,7 +101,7 @@ define(["utils", "../parts/analysis",  "../parts/language"], function (utils, an
                             }
                             _this.processInstances.sort(function(a,b){
                                 return a.endTime-b.endTime;
-                            })
+                            });
                             _this.processInstances.push({
                                 activityType:_this.startParticipant.activityType,
                                 taskId:_this.startParticipant.taskId,
