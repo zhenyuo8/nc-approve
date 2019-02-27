@@ -1,12 +1,12 @@
 define(["utils"], function(utils) {
     var p = "local";
-    var host ="http://10.4.111.31:8080/approve-client-adapter";
+    var host="http://114.113.234.244:8095/approve-client-adapter"
     if(p==="正式"){
-        host ="http://10.4.111.31:8080/approve-client-adapter";
+        host="http://114.113.234.244:8095/approve-client-adapter"
     }else if(p==="pre-rel"){
-        host ="http://10.4.111.31:8080/approve-client-adapter";
+        host="http://114.113.234.244:8095/approve-client-adapter"
     }  else if (p === "dev") {
-        host = "http://10.4.111.31:8080/approve-client-adapter";
+        host="http://114.113.234.244:8095/approve-client-adapter"
     } else {
         // host = "http://10.4.111.31:8090/approve-client-adapter";
         host="http://114.113.234.244:8095/approve-client-adapter"

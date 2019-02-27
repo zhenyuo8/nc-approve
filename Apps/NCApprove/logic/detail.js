@@ -68,17 +68,7 @@ define(["utils", "../parts/analysis",  "../parts/language"], function (utils, an
                                     _this.startParticipant=item;
                                 }
                             });
-                            _this.processInstances.push({
-                                activityType:_this.startParticipant.activityType,
-                                taskId:_this.startParticipant.taskId,
-                                assignee:_this.startParticipant.assignee,
-                                currentUserId:'',
-                                deleteReason:_this.startParticipant.deleteReason,
-                                endTime:_this.startParticipant.endTime,
-                                taskAuditDesc:_this.startParticipant.deleteReason,
-                                taskComments:_this.startParticipant.taskComments,
-                                userName:_this.startParticipant.userName,
-                            });
+                            
                             for(var i=0;i<historicTasks.length;i++){
                                 var itemData=historicTasks[i];
                                 var activityType='handling';
@@ -107,9 +97,22 @@ define(["utils", "../parts/analysis",  "../parts/language"], function (utils, an
                                         taskComments:itemData.taskComments,
                                         userName:itemData.userName,
                                     };    
-                                }
-                                    
+                                }     
                             }
+                            _this.processInstances.sort(function(a,b){
+                                return a.endTime-b.endTime;
+                            })
+                            _this.processInstances.push({
+                                activityType:_this.startParticipant.activityType,
+                                taskId:_this.startParticipant.taskId,
+                                assignee:_this.startParticipant.assignee,
+                                currentUserId:'',
+                                deleteReason:_this.startParticipant.deleteReason,
+                                endTime:_this.startParticipant.endTime,
+                                taskAuditDesc:_this.startParticipant.deleteReason,
+                                taskComments:_this.startParticipant.taskComments,
+                                userName:_this.startParticipant.userName,
+                            });
                             _this.processInstances.unshift(_this.currentToDoTask);
                             _this.pageview.delegate('userinfo_name', function (target) {
                                 var name=_this.startParticipant.userName+'的'+_this.instName;           
