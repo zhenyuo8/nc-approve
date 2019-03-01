@@ -46,6 +46,11 @@ define(["utils", "../parts/analysis",  "../parts/language"], function (utils, an
                     },
                     success: function (listData) {
                         var data;
+                        if(listData.flag==='1'){
+                            _this.pageview.hideLoading(true);
+                            _this.pageview.showTip({text: listData.desc, duration: 2000});
+                            return
+                        }
                         try{
                             data=JSON.parse(listData.data);
                         }catch(e){
@@ -274,8 +279,8 @@ define(["utils", "../parts/analysis",  "../parts/language"], function (utils, an
                             _this.pageview.go("deal", para);
                         }
                     } else {
-                        _this.pageview.go("deal", para);
-                        // _this.pageview.showTip({text: data.desc, duration: 2000});   
+                        // _this.pageview.go("deal", para);
+                        _this.pageview.showTip({text: data.desc, duration: 2000});   
                     }
                 },
                 error: function (data) {

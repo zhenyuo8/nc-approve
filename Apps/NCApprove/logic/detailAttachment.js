@@ -34,6 +34,11 @@ define(["utils",  "../parts/language","../parts/format"], function ( utils, lang
                         groupid:_this.parentThis.pageview.params.groupid||'0001V610000000000EEN'
                     },
                     success: function (listData) {
+                        if(listData.flag==='1'){
+                            _this.pageview.hideLoading(true);
+                            _this.pageview.showTip({text: listData.desc, duration: 2000});
+                            return
+                        }
                         _this.pageview.hideLoading(true);
                         if(listData.data&&listData.data instanceof Array){
                              var temp=[];
