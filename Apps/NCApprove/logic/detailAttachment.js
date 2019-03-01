@@ -37,7 +37,7 @@ define(["utils",  "../parts/language","../parts/format"], function ( utils, lang
                         if(listData.flag==='1'){
                             _this.pageview.hideLoading(true);
                             _this.pageview.showTip({text: listData.desc, duration: 2000});
-                            return
+                            return;
                         }
                         _this.pageview.hideLoading(true);
                         if(listData.data&&listData.data instanceof Array){

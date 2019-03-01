@@ -49,7 +49,7 @@ define(["utils", "../parts/analysis",  "../parts/language"], function (utils, an
                         if(listData.flag==='1'){
                             _this.pageview.hideLoading(true);
                             _this.pageview.showTip({text: listData.desc, duration: 2000});
-                            return
+                            return;
                         }
                         try{
                             data=JSON.parse(listData.data);
