@@ -92,9 +92,9 @@ define(["utils",  "../parts/language","../parts/format"], function ( utils, lang
         },
         flow_repeat_itemclick: function (sender, params) {
             if(sender.datasource.fileid){
-                var host=location.host
-                host=host=='localhost:3333'?'http://114.113.234.244:8095':host
-                var url=host+'/approve-client-adapter/process/download?fileId='+sender.datasource.fileid+'&filename='+encodeURI(sender.datasource.name)+'&userid='+this.parentThis.pageview.params.userid+'&groupid='+this.parentThis.pageview.params.groupid
+                var host=location.host;
+                host=host=='localhost:3333'?'http://114.113.234.244:8095':host;
+                var url=host+'/approve-client-adapter/process/download?fileId='+sender.datasource.fileid+'&filename='+encodeURI(sender.datasource.name)+'&userid='+this.parentThis.pageview.params.userid+'&groupid='+this.parentThis.pageview.params.groupid;
                 window.open(url);
             }
         },
