@@ -44,7 +44,7 @@ define(["utils",  "../parts/language","../parts/format"], function ( utils, lang
                              var temp=[];
                              listData.data.forEach(function(item){
                                  temp.push({
-                                    name:item.name,
+                                    name:item.name||item.filename,
                                     filesize:item.filesize,
                                     fileid:item.id,
                                     aliOSSUrl:'',
@@ -91,13 +91,12 @@ define(["utils",  "../parts/language","../parts/format"], function ( utils, lang
             sender.config.text = sender.datasource.name;
         },
         flow_repeat_itemclick: function (sender, params) {
-            var _this=this;
-            if(sender.datasource.aliOSSUrl){
-                window.open(sender.datasource.aliOSSUrl);
-            }else{
-                _this.pageview.showTip({text: '暂不支持附件预览和下载', duration: 1000});
+            if(sender.datasource.fileid){
+                var host=location.host
+                host=host=='localhost:3333'?'http://114.113.234.244:8095':host
+                var url=host+'/approve-client-adapter/process/download?fileId='+sender.datasource.fileid+'&filename='+encodeURI(sender.datasource.name)+'&userid='+this.parentThis.pageview.params.userid+'&groupid='+this.parentThis.pageview.params.groupid
+                window.open(url);
             }
-            
         },
         atta_time_init: function (sender, params) {   
             if(sender.datasource.time&&!isNaN(new Date(sender.datasource.time).getTime())){

@@ -49,7 +49,7 @@ app.get('/getlistdata', function(req, res, next) {
     }, 1000);
 });
 
-app.use('/approve-client-adapter', proxy('http://10.4.111.31:8080/approve-client-adapter/',{
+app.use('/approve-client-adapter', proxy('http://114.113.234.244:8095/approve-client-adapter/',{
     proxyReqPathResolver:function(req){
         return '/approve-client-adapter'+require('url').parse(req.url).path
     }

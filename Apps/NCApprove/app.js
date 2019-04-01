@@ -1,6 +1,6 @@
 define(["utils"], function(utils) {
     var p = "local";
-    var host="http://114.113.234.242:9095/approve-client-adapter"
+    var host="http://114.113.234.244:8095/approve-client-adapter"
     if(p==="正式"){
         host="http://114.113.234.242:9095/approve-client-adapter"
     }else if(p==="pre-rel"){
@@ -10,7 +10,7 @@ define(["utils"], function(utils) {
     } else {
         // host = "http://10.4.111.31:8090/approve-client-adapter";
         // host="http://114.113.234.244:8095/approve-client-adapter"
-        host="http://114.113.234.242:9095/approve-client-adapter"
+        host="http://114.113.234.244:8095/approve-client-adapter"
     }
 
     return {
