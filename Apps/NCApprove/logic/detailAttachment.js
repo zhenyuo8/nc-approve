@@ -92,7 +92,8 @@ define(["utils",  "../parts/language","../parts/format"], function ( utils, lang
         },
         flow_repeat_itemclick: function (sender, params) {
             if(sender.datasource.fileid){
-                var url='/process/download?fileId='+sender.datasource.fileid+'&filename='+encodeURI(sender.datasource.name)+'&userid='+this.parentThis.pageview.params.userid+'&groupid=0001V610000000000EEN';
+                var url='/approve-client-adapter/process/download?fileId='+sender.datasource.fileid+'&filename='+encodeURI(sender.datasource.name)+'&userid='+this.parentThis.pageview.params.userid+'&groupid=0001V610000000000EEN';
+                console.log(url);
                 window.open(url);
             }
         },
