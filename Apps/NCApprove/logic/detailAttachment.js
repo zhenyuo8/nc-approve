@@ -93,7 +93,7 @@ define(["utils",  "../parts/language","../parts/format"], function ( utils, lang
         flow_repeat_itemclick: function (sender, params) {
             var _this=this;
             if(sender.datasource.fileid){
-                var url='/approve-client-adapter/process/download?fileId='+sender.datasource.fileid+'&filename='+encodeURI(sender.datasource.name)+'&userid='+this.parentThis.pageview.params.userid+'&groupid=0001V610000000000EEN';
+                var url=window.location.origin+'/approve-client-adapter/process/download?fileId='+sender.datasource.fileid+'&filename='+encodeURI(sender.datasource.name)+'&userid='+this.parentThis.pageview.params.userid+'&groupid=0001V610000000000EEN';
                 cmp.att.download({
                     title:sender.datasource.name,
                     url: url, // 文件路径
