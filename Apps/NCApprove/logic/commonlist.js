@@ -133,20 +133,20 @@ define(["utils", '../parts/language'], function (utils, language) {
             }   
         },
         listview_rowclick: function (sender, params) {
-            // this.pageview.go("detail", {
-            //     taskId: '100211100000001WZ03F',
-            //     userid:'1002V61000000013VEQF',
-            //     billId:'100211100000001WZ024',
-            //     billtype:'2641',
-            //     groupid:'0001V610000000000EEN'
-            // });
             this.pageview.go("detail", {
-                taskId: sender.datasource.taskid,
-                userid:sender.datasource.cuserId,
-                billId:sender.datasource.billId,
-                billtype:sender.datasource.billType,
+                taskId: '10021110000000283TAU',
+                userid:'1002V61000000013VEQF',
+                billId:'10021110000000283T8X',
+                billtype:'2641',
                 groupid:'0001V610000000000EEN'
             });
+            // this.pageview.go("detail", {
+            //     taskId: sender.datasource.taskid,
+            //     userid:sender.datasource.cuserId,
+            //     billId:sender.datasource.billId,
+            //     billtype:sender.datasource.billType,
+            //     groupid:'0001V610000000000EEN'
+            // });
         },
     };
     return pageLogic;

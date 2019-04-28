@@ -9,8 +9,8 @@ define(["utils"], function(utils) {
         host="http://114.113.234.242:9095/approve-client-adapter"
     } else {
         // host = "http://10.4.111.31:8090/approve-client-adapter";
-        // host="http://114.113.234.244:8095/approve-client-adapter"
-        host="http://114.113.234.244:9095/approve-client-adapter"
+        host="http://114.113.234.244:8095/approve-client-adapter"
+        // host="http://114.113.234.244:9095/approve-client-adapter"
     }
 
     return {

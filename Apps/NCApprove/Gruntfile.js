@@ -148,6 +148,11 @@ module.exports = function (grunt) {
                                         '<META HTTP-EQUIV="expires" CONTENT="Wed, 26 Feb 1997 08:21:57 GMT">',
                                         '<META HTTP-EQUIV="expires" CONTENT="0">',
                                         '<script src="./libs/require.js" data-main="./js/main.min.js?v=' + (+new Date()) + '"></script>',
+                                        '<script src="http://cmp/v/js/cmp-i18n.js"></script>',
+                                        '<script src="http://cmp/v/js/cordova/__CMPSHELL_PLATFORM__/cordova.js"></script>',
+                                        '<script src="http://cmp/v/js/cordova/cordova-plugins.js"></script>',
+                                        '<script src="http://cmp/v/js/cmp.js"></script>',
+                                        '<script src="http://cmp/v/js/cmp-att.js"></script>',
                                         '<link href="./css/common.min.css?v='+ (+new Date()) +'" rel="stylesheet"/>'
                                     ].join('\n'));
                                 break;

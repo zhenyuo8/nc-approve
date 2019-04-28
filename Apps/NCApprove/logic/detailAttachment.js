@@ -91,10 +91,25 @@ define(["utils",  "../parts/language","../parts/format"], function ( utils, lang
             sender.config.text = sender.datasource.name;
         },
         flow_repeat_itemclick: function (sender, params) {
+            var _this=this;
             if(sender.datasource.fileid){
                 var url='/approve-client-adapter/process/download?fileId='+sender.datasource.fileid+'&filename='+encodeURI(sender.datasource.name)+'&userid='+this.parentThis.pageview.params.userid+'&groupid=0001V610000000000EEN';
-                console.log(url);
-                window.open(url);
+                cmp.att.download({
+                    title:sender.datasource.name,
+                    url: url, // 文件路径
+                    extData: {//避免重复下载的额外参数
+                        lastModified:sender.datasource.time||new Date().getTime(),//文件修改值
+                        fileId:sender.datasource.fileid,//文件唯一id
+                        origin:window.location.origin//服务器ip
+                    },
+                    success:function(res){
+                        _this.pageview.showTip({text: JSON.stringify(res), duration: 2000}); 
+                    },
+                    error:function(error){
+                        _this.pageview.showTip({text: JSON.stringify(error), duration: 2000}); 
+                    }
+                });
+                // window.open(url);
             }
         },
         atta_time_init: function (sender, params) {   
