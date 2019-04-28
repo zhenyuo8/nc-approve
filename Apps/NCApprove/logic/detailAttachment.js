@@ -109,7 +109,7 @@ define(["utils",  "../parts/language","../parts/format","../../../components/dia
                         },
                         onClick: function () {
                             _this.delegateDialog.hide();
-                            _this.previewAttachment(sender,url)
+                            _this.previewAttachment(sender,url);
                         }
                     }, {
                         title:  language.formAction.downLoad,
@@ -120,7 +120,7 @@ define(["utils",  "../parts/language","../parts/format","../../../components/dia
                         },
                         onClick: function () {
                             _this.delegateDialog.hide();
-                            _this.downloadAttachment(sender,url)
+                            _this.downloadAttachment(sender,url);
                         }
                     }]
                 });
