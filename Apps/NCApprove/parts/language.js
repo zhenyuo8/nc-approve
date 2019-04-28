@@ -31,7 +31,8 @@ define([], function () {
                 'deleteFail':' 删除失败，稍后再试 ',
                 'makeSureDeleteFile':'确定要删除该附件吗? ',
                 'approvalSucess':'审批成功',
-                'rejectSucess':'驳回成功'
+                'rejectSucess':'驳回成功',
+                'previewChoose':'附件操作选择',
             },
             'formAction':{
                 'agree':' 批准 ',
@@ -40,6 +41,8 @@ define([], function () {
                 'cancel':' 取消 ',
                 'confirm':' 确认 ',
                 'clear':' 清除 ',
+                'downLoad':' 下载 ',
+                'preview':' 预览 ',
             }
         };
     }else{
@@ -65,6 +68,7 @@ define([], function () {
                 'makeSureDeleteFile':'Are you sure you wish to delete this attachment? ',
                 'approvalSucess':'Approval Success',
                 'rejectSucess':' Reject Success',
+                'previewChoose':' Attachment operation selection ',
             },
             'formAction':{
                 'agree':' Consent ',
@@ -73,6 +77,8 @@ define([], function () {
                 'cancel':' Cancel ',
                 'confirm':' Confirm ',
                 'clear':' Clear ',
+                'downLoad':' DownLoad ',
+                'preview':' Preview ',
             }
         };
     }

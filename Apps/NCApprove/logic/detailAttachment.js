@@ -1,5 +1,5 @@
 
-define(["utils",  "../parts/language","../parts/format"], function ( utils, language,format) {
+define(["utils",  "../parts/language","../parts/format","../../../components/dialog"], function ( utils, language,format,Dialog) {
     function pageLogic(config) {
         this.pageview = config.pageview;
         this.parentThis = this.pageview.viewpagerParams.parent;
@@ -94,23 +94,67 @@ define(["utils",  "../parts/language","../parts/format"], function ( utils, lang
             var _this=this;
             if(sender.datasource.fileid){
                 var url=window.location.origin+'/approve-client-adapter/process/download?fileId='+sender.datasource.fileid+'&filename='+encodeURI(sender.datasource.name)+'&userid='+this.parentThis.pageview.params.userid+'&groupid=0001V610000000000EEN';
-                cmp.att.download({
-                    title:sender.datasource.name,
-                    url: url, // 文件路径
-                    extData: {//避免重复下载的额外参数
-                        lastModified:sender.datasource.time||new Date().getTime(),//文件修改值
-                        fileId:sender.datasource.fileid,//文件唯一id
-                        origin:window.location.origin//服务器ip
-                    },
-                    success:function(res){
-                        _this.pageview.showTip({text: JSON.stringify(res), duration: 2000}); 
-                    },
-                    error:function(error){
-                        _this.pageview.showTip({text: JSON.stringify(error), duration: 2000}); 
-                    }
+                this.delegateDialog = new Dialog({
+                    mode: 3,
+                    wrapper: this.pageview.$el,
+                    contentText: language.formTips.previewChoose,
+                    btnDirection: "row",
+                    buttons: [{
+                        title: language.formAction.preview,
+                        style: {
+                            height: 45,
+                            fontSize: 16,
+                            color: '#111',
+                            borderRight: '1px solid #eee'
+                        },
+                        onClick: function () {
+                            _this.delegateDialog.hide();
+                            _this.previewAttachment(sender,url)
+                        }
+                    }, {
+                        title:  language.formAction.downLoad,
+                        style: {
+                            height: 45,
+                            fontSize: 16,
+                            color: "#37b7fd",
+                        },
+                        onClick: function () {
+                            _this.delegateDialog.hide();
+                            _this.downloadAttachment(sender,url)
+                        }
+                    }]
                 });
-                // window.open(url);
+                this.delegateDialog.show();
             }
+        },
+        previewAttachment:function(sender,url) {
+            cmp.att.read({
+                filename:sender.datasource.name,
+                path: url, // 文件路径
+                header:{},//文件下载头
+                type:sender.datasource.type||'',//文件类型
+                size:sender.datasource.filesize||1024,//文件大小
+                success:function(res){},
+                error:function(res){}
+            });
+        },
+        downloadAttachment:function(sender,url){
+            var _this=this;
+            cmp.att.download({
+                title:sender.datasource.name,
+                url: url, // 文件路径
+                extData: {//避免重复下载的额外参数
+                    lastModified:sender.datasource.time||new Date().getTime(),//文件修改值
+                    fileId:sender.datasource.fileid,//文件唯一id
+                    origin:window.location.origin//服务器ip
+                },
+                success:function(res){
+                    _this.pageview.showTip({text: '下载成功', duration: 2000}); 
+                },
+                error:function(error){
+                    _this.pageview.showTip({text: JSON.stringify(error), duration: 2000}); 
+                }
+            });
         },
         atta_time_init: function (sender, params) {   
             if(sender.datasource.time&&!isNaN(new Date(sender.datasource.time).getTime())){
