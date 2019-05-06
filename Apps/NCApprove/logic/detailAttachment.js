@@ -128,15 +128,22 @@ define(["utils",  "../parts/language","../parts/format","../../../components/dia
             }
         },
         previewAttachment:function(sender,url) {
-            cmp.att.read({
-                filename:sender.datasource.name,
-                path: url, // 文件路径
-                header:{},//文件下载头
-                type:sender.datasource.type||'',//文件类型
-                size:sender.datasource.filesize||1024,//文件大小
-                success:function(res){},
-                error:function(res){}
-            });
+            var type=sender.datasource.type.toLowerCase();
+            if((type==='doc'||type==='docx')&&utils.deviceInfo().isIOS){
+                var iosUrl='/approve-client-adapter/process/download?fileId='+sender.datasource.fileid+'&filename='+encodeURI(sender.datasource.name)+'&userid='+this.parentThis.pageview.params.userid+'&groupid=0001V610000000000EEN';
+                window.open(iosUrl);
+            }else{
+                cmp.att.read({
+                    filename:sender.datasource.name,
+                    path: url, // 文件路径
+                    header:{},//文件下载头
+                    type:sender.datasource.type||'',//文件类型
+                    size:sender.datasource.filesize||1024,//文件大小
+                    success:function(res){},
+                    error:function(res){}
+                });
+            }
+
         },
         downloadAttachment:function(sender,url){
             var _this=this;
