@@ -93,7 +93,7 @@ define(["utils",  "../parts/language","../parts/format","../../../components/dia
         flow_repeat_itemclick: function (sender, params) {
             var _this=this;
             if(sender.datasource.fileid){
-                var url=window.location.origin+'/approve-client-adapter/process/download?fileId='+sender.datasource.fileid+'&filename='+encodeURI(sender.datasource.name)+'&userid='+this.parentThis.pageview.params.userid+'&groupid=0001V610000000000EEN';
+                var url=window.location.origin+'/approve-client-adapter/process/download?fileId='+sender.datasource.fileid+'&filename='+encodeURI(sender.datasource.name)+'&userid='+this.parentThis.pageview.params.userid+'&groupid='+this.parentThis.pageview.params.groupid;
                 this.delegateDialog = new Dialog({
                     mode: 3,
                     wrapper: this.pageview.$el,
@@ -130,7 +130,7 @@ define(["utils",  "../parts/language","../parts/format","../../../components/dia
         previewAttachment:function(sender,url) {
             var type=sender.datasource.type.toLowerCase();
             if((type==='doc'||type==='docx')&&utils.deviceInfo().isIOS){
-                var iosUrl='/approve-client-adapter/process/download?fileId='+sender.datasource.fileid+'&filename='+encodeURI(sender.datasource.name)+'&userid='+this.parentThis.pageview.params.userid+'&groupid=0001V610000000000EEN';
+                var iosUrl='/approve-client-adapter/process/download?fileId='+sender.datasource.fileid+'&filename='+encodeURI(sender.datasource.name)+'&userid='+this.parentThis.pageview.params.userid+'&groupid='+this.parentThis.pageview.params.groupid;
                 window.open(iosUrl);
             }else{
                 cmp.att.read({
