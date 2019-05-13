@@ -57,13 +57,47 @@ define(["utils", "../parts/analysis",  "../parts/language"], function (utils, an
                             data=listData.data;
                         }
                         _this.instName=data.inst.name;
-                        
+                        jsonList = analysis.getAnalysis_ifroms(data);
+                        var subFormsList = [];
+                            var subForms = listData.data.inst.bpmForms && listData.data.inst.bpmForms[0].subForms ? listData.data.inst.bpmForms[0].subForms : [];
+                            for (var subIdex = 0; subIdex < subForms.length; subIdex++) {
+                                //同一个子表多条的情况通过子表数值map来判断 xingjjc
+                                var formDataList = listData.data.inst.formDataList && listData.data.inst.formDataList[0][subForms[subIdex].tableName];
+                                for (var _subFormIndex = 0; _subFormIndex < formDataList.length; _subFormIndex++) {
+                                    var subFormsJson = {};
+                                    subFormsJson.title = subForms[subIdex].title;
+                                    subFormsJson.item = [];
+                                    subFormsJson.num = _subFormIndex + 1;
+                                    var _fields = subForms[subIdex] ? subForms[subIdex].fields : [];
+                                    for (var s_idex = 0; s_idex < _fields.length; s_idex++) {
+                                        var subFormsContent = {};
+                                        var s_variableContent = JSON.parse(_fields[s_idex].variableContent);
+                                        var s_name = s_variableContent.name ? s_variableContent.name : language.nameIsNull;
+                                        var s_type = s_variableContent.type.name;
+                                        if (s_variableContent.type.kind) {
+                                            subFormsContent.kind = s_variableContent.type.kind;
+                                        }
+                                        var _formdata = formDataList.length > 0 && formDataList[_subFormIndex][_fields[s_idex].tableFieldName] ? formDataList[_subFormIndex][_fields[s_idex].tableFieldName] : "";
+                                        if ('select' === s_type && '[]' === _formdata) {
+                                            _formdata = '';
+                                        }
+                                        subFormsContent.name = s_name;
+                                        subFormsContent.type = s_type;
+                                        subFormsContent.content = _formdata;
+                                        subFormsJson.item.push(subFormsContent);
+                                    }
+                                    subFormsList.push(subFormsJson);
+                                }
+                            }
                         setTimeout(function(){
                             _this.pageview.refs.result_text.$el.show();
                             var viewpager = _this.pageview.refs.top_view.components.viewpager;
-                            jsonList = analysis.getAnalysis_ifroms(data);
-                            viewpager.curPageViewItem.contentInstance.refs.detail_repeat.bindData(jsonList); 
-                            
+                            if (viewpager.curPageViewItem.contentInstance.refs.detail_repeat) {
+                                viewpager.curPageViewItem.contentInstance.refs.detail_repeat.bindData(jsonList); 
+                            }
+                            if (viewpager.curPageViewItem.contentInstance.refs.subform_repeat) {
+                                viewpager.curPageViewItem.contentInstance.refs.subform_repeat.bindData(subFormsList);
+                            }
                             // 处理流程
                             var historicTasks=data.inst.historicTasks;
                             _this.processInstances=[];
@@ -142,7 +176,7 @@ define(["utils", "../parts/analysis",  "../parts/language"], function (utils, an
                                 _this.pageview.refs.result_text.innerText.html('审批中');
                             }
                             _this.pageview.hideLoading(true);
-                        },500);
+                        },200);
                     },
                     error: function (listData) {
                         _this.pageview.showTip({text: listData.msg, duration: 2000});

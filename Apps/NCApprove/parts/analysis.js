@@ -7,7 +7,6 @@ define(["./common"], function (c) {
         },
         // 处理数据展示格式化
         getComponentData: function (data) {
-            var jsonContent = {};
             jsonList = [];
             var formDataList=data.inst.formDataList[0];
             var layoutDetail=this.getLayoutDatail(data.inst.bpmForms[0].fields);

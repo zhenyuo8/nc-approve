@@ -5,8 +5,104 @@ define(["../logic/detailContent", "../parts/common", 'utils'], function (pluginC
         style: {
             backgroundColor: "#F7F7F7"
         },
-        root: ["detail_repeat"],
+        root: ["detail_repeat","subform_repeat"],
         components: { 
+            subform_repeat: {
+                type: "repeat",
+                ref: true,
+                root: ["subform_view"],
+                style: {
+                    display: "inline",
+                    width: "100%",
+                    backgroundColor: "#fff",
+                    overflow:'hidden'
+                },
+                itemStyle: {
+                    borderBottom: "solid 1px #EDEDED",
+                    minHeight: 40,
+                    flexDirection: "row"
+                }
+            },
+            subform_view: {
+                type: "view",
+                root: ["subform_view_title", "subform_view_item"],
+                style: {
+                    flexDirection: "column",
+                    width: "100%"
+                }
+            },
+            subform_view_title: {
+                type: "text",
+                text_bind: "title",
+                preText: "1",
+                preTextStyle: {
+                    backgroundColor: "#F39801",
+                    color: "rgb(255, 255, 255)",
+                    borderRadius: "50%",
+                    fontSize: 12,
+                    w: 15,
+                    lineHeight: 14,
+                    marginRight: 4,
+                    textAlign: "center"
+                },
+                style: {
+                    backgroundColor: "rgb(251,251,251)",
+                    color: "#9E9E9E",
+                    fontSize: 13,
+                    paddingLeft: 14,
+                    height: 40
+                }
+            },
+            subform_view_item: {
+                type: "repeat",
+                root: ["subform_view_item_title", "subform_view_item_content","detail_item_files"],
+                style: {
+                    display: "inline",
+                    width: "100%",
+                    backgroundColor: "#fff",
+                },
+                itemClassName:'bottom-half-line',
+                itemStyle: {
+                    minHeight: 30,
+                    flexDirection: "row",
+                }
+            },
+            subform_view_item_title: {
+                type: "text",
+                text_bind: "name",
+                style: {
+                    color: "#9E9E9E",
+                    fontSize: 13,
+                    paddingLeft: 14
+                }
+            },
+            subform_view_item_content: {
+                type: "text",
+                text_bind: "content",
+                style: {
+                    color: "#262626",
+                    fontSize: 13,
+                    flex:1,
+                    padding:12
+
+                },
+                textStyle:{
+                    textAlign:'right',
+                }
+            },
+            detail_item_files: {
+                type: "repeat",
+                ref: true,
+                root: ["detail_files_view"],
+                style: {
+                    display: "block",
+                    backgroundColor: "#fff"
+                },
+                itemStyle: {
+                    height: 40,
+                    flexDirection: "row"
+                }
+            },
             datatable_repeat: {
                 type: "repeat",
                 ref: true,

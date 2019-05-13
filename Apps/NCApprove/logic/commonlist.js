@@ -134,11 +134,11 @@ define(["utils", '../parts/language'], function (utils, language) {
         },
         listview_rowclick: function (sender, params) {
             // this.pageview.go("detail", {
-            //     taskId: '10021110000000283TAU',
-            //     userid:'1002V61000000013VEQF',
-            //     billId:'10021110000000283T8X',
-            //     billtype:'2641',
-            //     groupid:'0001V610000000000EEN'
+            //     taskId: '0001T110000000006JV2',
+            //     userid:'1001T110000000001HFX',
+            //     billId:'0001T110000000006JRJ',
+            //     billtype:'264X-Cxx-01',
+            //     groupid:'0001T1100000000003JS'
             // });
             this.pageview.go("detail", {
                 taskId: sender.datasource.taskid,
