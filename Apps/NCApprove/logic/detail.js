@@ -125,17 +125,33 @@ define(["utils", "../parts/analysis",  "../parts/language"], function (utils, an
                                         userName:itemData.userName,
                                     });
                                 }else{
-                                    _this.currentToDoTask={
-                                        activityType:activityType,
-                                        taskId:itemData.id,
-                                        assignee:itemData.assignee,
-                                        currentUserId:'',
-                                        deleteReason:itemData.deleteReason,
-                                        endTime:itemData.endTime,
-                                        taskAuditDesc:itemData.deleteReason,
-                                        taskComments:itemData.taskComments,
-                                        userName:itemData.userName,
-                                    };    
+                                    if(_this.taskId===itemData.id){
+                                        _this.currentToDoTask={
+                                            activityType:activityType,
+                                            taskId:itemData.id,
+                                            assignee:itemData.assignee,
+                                            currentUserId:'',
+                                            deleteReason:itemData.deleteReason,
+                                            endTime:itemData.endTime,
+                                            taskAuditDesc:itemData.deleteReason,
+                                            taskComments:itemData.taskComments,
+                                            userName:itemData.userName,
+                                        }; 
+                                    }else{
+                                        var currentToDoTaskSibling={
+                                            activityType:activityType,
+                                            taskId:itemData.id,
+                                            assignee:itemData.assignee,
+                                            currentUserId:'',
+                                            deleteReason:itemData.deleteReason,
+                                            endTime:itemData.endTime,
+                                            taskAuditDesc:itemData.deleteReason,
+                                            taskComments:itemData.taskComments,
+                                            userName:itemData.userName,
+                                        };
+                                        _this.processInstances.unshift(currentToDoTaskSibling);
+                                    }
+                                       
                                 }     
                             }
                             _this.processInstances.sort(function(a,b){
@@ -159,7 +175,6 @@ define(["utils", "../parts/analysis",  "../parts/language"], function (utils, an
                                 var name=_this.startParticipant.userName+'的'+_this.instName;           
                                 target.setText(name);
                             });
-
                             if(_this.currentToDoTask&&_this.taskId===_this.currentToDoTask.taskId&&(!data.inst.endTime&&!data.inst.deleteReason)){
                                 _this.item.push({label:'批准',id:'',type:'agree'});
                                 _this.item.push({label:'驳回',id:'',type:'reject'});
