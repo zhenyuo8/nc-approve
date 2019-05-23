@@ -1,5 +1,5 @@
 
-define(["utils", "../parts/analysis",  "../parts/language"], function (utils, analysis,language) {
+define(["utils", "../parts/analysis",  "../parts/language","../../../components/dialog"], function (utils, analysis,language,Dialog) {
 
     function PageLogic(config) {
         var _this = this;
@@ -171,13 +171,18 @@ define(["utils", "../parts/analysis",  "../parts/language"], function (utils, an
                                 userName:_this.startParticipant.userName,
                             });
                             _this.processInstances.unshift(_this.currentToDoTask);
+                            var userName=this.startParticipant.userName||'';
                             _this.pageview.delegate('userinfo_name', function (target) {
-                                var name=_this.startParticipant.userName+'的'+_this.instName;           
+                                var name=_userName+'的'+_this.instName;           
                                 target.setText(name);
                             });
                             if(_this.currentToDoTask&&_this.taskId===_this.currentToDoTask.taskId&&(!data.inst.endTime&&!data.inst.deleteReason)){
                                 _this.item.push({label:'批准',id:'',type:'agree'});
                                 _this.item.push({label:'驳回',id:'',type:'reject'});
+                                _this.pageview.refs.bottomToolBar.$el.show();
+                                _this.initBtn();
+                            }else{
+                                _this.item.push({label:'收回',id:'',type:'back'});
                                 _this.pageview.refs.bottomToolBar.$el.show();
                                 _this.initBtn();
                             }
@@ -305,10 +310,65 @@ define(["utils", "../parts/analysis",  "../parts/language"], function (utils, an
             // 指派检查
             if(sender.datasource.type==='reject'){
                 this.pageview.go("deal", paras);
-            }else{
+            }else if(sender.datasource.type==='back'){
+                this.goWithDrawApprove(paras);
+            }else if(sender.datasource.type==='agree'){
                 this.AgreeAndAssign(paras);
             }
            
+        },
+        goWithDrawApprove: function(para){
+            var _this=this;
+            this.delegateDialog = new Dialog({
+                mode: 3,
+                wrapper: this.pageview.$el,
+                contentText: language.formTips.confirmBack,
+                btnDirection: "row",
+                buttons: [{
+                    title: language.formAction.cancel,
+                    style: {
+                        height: 45,
+                        fontSize: 16,
+                        color: '#111',
+                        borderRight: '1px solid #eee'
+                    },
+                    onClick: function () {
+                        _this.delegateDialog.hide();
+                    }
+                }, {
+                    title:  language.formAction.confirm,
+                    style: {
+                        height: 45,
+                        fontSize: 16,
+                        color: "#37b7fd",
+                    },
+                    onClick: function () {
+                        _this.delegateDialog.hide();
+                        _this.pageview.showLoading({text: language.formTips.onLoading, timeout: 8000});
+                        _this.pageview.ajax({
+                            url: '/process/audit',
+                            data: para,
+                            type: 'GET',
+                            success: function (data) {
+                                _this.pageview.hideLoading(true);
+                                if (data.flag === '0') {
+                                    _this.pageview.showTip({text: '收回成功！', duration: 2000});
+                                    setTimeout(function () {
+                                        _this.pageview.goBack(-1);
+                                    }, 2000);
+                                } else {
+                                    _this.pageview.showTip({text: '收回失败', duration: 2000});
+                                }
+                            },
+                            error: function (data) {
+                                
+                            }
+                        });
+                    }
+                }]
+            });
+            this.delegateDialog.show();
+            
         },
         AgreeAndAssign: function (_para) {
             var _this = this,

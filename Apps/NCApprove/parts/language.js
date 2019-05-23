@@ -33,6 +33,7 @@ define([], function () {
                 'approvalSucess':'审批成功',
                 'rejectSucess':'驳回成功',
                 'previewChoose':'附件操作选择',
+                'confirmBack':'确认收回审批'
             },
             'formAction':{
                 'agree':' 批准 ',
@@ -69,6 +70,7 @@ define([], function () {
                 'approvalSucess':'Approval Success',
                 'rejectSucess':' Reject Success',
                 'previewChoose':' Attachment operation selection ',
+                'confirmBack':'确认收回审批'
             },
             'formAction':{
                 'agree':' Consent ',
