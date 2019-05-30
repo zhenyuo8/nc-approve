@@ -171,9 +171,9 @@ define(["utils", "../parts/analysis",  "../parts/language","../../../components/
                                 userName:_this.startParticipant.userName,
                             });
                             _this.processInstances.unshift(_this.currentToDoTask);
-                            var userName=this.startParticipant.userName||'';
+                            var userName=_this.startParticipant.userName||'';
                             _this.pageview.delegate('userinfo_name', function (target) {
-                                var name=_userName+'的'+_this.instName;           
+                                var name=userName+'的'+_this.instName;           
                                 target.setText(name);
                             });
                             if(_this.currentToDoTask&&_this.taskId===_this.currentToDoTask.taskId&&(!data.inst.endTime&&!data.inst.deleteReason)){
