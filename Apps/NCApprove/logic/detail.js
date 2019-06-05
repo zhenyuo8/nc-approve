@@ -182,15 +182,23 @@ define(["utils", "../parts/analysis",  "../parts/language","../../../components/
                                 _this.pageview.refs.bottomToolBar.$el.show();
                                 _this.initBtn();
                             }else{
-                                _this.item.push({label:'收回',id:'',type:'back'});
-                                _this.pageview.refs.bottomToolBar.$el.show();
-                                _this.initBtn();
+                                if(data.inst.deleteReason=='deleted'&&data.inst.endTime=='1970-01-01 08:00:00'){
+
+                                }else{
+                                    _this.item.push({label:'收回',id:'',type:'back'});
+                                    _this.pageview.refs.bottomToolBar.$el.show();
+                                    _this.initBtn();
+                                }
                             }
                            
-
                             if(data.inst.endTime||data.inst.deleteReason){
-                                _this.pageview.refs.result_text.innerText.html('已完成');
-                                _this.pageview.refs.result_text.innerText.css('color','blue');
+                                if(data.inst.deleteReason=='deleted'&&data.inst.endTime=='1970-01-01 08:00:00'){
+                                    _this.pageview.refs.result_text.innerText.html('已收回');
+                                    _this.pageview.refs.result_text.innerText.css('color','grey');
+                                }else{
+                                    _this.pageview.refs.result_text.innerText.html('已完成');
+                                    _this.pageview.refs.result_text.innerText.css('color','blue');
+                                }
                             }else{
                                 _this.pageview.refs.result_text.innerText.css('color','#e7a757');
                                 _this.pageview.refs.result_text.innerText.html('审批中');
